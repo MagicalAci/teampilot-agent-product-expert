@@ -1,0 +1,100 @@
+version: 1
+agent:
+  slug: product-expert
+  name: 产品专家 Agent
+  description: 聚焦产品调研、方案策划与 AI 策划协作的 Cursor 原生 Agent。
+  repoFullName: MagicalAci/teampilot-agent-product-expert
+  cursorOnly: true
+  standaloneEnabled: true
+release:
+  version: 0.1.0
+  notes: 首个产品专家 Agent 示例版本，提供 调研 / 策划 / AI策划 三个能力入口，并带上更新、写回、提交与评审工作流。
+dependencies:
+  skills:
+    - skills/research/SKILL.md
+    - skills/planning/SKILL.md
+    - skills/ai-planning/SKILL.md
+  mcps:
+    - user-exa
+    - user-firecrawl
+  templates:
+    - templates/research-brief.md
+    - templates/planning-prd.md
+    - templates/ai-planning.md
+  policies:
+    - policies/submission-review-contract.md
+contracts:
+  submitChecklist:
+    - 交付物需明确对应当前任务目标，并落在任务约定目录中。
+    - 提交时必须附上关键决策、对话记录、洞察摘要与自检结论。
+    - 若 Agent 给出多个备选方案，最终选择与理由必须由人类明确确认。
+  reviewChecklist:
+    - 确认交付物是否覆盖任务目标、关键要求与约束条件。
+    - 确认对话、洞察与决策记录是否足够支撑最终结论。
+    - 确认需要沉淀到 Agent 的经验是否已通过 `/更新请求` 或 `/经验写回` 提出。
+  updateRequestGuidance: 更新请求应说明当前问题、建议调整、适用场景，以及希望写回到 Agent 仓库的技能 / 模板 / 规则位置。
+cursor:
+  quickstartTitle: 产品专家 Agent 快速上手
+  commands:
+    - key: help
+      title: 帮助
+      command: /产品专家帮助
+      description: 查看当前 Agent 的能力入口、使用方式与推荐流程
+      example: /产品专家帮助
+    - key: writeback
+      title: 经验写回
+      command: /经验写回
+      description: 把本次对话中值得沉淀的方法、提示词或判断框架写回为 Agent 仓库 PR
+      example: /经验写回 把这次竞品拆解模板沉淀到调研能力里
+capabilities:
+  - key: research
+    title: 调研
+    description: 用于竞品、用户、市场和证据收集，先收束问题，再结构化输出调研结论。
+    command: /调研
+    recommendedWhen: 当你需要先搞清事实、证据、竞品差异或用户问题时使用。
+    inputTemplate: /调研 目标：分析 AI 陪练产品。范围：3 个竞品。输出：对比表 + 洞察结论 + 建议。
+    outputFormat: 调研摘要、对比矩阵、证据链接、结论与风险
+    skillRefs:
+      - skills/research/SKILL.md
+    mcpRefs:
+      - user-exa
+      - user-firecrawl
+    templateRefs:
+      - templates/research-brief.md
+    policyRefs:
+      - policies/submission-review-contract.md
+  - key: planning
+    title: 策划
+    description: 把目标转成可评审的产品方案，覆盖目标、用户、范围、流程、验收与风险。
+    command: /策划
+    recommendedWhen: 当事实已经足够，需要产出方案、PRD、流程设计或执行框架时使用。
+    inputTemplate: /策划 目标：为企业知识库做 Agent 安装与升级能力。输出：PRD + 流程 + 验收清单。
+    outputFormat: 方案摘要、PRD 结构、关键流程、边界条件、验收标准
+    skillRefs:
+      - skills/planning/SKILL.md
+    mcpRefs: []
+    templateRefs:
+      - templates/planning-prd.md
+    policyRefs:
+      - policies/submission-review-contract.md
+  - key: ai-planning
+    title: AI策划
+    description: 面向 AI 场景的产品设计能力，强调模型边界、交互链路、评测指标与安全治理。
+    command: /AI策划
+    recommendedWhen: 当方案核心依赖 LLM、Prompt、工具调用、评测或 Agent 工作流时使用。
+    inputTemplate: /AI策划 目标：设计一个会写 PRD 的产品经理 Agent。输出：能力拆解 + 评测方案 + 风险控制。
+    outputFormat: AI 能力蓝图、输入输出协议、评测计划、风险与回滚方案
+    skillRefs:
+      - skills/ai-planning/SKILL.md
+    mcpRefs:
+      - user-exa
+    templateRefs:
+      - templates/ai-planning.md
+    policyRefs:
+      - policies/submission-review-contract.md
+workflows:
+  listCapabilitiesCommand: /查看能力
+  checkUpdateCommand: /检查Agent更新
+  submitCommand: /提交产出
+  reviewCommand: /评审结果
+  updateCommand: /更新请求
