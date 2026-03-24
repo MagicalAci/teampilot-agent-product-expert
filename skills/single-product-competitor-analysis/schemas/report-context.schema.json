@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "report-context.schema.json",
+  "title": "SPCA Report Context",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "task",
+    "product",
+    "counts",
+    "analysis"
+  ],
+  "properties": {
+    "task": {
+      "type": "object",
+      "required": [
+        "mode",
+        "slug"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "full",
+            "crawl",
+            "guide"
+          ]
+        },
+        "slug": {
+          "type": "string"
+        }
+      }
+    },
+    "product": {
+      "type": "object",
+      "required": [
+        "name",
+        "slug",
+        "analysis_goal"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "primary_url": {
+          "type": "string"
+        },
+        "analysis_goal": {
+          "type": "string"
+        },
+        "focus_dimensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": [
+        "sources",
+        "evidence",
+        "review_samples"
+      ],
+      "properties": {
+        "sources": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evidence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "review_samples": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "analysis": {
+      "type": "object",
+      "required": [
+        "product_overview",
+        "user_analysis",
+        "social_sentiment",
+        "seo_content",
+        "monetization",
+        "competition"
+      ],
+      "properties": {
+        "product_overview": {
+          "type": "object"
+        },
+        "user_analysis": {
+          "type": "object"
+        },
+        "social_sentiment": {
+          "type": "object"
+        },
+        "seo_content": {
+          "type": "object"
+        },
+        "monetization": {
+          "type": "object"
+        },
+        "competition": {
+          "type": "object"
+        }
+      }
+    },
+    "paths": {
+      "type": "object"
+    }
+  }
+}

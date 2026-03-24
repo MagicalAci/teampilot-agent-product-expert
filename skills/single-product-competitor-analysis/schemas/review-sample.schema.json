@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-sample.schema.json",
+  "title": "SPCA Review Sample",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "sample_id",
+    "product_slug",
+    "source_id",
+    "platform",
+    "text",
+    "sentiment_label"
+  ],
+  "properties": {
+    "sample_id": {
+      "type": "string"
+    },
+    "product_slug": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "evidence_id": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "author": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "rating": {
+      "type": [
+        "number",
+        "integer",
+        "null"
+      ]
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sentiment_label": {
+      "type": "string",
+      "enum": [
+        "positive",
+        "negative",
+        "neutral"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}

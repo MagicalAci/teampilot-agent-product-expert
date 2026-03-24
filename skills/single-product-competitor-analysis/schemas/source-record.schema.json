@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source-record.schema.json",
+  "title": "SPCA Source Record",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "source_id",
+    "product_slug",
+    "channel",
+    "source_tier",
+    "title",
+    "local_path",
+    "collected_at",
+    "payload_kind"
+  ],
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "product_slug": {
+      "type": "string",
+      "minLength": 1
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "web",
+        "reviews",
+        "social",
+        "seo",
+        "pricing",
+        "manual"
+      ]
+    },
+    "source_tier": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "uri": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "local_path": {
+      "type": "string"
+    },
+    "content_type": {
+      "type": "string"
+    },
+    "collected_at": {
+      "type": "string"
+    },
+    "payload_kind": {
+      "type": "string",
+      "enum": [
+        "text",
+        "json_object",
+        "json_array",
+        "jsonl"
+      ]
+    },
+    "body": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "items": {
+      "type": "array"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence-record.schema.json",
+  "title": "SPCA Evidence Record",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "evidence_id",
+    "product_slug",
+    "source_id",
+    "channel",
+    "evidence_pool",
+    "tier",
+    "title",
+    "summary",
+    "excerpt"
+  ],
+  "properties": {
+    "evidence_id": {
+      "type": "string"
+    },
+    "product_slug": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "channel": {
+      "type": "string"
+    },
+    "evidence_pool": {
+      "type": "string",
+      "enum": [
+        "official_pages",
+        "feature_structure",
+        "pricing_monetization",
+        "reviews_feedback",
+        "social_sentiment",
+        "seo_content",
+        "screenshots_recordings"
+      ]
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "uri": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "local_path": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "page_stage": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}

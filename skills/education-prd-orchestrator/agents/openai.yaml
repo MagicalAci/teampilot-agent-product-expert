@@ -1,0 +1,7 @@
+interface:
+  display_name: "产品策划"
+  short_description: "用 /产品策划 和 /产品策划校验 驱动证据型 PRD 工作流"
+  default_prompt: "Use $education-prd-orchestrator with /产品策划 to start product planning work, or /产品策划校验 to audit an existing PRD or product document."
+
+policy:
+  allow_implicit_invocation: true

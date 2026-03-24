@@ -1,0 +1,31 @@
+{
+  "product_name": "Demo Study App",
+  "product_slug": "demo-study-app",
+  "primary_url": "https://example.com/demo-study-app",
+  "analysis_goal": "判断这个产品在用户、口碑、SEO 和商业化上是否值得我方学习。",
+  "key_question": "它为什么容易被家长和学生接受？",
+  "product_type": "web+app",
+  "focus_dimensions": [
+    "product",
+    "user",
+    "social",
+    "seo",
+    "monetization"
+  ],
+  "platforms": [
+    "web",
+    "appstore",
+    "xiaohongshu",
+    "seo",
+    "pricing"
+  ],
+  "source_scopes": [
+    "official_pages",
+    "reviews_feedback",
+    "social_sentiment",
+    "seo_content",
+    "pricing_monetization"
+  ],
+  "requires_app_depth": true,
+  "task_mode": "full"
+}

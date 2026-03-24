@@ -1,0 +1,3 @@
+evidence_id,source_type,source_name,source_url_or_path,local_asset_path,captured_at,claim_supported,evidence_strength,status,used_in_section,figure_number,notes
+EV001,official,[来源名],[URL或本地路径],images/[文件名],2026-03-13,"[这条证据支持什么判断]",strong,ready,"第X章 / 第Y节","图 X-1","[备注]"
+EV002,user_quote,[来源名],[URL或本地路径],,2026-03-13,"[这条证据支持什么判断]",medium,needs_review,"第X章 / 第Y节","","[如果缺截图或样本不足就在这里写明]"
