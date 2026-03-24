@@ -1,0 +1,38 @@
+name: Validate Product Expert Agent
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - feat/**
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Run repository regression
+        run: python -m unittest tests/test_product_expert_agent.py
+
+      - name: Run single product analysis tests
+        run: python -m unittest discover -s skills/single-product-competitor-analysis/tests -p "test_*.py"
+
+      - name: Run product planning tests
+        run: python -m unittest discover -s skills/education-prd-orchestrator/tests -p "test_*.py"
+
+      - name: Run AI planning tests
+        run: python -m unittest discover -s skills/ai-planning-orchestrator/tests -p "test_*.py"

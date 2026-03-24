@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "task-card.schema.json",
+  "title": "SPCA Task Card",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "product_name",
+    "analysis_goal"
+  ],
+  "properties": {
+    "task_mode": {
+      "type": "string",
+      "enum": [
+        "full",
+        "crawl",
+        "guide"
+      ]
+    },
+    "task_slug": {
+      "type": "string",
+      "minLength": 1
+    },
+    "product_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "product_slug": {
+      "type": "string",
+      "minLength": 1
+    },
+    "primary_url": {
+      "type": "string",
+      "minLength": 1
+    },
+    "analysis_goal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "key_question": {
+      "type": "string"
+    },
+    "product_type": {
+      "type": "string",
+      "enum": [
+        "web",
+        "app",
+        "web+app",
+        "unknown"
+      ]
+    },
+    "focus_dimensions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source_scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "channels": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "collection_backends": {
+      "type": "object"
+    },
+    "imports_root": {
+      "type": "string"
+    },
+    "manual_root": {
+      "type": "string"
+    },
+    "output_root": {
+      "type": "string"
+    },
+    "report_path": {
+      "type": "string"
+    },
+    "requires_app_depth": {
+      "type": "boolean"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}

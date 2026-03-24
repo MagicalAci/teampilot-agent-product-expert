@@ -1,0 +1,16 @@
+[
+  {
+    "platform": "xiaohongshu",
+    "author": "博主甲",
+    "title": "陪学效率不错",
+    "text": "这个产品最吸引我的是家长不用一直盯着，学习报告很清晰。",
+    "tags": ["家长", "报告"]
+  },
+  {
+    "platform": "xiaohongshu",
+    "author": "博主乙",
+    "title": "AI 识别偶尔翻车",
+    "text": "孩子拍题挺方便，但 AI 有时会误判，会员也不便宜。",
+    "tags": ["AI准确性", "会员"]
+  }
+]

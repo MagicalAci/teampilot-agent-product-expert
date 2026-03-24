@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[产品名] - 图表论证模板</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700;900&display=swap");
+
+      :root {
+        --bg: #09111b;
+        --panel: rgba(16, 24, 34, 0.9);
+        --text: #eef5ff;
+        --muted: rgba(238, 245, 255, 0.72);
+        --line: rgba(255, 255, 255, 0.08);
+        --bar-a: #7ce0c3;
+        --bar-b: #ffd37b;
+        --grid: rgba(255, 255, 255, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Noto Sans SC", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(124, 224, 195, 0.12), transparent 24%),
+          radial-gradient(circle at bottom right, rgba(255, 211, 123, 0.12), transparent 24%),
+          linear-gradient(135deg, #081018 0%, #0a1220 48%, #081018 100%);
+      }
+
+      .shell {
+        width: min(1180px, calc(100vw - 40px));
+        margin: 28px auto 40px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: var(--panel);
+        padding: 24px;
+      }
+
+      .eyebrow {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--bar-a);
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        margin-top: 10px;
+        font-size: clamp(28px, 4vw, 48px);
+      }
+
+      .subtitle {
+        margin-top: 10px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        margin-top: 20px;
+      }
+
+      .metric-card {
+        padding: 18px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .metric-label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .metric-value {
+        margin-top: 10px;
+        font-size: 28px;
+        font-weight: 800;
+      }
+
+      .chart-wrap {
+        margin-top: 22px;
+        border-radius: 24px;
+        border: 1px solid var(--line);
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      svg {
+        width: 100%;
+        height: auto;
+      }
+
+      .caption {
+        margin-top: 14px;
+        font-size: 14px;
+        color: var(--muted);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 16px;
+      }
+
+      th,
+      td {
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+      }
+
+      th {
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      @media (max-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="panel">
+        <div class="eyebrow">CHART EVIDENCE</div>
+        <h1>[图表标题]</h1>
+        <p class="subtitle">
+          这张图只服务一个关键判断：<strong>[要证明的判断]</strong>。如果一张图无法回答这个判断，就拆成两张。
+        </p>
+
+        <div class="grid">
+          <div class="metric-card">
+            <div class="metric-label">结论摘要</div>
+            <div class="metric-value">[结论数字或一句判断]</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">数据来源</div>
+            <div class="metric-value">[来源名称 / 搜索批次 / 时间范围]</div>
+          </div>
+        </div>
+
+        <div class="chart-wrap">
+          <svg viewBox="0 0 980 420" role="img" aria-label="[图表标题]">
+            <defs>
+              <linearGradient id="barA" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#7ce0c3" />
+                <stop offset="100%" stop-color="#55bba0" />
+              </linearGradient>
+              <linearGradient id="barB" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stop-color="#ffd37b" />
+                <stop offset="100%" stop-color="#f3b750" />
+              </linearGradient>
+            </defs>
+
+            <line x1="90" y1="80" x2="90" y2="340" stroke="rgba(255,255,255,0.18)" />
+            <line x1="90" y1="340" x2="900" y2="340" stroke="rgba(255,255,255,0.18)" />
+            <line x1="90" y1="120" x2="900" y2="120" stroke="var(--grid)" stroke-dasharray="4 8" />
+            <line x1="90" y1="200" x2="900" y2="200" stroke="var(--grid)" stroke-dasharray="4 8" />
+            <line x1="90" y1="280" x2="900" y2="280" stroke="var(--grid)" stroke-dasharray="4 8" />
+
+            <rect x="180" y="150" width="90" height="190" rx="18" fill="url(#barA)" />
+            <rect x="292" y="116" width="90" height="224" rx="18" fill="url(#barB)" />
+
+            <rect x="450" y="178" width="90" height="162" rx="18" fill="url(#barA)" />
+            <rect x="562" y="138" width="90" height="202" rx="18" fill="url(#barB)" />
+
+            <rect x="720" y="132" width="90" height="208" rx="18" fill="url(#barA)" />
+            <rect x="832" y="96" width="90" height="244" rx="18" fill="url(#barB)" />
+
+            <text x="135" y="346" fill="rgba(255,255,255,0.65)" font-size="14">0</text>
+            <text x="127" y="286" fill="rgba(255,255,255,0.65)" font-size="14">20</text>
+            <text x="127" y="206" fill="rgba(255,255,255,0.65)" font-size="14">40</text>
+            <text x="127" y="126" fill="rgba(255,255,255,0.65)" font-size="14">60</text>
+
+            <text x="226" y="370" fill="rgba(255,255,255,0.72)" font-size="16">样本 A</text>
+            <text x="496" y="370" fill="rgba(255,255,255,0.72)" font-size="16">样本 B</text>
+            <text x="766" y="370" fill="rgba(255,255,255,0.72)" font-size="16">样本 C</text>
+
+            <text x="206" y="140" fill="#7ce0c3" font-size="18" font-weight="700">48</text>
+            <text x="319" y="104" fill="#ffd37b" font-size="18" font-weight="700">56</text>
+
+            <text x="476" y="168" fill="#7ce0c3" font-size="18" font-weight="700">41</text>
+            <text x="590" y="126" fill="#ffd37b" font-size="18" font-weight="700">51</text>
+
+            <text x="748" y="120" fill="#7ce0c3" font-size="18" font-weight="700">52</text>
+            <text x="860" y="84" fill="#ffd37b" font-size="18" font-weight="700">61</text>
+          </svg>
+
+          <p class="caption">
+            图注模板：在 `[时间范围]` 的 `[样本量]` 个样本中，`[对照组 A]` 与 `[对照组 B]` 在
+            `[指标]` 上存在 `[差异方向]`，因此支持正文中的 `[判断]`。
+          </p>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>字段</th>
+              <th>应填写内容</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>数据来源</td>
+              <td>[搜索计划 / 评论样本 / CSV 汇总 / 人工录入]</td>
+            </tr>
+            <tr>
+              <td>指标定义</td>
+              <td>[指标如何计算，是否是比例、次数、均值或中位数]</td>
+            </tr>
+            <tr>
+              <td>降级说明</td>
+              <td>[如果样本不足或只能拿到二手信息，要明确写待确认]</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

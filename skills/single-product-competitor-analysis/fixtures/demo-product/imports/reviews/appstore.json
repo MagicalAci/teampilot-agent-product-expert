@@ -1,0 +1,23 @@
+[
+  {
+    "author": "家长A",
+    "rating": 5,
+    "platform": "appstore",
+    "title": "反馈很清晰",
+    "text": "家长最喜欢学习报告，孩子做完题后我能马上看到反馈，整体很好用。"
+  },
+  {
+    "author": "学生B",
+    "rating": 2,
+    "platform": "appstore",
+    "title": "会员有点贵",
+    "text": "讲解还可以，但是会员价格有点贵，而且有时候识别不准。"
+  },
+  {
+    "author": "家长C",
+    "rating": 4,
+    "platform": "appstore",
+    "title": "省时",
+    "text": "以前辅导作业很麻烦，现在方便很多，不过偶尔会卡顿。"
+  }
+]

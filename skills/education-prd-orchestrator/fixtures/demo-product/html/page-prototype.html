@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Product 页面稿</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+        color: #eef5ff;
+        background: linear-gradient(135deg, #081018, #101924);
+      }
+
+      .shell {
+        width: min(1080px, calc(100vw - 40px));
+        margin: 28px auto;
+      }
+
+      .panel {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 28px;
+        background: rgba(12, 18, 28, 0.86);
+        padding: 24px;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .subtitle {
+        margin-top: 12px;
+        color: rgba(238, 245, 255, 0.72);
+        line-height: 1.7;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .card {
+        border-radius: 20px;
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="panel">
+        <h1>Demo Product 页面稿</h1>
+        <p class="subtitle">这份页面稿证明：portable 交付目录不仅能放 Markdown，也能承载可审阅的单文件 HTML 页面稿。</p>
+        <div class="grid">
+          <article class="card">
+            <h2>角色</h2>
+            <p class="subtitle">产品经理 / reviewer</p>
+          </article>
+          <article class="card">
+            <h2>关键动作</h2>
+            <p class="subtitle">查看交付结构并定位图证、页面稿、图表</p>
+          </article>
+          <article class="card">
+            <h2>价值判断</h2>
+            <p class="subtitle">一眼看清交付物是否完整、是否可继续协作</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

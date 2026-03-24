@@ -1,0 +1,2 @@
+evidence_id,source_type,source_name,source_url_or_path,local_asset_path,captured_at,claim_supported,evidence_strength,status,used_in_section,figure_number,notes
+EV001,fixture,Demo Fixture,fixtures/demo-product/prd.md,images/demo-flow.svg,2026-03-13,"portable 交付可以把图证、页面稿和图表组织进同一目录",strong,ready,"第一章 当前产品分析","图 1-1","用于 smoke test"

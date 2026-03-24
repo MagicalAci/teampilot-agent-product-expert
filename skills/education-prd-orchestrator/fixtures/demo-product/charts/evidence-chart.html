@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Product 图表论证</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "PingFang SC", "Noto Sans SC", sans-serif;
+        color: #eef5ff;
+        background: linear-gradient(135deg, #081018, #0f1725);
+      }
+
+      .shell {
+        width: min(960px, calc(100vw - 40px));
+        margin: 28px auto;
+      }
+
+      .panel {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 28px;
+        background: rgba(12, 18, 28, 0.88);
+        padding: 24px;
+      }
+
+      .row {
+        display: flex;
+        gap: 16px;
+        align-items: end;
+        height: 240px;
+        margin-top: 20px;
+      }
+
+      .bar {
+        flex: 1;
+        border-radius: 18px 18px 0 0;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+        padding-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .bar-a {
+        height: 68%;
+        background: linear-gradient(180deg, #7ce0c3, #4fb79c);
+      }
+
+      .bar-b {
+        height: 82%;
+        background: linear-gradient(180deg, #ffd37b, #f0b751);
+      }
+
+      .bar-c {
+        height: 74%;
+        background: linear-gradient(180deg, #8db2ff, #5c84e6);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <section class="panel">
+        <h1>Demo Product 图表论证</h1>
+        <p>这张图表证明：成品交付可以同时承载页面稿与图表稿，便于在 PRD 里引用不同类型的辅助材料。</p>
+        <div class="row">
+          <div class="bar bar-a">68</div>
+          <div class="bar bar-b">82</div>
+          <div class="bar bar-c">74</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
