@@ -36,3 +36,6 @@ jobs:
 
       - name: Run AI planning tests
         run: python -m unittest discover -s skills/ai-planning-orchestrator/tests -p "test_*.py"
+
+      - name: Run demo development tests
+        run: python -m unittest discover -s skills/product-demo-orchestrator/tests -p "test_*.py"

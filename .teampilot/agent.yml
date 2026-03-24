@@ -7,13 +7,14 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.2.0
-  notes: 从示例仓升级为可直接使用的产品专家 Agent，内置单产品分析 / 产品策划 / AI策划 三个完整 skill 包与回归测试。
+  version: 0.3.0
+  notes: 新增 Demo开发 能力，支持 Web、H5 与 SwiftUI demo 的 brief、设计系统、脚手架、打磨、校验与交接。
 dependencies:
   skills:
     - skills/single-product-competitor-analysis/SKILL.md
     - skills/education-prd-orchestrator/SKILL.md
     - skills/ai-planning-orchestrator/SKILL.md
+    - skills/product-demo-orchestrator/SKILL.md
   mcps:
     - user-firecrawl
     - user-app-insight
@@ -29,6 +30,7 @@ contracts:
     - 单产品分析需保留任务卡、关键证据、过程记录、最终判断与事实核查痕迹。
     - 产品策划需保留 PRD、图文资产、证据包与 review 交接信息。
     - AI策划需保留 AI PRD、脚本或样例、测试报告，以及必要的开发 README 或打包清单。
+    - Demo开发需保留 demo brief、design system、平台入口文件、preflight checklist、walkthrough 与 developer handoff。
     - 若 Agent 给出多个备选方案，最终选择与理由必须由人类明确确认。
   reviewChecklist:
     - 确认交付物是否覆盖任务目标、关键要求与约束条件。
@@ -89,10 +91,35 @@ cursor:
       command: /AI测试
       description: 单独验证 AI 脚本并输出测试报告
       example: /AI测试 PRD 生成 Agent
+    - key: demo-development
+      title: Demo开发
+      command: /Demo开发
+      description: 启动产品 demo 的全流程，覆盖 brief、设计系统、脚手架、打磨与校验
+      example: /Demo开发 AI 陪练产品首页 demo，目标平台：H5
+    - key: demo-design-system
+      title: Demo设计系统
+      command: /Demo设计系统
+      description: 单独产出或刷新 demo 的设计系统
+      example: /Demo设计系统 AI 陪练产品首页 demo
+    - key: demo-scaffold
+      title: Demo脚手架
+      command: /Demo脚手架
+      description: 初始化 Web、H5 或 SwiftUI demo 骨架
+      example: /Demo脚手架 AI 陪练产品首页 demo，目标平台：Web
+    - key: demo-polish
+      title: Demo打磨
+      command: /Demo打磨
+      description: 在已有 demo 骨架上补齐 baseline、a11y、metadata 与动效性能
+      example: /Demo打磨 outputs/demo-home
+    - key: demo-validate
+      title: Demo校验
+      command: /Demo校验
+      description: 校验 demo brief、design system、入口文件与交接文档
+      example: /Demo校验 outputs/demo-home
     - key: capabilities
       title: 查看能力
       command: /查看能力
-      description: 列出三个核心能力点和子命令
+      description: 列出四个核心能力点和子命令
       example: /查看能力
     - key: check-update
       title: 检查Agent更新
@@ -150,6 +177,19 @@ capabilities:
     outputFormat: AI PRD、脚本与样例、测试报告、开发 README、脚本包清单
     skillRefs:
       - skills/ai-planning-orchestrator/SKILL.md
+    mcpRefs: []
+    templateRefs: []
+    policyRefs:
+      - policies/submission-review-contract.md
+  - key: demo-development
+    title: Demo开发
+    description: 面向 Web、H5 与 SwiftUI 的产品 demo 开发能力，覆盖 brief、设计系统、脚手架、打磨、校验与交接。
+    command: /Demo开发
+    recommendedWhen: 当你要快速做一个可演示、可讲述、可交接的产品 demo，而不是完整正式工程时使用。
+    inputTemplate: /Demo开发 AI 陪练产品首页 demo，目标平台：H5，输出：可演示页面 + design system + walkthrough + handoff。
+    outputFormat: outputs 目录、design system、平台入口文件、preflight checklist、walkthrough、handoff、zip 包
+    skillRefs:
+      - skills/product-demo-orchestrator/SKILL.md
     mcpRefs: []
     templateRefs: []
     policyRefs:

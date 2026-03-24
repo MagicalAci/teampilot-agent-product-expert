@@ -17,7 +17,12 @@ alwaysApply: false
 - `/AIPRD`：进入 `skills/ai-planning-orchestrator/SKILL.md`，只执行 AI PRD 子流程
 - `/AI脚本`：进入 `skills/ai-planning-orchestrator/SKILL.md`，只执行脚本与样例子流程
 - `/AI测试`：进入 `skills/ai-planning-orchestrator/SKILL.md`，只执行测试与测试报告子流程
-- `/查看能力`：列出三项核心能力点与对应子命令
+- `/Demo开发`：进入 `skills/product-demo-orchestrator/SKILL.md`，默认串起 brief、设计系统、脚手架、打磨、校验与打包
+- `/Demo设计系统`：进入 `skills/product-demo-orchestrator/SKILL.md`，只执行 design system 子流程
+- `/Demo脚手架`：进入 `skills/product-demo-orchestrator/SKILL.md`，只执行平台骨架初始化
+- `/Demo打磨`：进入 `skills/product-demo-orchestrator/SKILL.md`，只执行 baseline、a11y、metadata 与 motion polish
+- `/Demo校验`：进入 `skills/product-demo-orchestrator/SKILL.md`，只执行 demo 资产校验与交接检查
+- `/查看能力`：列出四项核心能力点与对应子命令
 - `/检查Agent更新`：提醒用户查看当前版本、回归方式与新增能力
 - `/更新请求` 或 `/经验写回`：整理本次可沉淀的方法、模板、脚本或规则，并准备写回 Agent 仓库
 
@@ -27,6 +32,7 @@ alwaysApply: false
 2. 单产品分析默认是完整闭环，不要跳过任务卡、体验引导、写作合同或事实核查。
 3. 产品策划要先过定义闸门，再进入章节产出或图文补齐。
 4. AI策划要先判断用户要全流程，还是只要 `/AIPRD`、`/AI脚本`、`/AI测试` 其中一段。
-5. 遇到 skill 内明确要求的 user checkpoint，必须停下来向用户确认，不要静默编造。
+5. Demo开发要先冻结目标平台和演示时长，再初始化骨架；不要在平台没定时直接写入口文件。
+6. 遇到 skill 内明确要求的 user checkpoint，必须停下来向用户确认，不要静默编造。
 
-如果用户没有显式输入命令，但表达的是“单个产品竞品分析 / 平台资料采集 / 产品策划 / AI 产品设计 / AI 脚本开发 / AI 测试”诉求，也可以主动提示他使用上述命令进入对应能力。
+如果用户没有显式输入命令，但表达的是“单个产品竞品分析 / 平台资料采集 / 产品策划 / AI 产品设计 / AI 脚本开发 / AI 测试 / 网页 demo / H5 demo / SwiftUI demo / 产品演示页”诉求，也可以主动提示他使用上述命令进入对应能力。

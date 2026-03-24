@@ -25,6 +25,11 @@
 - 必须保留 AI PRD、脚本或样例、测试报告
 - 如果有开发交接诉求，还需补 README 或脚本包清单
 
+### Demo开发
+
+- 必须保留 demo brief、design system、平台入口文件、preflight checklist、demo walkthrough 与 developer handoff
+- 如果执行的是 `/Demo校验`，需要明确指出缺失资产、标题缺口或平台入口异常
+
 ## 评审时重点确认
 
 - 是否真正回答了任务目标
