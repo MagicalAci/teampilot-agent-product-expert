@@ -9,20 +9,23 @@ README_PATH = REPO_ROOT / "README.md"
 
 
 class ProductExpertAgentRepositoryTest(unittest.TestCase):
-    def test_manifest_registers_three_capabilities(self):
+    def test_manifest_registers_four_capabilities(self):
         manifest = MANIFEST_PATH.read_text(encoding="utf-8")
 
         expected_snippets = [
-            "version: 0.2.0",
+            "version: 0.3.0",
             "title: 单产品分析",
             "command: /竞品分析",
             "title: 产品策划",
             "command: /产品策划",
             "title: AI策划",
             "command: /AI策划",
+            "title: Demo开发",
+            "command: /Demo开发",
             "skills/single-product-competitor-analysis/SKILL.md",
             "skills/education-prd-orchestrator/SKILL.md",
             "skills/ai-planning-orchestrator/SKILL.md",
+            "skills/product-demo-orchestrator/SKILL.md",
         ]
         for snippet in expected_snippets:
             with self.subTest(snippet=snippet):
@@ -41,6 +44,11 @@ class ProductExpertAgentRepositoryTest(unittest.TestCase):
             "/AIPRD",
             "/AI脚本",
             "/AI测试",
+            "/Demo开发",
+            "/Demo设计系统",
+            "/Demo脚手架",
+            "/Demo打磨",
+            "/Demo校验",
             "/查看能力",
         ]:
             with self.subTest(command=command):
@@ -52,9 +60,11 @@ class ProductExpertAgentRepositoryTest(unittest.TestCase):
             "单产品分析",
             "产品策划",
             "AI策划",
+            "Demo开发",
             "/单产品分析 豆包爱学",
             "/产品策划 家长端留存提升方案",
             "/AI策划 PRD 生成 Agent",
+            "/Demo开发 AI 陪练产品首页 demo，目标平台：H5",
             "python -m unittest tests/test_product_expert_agent.py",
         ]:
             with self.subTest(snippet=snippet):
@@ -71,6 +81,9 @@ class ProductExpertAgentRepositoryTest(unittest.TestCase):
             "skills/ai-planning-orchestrator/SKILL.md",
             "skills/ai-planning-orchestrator/scripts/init_ai_planning_delivery.py",
             "skills/ai-planning-orchestrator/tests/test_pipeline_smoke.py",
+            "skills/product-demo-orchestrator/SKILL.md",
+            "skills/product-demo-orchestrator/scripts/run_pipeline.py",
+            "skills/product-demo-orchestrator/tests/test_pipeline_smoke.py",
         ]
         for relative_path in expected_paths:
             with self.subTest(path=relative_path):

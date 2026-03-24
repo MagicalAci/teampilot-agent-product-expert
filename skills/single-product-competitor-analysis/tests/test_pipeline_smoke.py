@@ -203,6 +203,7 @@ class PipelineSmokeTest(unittest.TestCase):
             self.assertNotEqual(export_result.returncode, 0)
             self.assertIn("成稿门禁", export_result.stdout + export_result.stderr)
 
+    @unittest.skipUnless(sys.platform == "darwin", "bootstrap-macos.sh smoke test requires macOS")
     def test_bootstrap_standalone_smoke_from_copied_skill_root(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_root = Path(temp_dir)
