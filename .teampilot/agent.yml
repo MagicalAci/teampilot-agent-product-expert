@@ -2,156 +2,94 @@ version: 1
 agent:
   slug: product-expert
   name: 产品专家 Agent
-  description: 内置单产品分析、产品策划与 AI 策划三项完整能力的 Cursor 原生 Agent。
+  description: 聚焦产品调研、方案策划与 AI 策划协作的 Cursor 原生 Agent。
   repoFullName: MagicalAci/teampilot-agent-product-expert
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.2.0
-  notes: 从示例仓升级为可直接使用的产品专家 Agent，内置单产品分析 / 产品策划 / AI策划 三个完整 skill 包与回归测试。
+  version: 0.1.0
+  notes: 首个产品专家 Agent 示例版本，提供 调研 / 策划 / AI策划 三个能力入口，并带上更新、写回、提交与评审工作流。
 dependencies:
   skills:
-    - skills/single-product-competitor-analysis/SKILL.md
-    - skills/education-prd-orchestrator/SKILL.md
-    - skills/ai-planning-orchestrator/SKILL.md
+    - skills/research/SKILL.md
+    - skills/planning/SKILL.md
+    - skills/ai-planning/SKILL.md
   mcps:
+    - user-exa
     - user-firecrawl
-    - user-app-insight
-    - user-xiaohongshu
-    - user-weibo
-    - user-bilibili
-  templates: []
+  templates:
+    - templates/research-brief.md
+    - templates/planning-prd.md
+    - templates/ai-planning.md
   policies:
     - policies/submission-review-contract.md
 contracts:
   submitChecklist:
-    - 交付物必须明确对应本次能力入口，并落在该能力约定的标准目录结构中。
-    - 单产品分析需保留任务卡、关键证据、过程记录、最终判断与事实核查痕迹。
-    - 产品策划需保留 PRD、图文资产、证据包与 review 交接信息。
-    - AI策划需保留 AI PRD、脚本或样例、测试报告，以及必要的开发 README 或打包清单。
+    - 交付物需明确对应当前任务目标，并落在任务约定目录中。
+    - 提交时必须附上关键决策、对话记录、洞察摘要与自检结论。
     - 若 Agent 给出多个备选方案，最终选择与理由必须由人类明确确认。
   reviewChecklist:
     - 确认交付物是否覆盖任务目标、关键要求与约束条件。
-    - 确认能力对应的标准文件结构、脚本校验或 smoke test 是否通过。
-    - 确认证据、判断、风险与剩余待确认事项是否已分层表达。
+    - 确认对话、洞察与决策记录是否足够支撑最终结论。
     - 确认需要沉淀到 Agent 的经验是否已通过 `/更新请求` 或 `/经验写回` 提出。
-  updateRequestGuidance: 更新请求应说明当前问题、建议调整、适用场景，以及希望写回到 Agent 仓库的技能、脚本、模板或规则位置。
+  updateRequestGuidance: 更新请求应说明当前问题、建议调整、适用场景，以及希望写回到 Agent 仓库的技能 / 模板 / 规则位置。
 cursor:
   quickstartTitle: 产品专家 Agent 快速上手
   commands:
-    - key: single-product-analysis
-      title: 单产品分析
-      command: /单产品分析
-      description: 单产品竞品分析入口，等价于 /竞品分析
-      example: /单产品分析 豆包爱学
-    - key: competitor-analysis
-      title: 竞品分析
-      command: /竞品分析
-      description: 启动单产品竞品分析全流程
-      example: /竞品分析 豆包爱学
-    - key: crawl
-      title: 爬取
-      command: /爬取
-      description: 仅启动平台资料采集流程
-      example: /爬取 豆包爱学 小红书
-    - key: guided-experience
-      title: 竞品引导
-      command: /竞品引导
-      description: 启动真实体验引导与素材沉淀
-      example: /竞品引导 豆包爱学
-    - key: product-planning
-      title: 产品策划
-      command: /产品策划
-      description: 启动产品 PRD、流程、图文与校验工作流
-      example: /产品策划 家长端留存提升方案
-    - key: product-planning-validate
-      title: 产品策划校验
-      command: /产品策划校验
-      description: 校验已有产品策划文档、图文资产与证据链
-      example: /产品策划校验 outputs/demo/prd.md
-    - key: ai-planning
-      title: AI策划
-      command: /AI策划
-      description: 启动 AI PRD、脚本、测试全流程
-      example: /AI策划 PRD 生成 Agent
-    - key: ai-prd
-      title: AIPRD
-      command: /AIPRD
-      description: 单独撰写或刷新 AI PRD
-      example: /AIPRD PRD 生成 Agent
-    - key: ai-script
-      title: AI脚本
-      command: /AI脚本
-      description: 单独开发 AI 脚本、样例和 README
-      example: /AI脚本 PRD 生成 Agent
-    - key: ai-test
-      title: AI测试
-      command: /AI测试
-      description: 单独验证 AI 脚本并输出测试报告
-      example: /AI测试 PRD 生成 Agent
-    - key: capabilities
-      title: 查看能力
-      command: /查看能力
-      description: 列出三个核心能力点和子命令
-      example: /查看能力
-    - key: check-update
-      title: 检查Agent更新
-      command: /检查Agent更新
-      description: 查看当前版本与后续更新提示
-      example: /检查Agent更新
-    - key: update-request
-      title: 更新请求
-      command: /更新请求
-      description: 整理需要回写到 Agent 仓库的方法、模板或脚本改动
-      example: /更新请求 把这次图文校验流程固化到产品策划能力里
+    - key: help
+      title: 帮助
+      command: /产品专家帮助
+      description: 查看当前 Agent 的能力入口、使用方式与推荐流程
+      example: /产品专家帮助
     - key: writeback
       title: 经验写回
       command: /经验写回
-      description: 把本次可沉淀的方法、提示词或判断框架写回为 Agent 仓库 PR
-      example: /经验写回 把这次竞品拆解模板沉淀到单产品分析能力里
+      description: 把本次对话中值得沉淀的方法、提示词或判断框架写回为 Agent 仓库 PR
+      example: /经验写回 把这次竞品拆解模板沉淀到调研能力里
 capabilities:
-  - key: single-product-analysis
-    title: 单产品分析
-    description: 从任务澄清、并发采集、体验引导到逐章写作与事实核查的单产品竞品分析能力。
-    command: /竞品分析
-    recommendedWhen: 当你要深挖一个具体产品，形成可追溯的竞品分析结论与建议时使用。
-    inputTemplate: /竞品分析 豆包爱学
-    outputFormat: 任务卡、平台 summary/data、体验报告、章节成稿、事实核查与最终报告
+  - key: research
+    title: 调研
+    description: 用于竞品、用户、市场和证据收集，先收束问题，再结构化输出调研结论。
+    command: /调研
+    recommendedWhen: 当你需要先搞清事实、证据、竞品差异或用户问题时使用。
+    inputTemplate: /调研 目标：分析 AI 陪练产品。范围：3 个竞品。输出：对比表 + 洞察结论 + 建议。
+    outputFormat: 调研摘要、对比矩阵、证据链接、结论与风险
     skillRefs:
-      - skills/single-product-competitor-analysis/SKILL.md
+      - skills/research/SKILL.md
     mcpRefs:
+      - user-exa
       - user-firecrawl
-      - user-app-insight
-      - user-xiaohongshu
-      - user-weibo
-      - user-bilibili
-    templateRefs: []
+    templateRefs:
+      - templates/research-brief.md
     policyRefs:
       - policies/submission-review-contract.md
-  - key: product-planning
-    title: 产品策划
-    description: 证据驱动的产品策划与 PRD 交付能力，覆盖任务卡冻结、定义闸门、章节编排、配图与校验。
-    command: /产品策划
-    recommendedWhen: 当你需要从 0 到 1 写 PRD，或校验已有产品文档、图文资产与证据链时使用。
-    inputTemplate: /产品策划 家长端留存提升方案
-    outputFormat: portable outputs 目录、prd.md、images、html、charts、evidence、review
+  - key: planning
+    title: 策划
+    description: 把目标转成可评审的产品方案，覆盖目标、用户、范围、流程、验收与风险。
+    command: /策划
+    recommendedWhen: 当事实已经足够，需要产出方案、PRD、流程设计或执行框架时使用。
+    inputTemplate: /策划 目标：为企业知识库做 Agent 安装与升级能力。输出：PRD + 流程 + 验收清单。
+    outputFormat: 方案摘要、PRD 结构、关键流程、边界条件、验收标准
     skillRefs:
-      - skills/education-prd-orchestrator/SKILL.md
+      - skills/planning/SKILL.md
     mcpRefs: []
-    templateRefs: []
+    templateRefs:
+      - templates/planning-prd.md
     policyRefs:
       - policies/submission-review-contract.md
   - key: ai-planning
     title: AI策划
-    description: 面向 AI 方案落地的产品能力，覆盖 AI PRD、脚本开发、测试报告与最小交接包。
+    description: 面向 AI 场景的产品设计能力，强调模型边界、交互链路、评测指标与安全治理。
     command: /AI策划
-    recommendedWhen: 当方案核心依赖 LLM、Prompt、工具调用、结构化输出或 Agent 工作流时使用。
-    inputTemplate: /AI策划 PRD 生成 Agent
-    outputFormat: AI PRD、脚本与样例、测试报告、开发 README、脚本包清单
+    recommendedWhen: 当方案核心依赖 LLM、Prompt、工具调用、评测或 Agent 工作流时使用。
+    inputTemplate: /AI策划 目标：设计一个会写 PRD 的产品经理 Agent。输出：能力拆解 + 评测方案 + 风险控制。
+    outputFormat: AI 能力蓝图、输入输出协议、评测计划、风险与回滚方案
     skillRefs:
-      - skills/ai-planning-orchestrator/SKILL.md
-    mcpRefs: []
-    templateRefs: []
+      - skills/ai-planning/SKILL.md
+    mcpRefs:
+      - user-exa
+    templateRefs:
+      - templates/ai-planning.md
     policyRefs:
       - policies/submission-review-contract.md
 workflows:
