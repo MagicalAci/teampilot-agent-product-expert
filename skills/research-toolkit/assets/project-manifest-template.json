@@ -1,0 +1,24 @@
+{
+  "slug": "__SLUG__",
+  "title": "__TITLE__",
+  "createdAt": "__CREATED_AT__",
+  "workspaceOutputRoot": "__OUTPUT_ROOT__",
+  "runtimeHome": "__RUNTIME_HOME__",
+  "modes": {
+    "basicReady": false,
+    "deepReady": false,
+    "socialReady": false
+  },
+  "paths": {
+    "drafts": "drafts",
+    "evidence": "evidence",
+    "analysis": "analysis",
+    "delivery": "delivery",
+    "meta": ".meta"
+  },
+  "artifacts": {
+    "outline": "drafts/00-report-outline.md",
+    "evidenceIndex": "evidence/_evidence-index.csv",
+    "doctorReport": ".meta/doctor-report.md"
+  }
+}

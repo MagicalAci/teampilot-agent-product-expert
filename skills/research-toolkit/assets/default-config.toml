@@ -1,0 +1,32 @@
+[runtime]
+runtime_home = "~/.local/share/cursor-research"
+vendor_root = "~/.local/share/cursor-research/vendor"
+
+[modes]
+basic_enabled = true
+deep_enabled = false
+social_enabled = false
+
+[paths]
+deerflow_root = "~/.local/share/cursor-research/vendor/deer-flow"
+mediacrawler_root = "~/crawlers/MediaCrawler"
+xhs_downloader_root = "~/crawlers/XHS-Downloader"
+deerflow_managed_config = "config.research-toolkit.yaml"
+
+[models.default]
+provider = "volcengine"
+model = "doubao-seed-1-6-flash"
+api_key_env = "ARK_API_KEY"
+
+[models.alt_openai]
+provider = "openai"
+model = "gpt-4o"
+api_key_env = "OPENAI_API_KEY"
+
+[search.default]
+provider = "tavily"
+api_key_env = "TAVILY_API_KEY"
+fallback_api_key_env = "INFOQUEST_API_KEY"
+
+[output]
+default_root = "outputs"

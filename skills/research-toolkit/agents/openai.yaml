@@ -1,0 +1,7 @@
+interface:
+  display_name: "research-toolkit"
+  short_description: "统一调研分析工具包，支持单产品深度分析、方向调研、市场全景、用户研究等多种任务类型"
+  default_prompt: "Use $research-toolkit with /深度调研, /爬取, /体验引导, /调研安装, /调研体检, /调研授权, or /调研打包. First identify the task type: single-product deep analysis, direction research, market landscape, or user research. For onboarding or handoff, use one-step-at-a-time guidance only: say what is missing, give exactly one next action, and tell the user the exact reply word to continue. Default first command for recipients is `bash scripts/bootstrap.sh --with-stack --doctor`. If a search key is missing, point only to `~/.local/share/cursor-research/.env.research-toolkit` and ask the user to reply `配好了`. If MediaCrawler auth is missing, do not explain it in prose: run /调研授权, show only the QR code path or image, ask the user to reply `扫好了`, and stop until they do. Before /深度调研, first build a compact research card, derive keywords, confirm scope with the user, then run the CLI. If the user wants a distributable version, build a clean release bundle instead of handing out the raw working directory."
+
+policy:
+  allow_implicit_invocation: false
