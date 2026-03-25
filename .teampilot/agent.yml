@@ -2,16 +2,16 @@ version: 1
 agent:
   slug: product-expert
   name: 产品专家 Agent
-  description: 内置单产品分析、产品策划与 AI 策划三项完整能力的 Cursor 原生 Agent。
+  description: 内置调研分析（单产品/方向/全景/用户研究）、产品策划、AI策划、Demo开发四项完整能力的 Cursor 原生 Agent。
   repoFullName: MagicalAci/teampilot-agent-product-expert
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.3.0
-  notes: 新增 Demo开发 能力，支持 Web、H5 与 SwiftUI demo 的 brief、设计系统、脚手架、打磨、校验与交接。
+  version: 0.4.0
+  notes: 调研分析能力全面升级为 Research Toolkit，合并 SPCA 质量体系 + LRS 工具链，支持多任务类型（单产品/方向/全景/用户研究），新增 DeerFlow 深度研究、MediaCrawler 社媒主动采集、QR 授权、跨平台 bootstrap。
 dependencies:
   skills:
-    - skills/single-product-competitor-analysis/SKILL.md
+    - skills/research-toolkit/SKILL.md
     - skills/education-prd-orchestrator/SKILL.md
     - skills/ai-planning-orchestrator/SKILL.md
     - skills/product-demo-orchestrator/SKILL.md
@@ -41,26 +41,41 @@ contracts:
 cursor:
   quickstartTitle: 产品专家 Agent 快速上手
   commands:
-    - key: single-product-analysis
-      title: 单产品分析
-      command: /单产品分析
-      description: 单产品竞品分析入口，等价于 /竞品分析
-      example: /单产品分析 豆包爱学
-    - key: competitor-analysis
-      title: 竞品分析
-      command: /竞品分析
-      description: 启动单产品竞品分析全流程
-      example: /竞品分析 豆包爱学
+    - key: deep-research
+      title: 深度调研
+      command: /深度调研
+      description: 调研分析主入口，AI 自动识别任务类型（单产品/方向/全景/用户研究），走完整流程
+      example: /深度调研 Kimi学习版
     - key: crawl
       title: 爬取
       command: /爬取
-      description: 仅启动平台资料采集流程
-      example: /爬取 豆包爱学 小红书
+      description: 调用 MediaCrawler/XHS-Downloader 进行关键词搜索与评论采集
+      example: /爬取 xhs AI学习工具,AI教育
     - key: guided-experience
-      title: 竞品引导
-      command: /竞品引导
-      description: 启动真实体验引导与素材沉淀
-      example: /竞品引导 豆包爱学
+      title: 体验引导
+      command: /体验引导
+      description: 引导用户完成 App/Web 实测体验并录入素材
+      example: /体验引导
+    - key: research-install
+      title: 调研安装
+      command: /调研安装
+      description: 安装 DeerFlow + MediaCrawler + XHS-Downloader 工具链
+      example: /调研安装
+    - key: research-doctor
+      title: 调研体检
+      command: /调研体检
+      description: 环境 + MCP + API + 工具链全面就绪检查
+      example: /调研体检
+    - key: research-auth
+      title: 调研授权
+      command: /调研授权
+      description: 小红书 QR 二维码授权流程
+      example: /调研授权
+    - key: research-package
+      title: 调研打包
+      command: /调研打包
+      description: 构建可分发的 Skill zip 包
+      example: /调研打包
     - key: product-planning
       title: 产品策划
       command: /产品策划
@@ -137,15 +152,15 @@ cursor:
       description: 把本次可沉淀的方法、提示词或判断框架写回为 Agent 仓库 PR
       example: /经验写回 把这次竞品拆解模板沉淀到单产品分析能力里
 capabilities:
-  - key: single-product-analysis
-    title: 单产品分析
-    description: 从任务澄清、并发采集、体验引导到逐章写作与事实核查的单产品竞品分析能力。
-    command: /竞品分析
-    recommendedWhen: 当你要深挖一个具体产品，形成可追溯的竞品分析结论与建议时使用。
-    inputTemplate: /竞品分析 豆包爱学
-    outputFormat: 任务卡、平台 summary/data、体验报告、章节成稿、事实核查与最终报告
+  - key: research-toolkit
+    title: 调研分析
+    description: 统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，自带 DeerFlow 深度研究、MediaCrawler 社媒采集、质量门禁、逐章写作与三轮事实核查。
+    command: /深度调研
+    recommendedWhen: 当你需要深入分析产品、验证方向可行性、对比竞品、挖掘用户痛点时使用。
+    inputTemplate: /深度调研 Kimi学习版
+    outputFormat: 任务卡、平台 summary/data、DeerFlow 深度报告、体验报告、章节成稿、事实核查与最终报告
     skillRefs:
-      - skills/single-product-competitor-analysis/SKILL.md
+      - skills/research-toolkit/SKILL.md
     mcpRefs:
       - user-firecrawl
       - user-app-insight

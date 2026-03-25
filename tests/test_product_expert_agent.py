@@ -22,7 +22,7 @@ class ProductExpertAgentRepositoryTest(unittest.TestCase):
             "command: /AI策划",
             "title: Demo开发",
             "command: /Demo开发",
-            "skills/single-product-competitor-analysis/SKILL.md",
+            "skills/research-toolkit/SKILL.md",
             "skills/education-prd-orchestrator/SKILL.md",
             "skills/ai-planning-orchestrator/SKILL.md",
             "skills/product-demo-orchestrator/SKILL.md",
@@ -72,9 +72,9 @@ class ProductExpertAgentRepositoryTest(unittest.TestCase):
 
     def test_skill_directories_keep_key_assets(self):
         expected_paths = [
-            "skills/single-product-competitor-analysis/SKILL.md",
-            "skills/single-product-competitor-analysis/scripts/run_pipeline.py",
-            "skills/single-product-competitor-analysis/tests/test_pipeline_smoke.py",
+            "skills/research-toolkit/SKILL.md",
+            "skills/research-toolkit/scripts/run_pipeline.py",
+            "skills/research-toolkit/tests/test_pipeline_smoke.py",
             "skills/education-prd-orchestrator/SKILL.md",
             "skills/education-prd-orchestrator/scripts/run_pipeline.py",
             "skills/education-prd-orchestrator/tests/test_pipeline_smoke.py",

@@ -29,7 +29,7 @@ jobs:
         run: python -m unittest tests/test_product_expert_agent.py
 
       - name: Run single product analysis tests
-        run: python -m unittest discover -s skills/single-product-competitor-analysis/tests -p "test_*.py"
+        run: python -m unittest discover -s skills/research-toolkit/tests -p "test_*.py"
 
       - name: Run product planning tests
         run: python -m unittest discover -s skills/education-prd-orchestrator/tests -p "test_*.py"

@@ -8,31 +8,41 @@ alwaysApply: false
 
 当用户输入以下命令时，优先读取对应 `SKILL.md` 并严格按 skill 内的流程、检查点与脚本入口执行：
 
-- `/单产品分析` 或 `/竞品分析`：进入 `skills/single-product-competitor-analysis/SKILL.md`
-- `/爬取`：作为 `single-product-competitor-analysis` 的平台采集子流程执行
-- `/竞品引导`：作为 `single-product-competitor-analysis` 的真实体验引导子流程执行
+## Research Toolkit 调研分析命令
+
+- `/深度调研 [产品/方向]`：进入 `skills/research-toolkit/SKILL.md`，AI 自动识别任务类型（单产品/方向/全景/用户研究），走完整调研流程
+- `/爬取 [平台] [关键词]`：作为 `research-toolkit` 的主动社媒采集子流程执行（MediaCrawler / XHS-Downloader）
+- `/体验引导`：作为 `research-toolkit` 的 App/Web 实测引导子流程执行
+- `/调研安装`：安装 DeerFlow + MediaCrawler + XHS-Downloader 工具链
+- `/调研体检`：环境 + MCP + API + 工具链全面就绪检查
+- `/调研授权`：小红书 QR 二维码授权流程
+- `/调研打包`：构建可分发的 Skill zip 包
+
+### 自然语言触发
+
+以下表达也会路由到 `research-toolkit`：
+- "帮我调研下 XXX" / "看看 XXX 怎么样" / "分析一下 XXX"
+- "XXX 竞品分析" / "XXX 产品调研" / "XXX 市场调研"
+- "做个用户研究" / "看看用户怎么说" / "挖一下用户痛点"
+- "这个赛道怎么样" / "方向可行性分析"
+
+## 其他 Skill 命令
+
 - `/产品策划`：进入 `skills/education-prd-orchestrator/SKILL.md`
-- `/产品策划校验`：进入 `skills/education-prd-orchestrator/SKILL.md`，但以校验已有产物为主，不默认重写
+- `/产品策划校验`：进入 `skills/education-prd-orchestrator/SKILL.md`，以校验已有产物为主
 - `/AI策划`：进入 `skills/ai-planning-orchestrator/SKILL.md`，默认串起 AI PRD、AI脚本、AI测试
-- `/AIPRD`：进入 `skills/ai-planning-orchestrator/SKILL.md`，只执行 AI PRD 子流程
-- `/AI脚本`：进入 `skills/ai-planning-orchestrator/SKILL.md`，只执行脚本与样例子流程
-- `/AI测试`：进入 `skills/ai-planning-orchestrator/SKILL.md`，只执行测试与测试报告子流程
-- `/Demo开发`：进入 `skills/product-demo-orchestrator/SKILL.md`，默认串起 brief、设计系统、脚手架、打磨、校验与打包
-- `/Demo设计系统`：进入 `skills/product-demo-orchestrator/SKILL.md`，只执行 design system 子流程
-- `/Demo脚手架`：进入 `skills/product-demo-orchestrator/SKILL.md`，只执行平台骨架初始化
-- `/Demo打磨`：进入 `skills/product-demo-orchestrator/SKILL.md`，只执行 baseline、a11y、metadata 与 motion polish
-- `/Demo校验`：进入 `skills/product-demo-orchestrator/SKILL.md`，只执行 demo 资产校验与交接检查
-- `/查看能力`：列出四项核心能力点与对应子命令
-- `/检查Agent更新`：提醒用户查看当前版本、回归方式与新增能力
-- `/更新请求` 或 `/经验写回`：整理本次可沉淀的方法、模板、脚本或规则，并准备写回 Agent 仓库
+- `/AIPRD`：只执行 AI PRD 子流程
+- `/AI脚本`：只执行脚本与样例子流程
+- `/AI测试`：只执行测试与测试报告子流程
+- `/Demo开发`：进入 `skills/product-demo-orchestrator/SKILL.md`
+- `/Demo设计系统` / `/Demo脚手架` / `/Demo打磨` / `/Demo校验`：Demo 子流程
+- `/查看能力`：列出核心能力点与对应子命令
+- `/检查Agent更新`：查看当前版本与新增能力
+- `/更新请求` / `/经验写回`：整理可沉淀的方法并写回 Agent 仓库
 
-执行原则：
+## 执行原则
 
-1. 先读对应 skill，再行动；不要凭仓库名或命令名猜测流程。
-2. 单产品分析默认是完整闭环，不要跳过任务卡、体验引导、写作合同或事实核查。
-3. 产品策划要先过定义闸门，再进入章节产出或图文补齐。
-4. AI策划要先判断用户要全流程，还是只要 `/AIPRD`、`/AI脚本`、`/AI测试` 其中一段。
-5. Demo开发要先冻结目标平台和演示时长，再初始化骨架；不要在平台没定时直接写入口文件。
-6. 遇到 skill 内明确要求的 user checkpoint，必须停下来向用户确认，不要静默编造。
-
-如果用户没有显式输入命令，但表达的是“单个产品竞品分析 / 平台资料采集 / 产品策划 / AI 产品设计 / AI 脚本开发 / AI 测试 / 网页 demo / H5 demo / SwiftUI demo / 产品演示页”诉求，也可以主动提示他使用上述命令进入对应能力。
+1. 先读对应 skill，再行动。不要凭命令名猜测流程。
+2. 调研分析默认是完整闭环：任务卡 → 采集 → 分析 → 体验 → 写作 → 核查 → 导出。不跳步。
+3. 遇到 skill 内要求的 user checkpoint，必须停下来确认，不要编造。
+4. 接手人首次使用时，按 SKILL.md 中的"傻瓜式三件套"引导协议执行。

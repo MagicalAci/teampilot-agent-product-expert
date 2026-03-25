@@ -17,13 +17,13 @@
 
 ## 四个能力点
 
-### 1. 单产品分析
+### 1. 调研分析（Research Toolkit）
 
-- 主 skill：`skills/single-product-competitor-analysis/SKILL.md`
-- 主命令：`/竞品分析`
-- 兼容别名：`/单产品分析`
-- 子命令：`/爬取`、`/竞品引导`
-- 适用场景：单个产品竞品研究、平台资料采集、真实体验引导、逐章写作与事实核查
+- 主 skill：`skills/research-toolkit/SKILL.md`
+- 主命令：`/深度调研 [产品/方向]`
+- 子命令：`/爬取`、`/体验引导`、`/调研安装`、`/调研体检`、`/调研授权`、`/调研打包`
+- 适用场景：单产品深度分析、方向/赛道调研、市场全景对比、用户研究、自定义调研
+- 工具链：DeerFlow 深度研究、MediaCrawler/XHS-Downloader 社媒采集、MCP 并行采集
 
 ### 2. 产品策划
 
@@ -58,7 +58,7 @@
 
 ## 目录说明
 
-- `skills/single-product-competitor-analysis/`：单产品分析完整 skill 包，含 assets、examples、references、scripts、tests、schemas、fixtures
+- `skills/research-toolkit/`：单产品分析完整 skill 包，含 assets、examples、references、scripts、tests、schemas、fixtures
 - `skills/education-prd-orchestrator/`：产品策划完整 skill 包，含 assets、examples、references、scripts、tests、fixtures
 - `skills/ai-planning-orchestrator/`：AI策划完整 skill 包，含 assets、examples、references、scripts、tests
 - `skills/product-demo-orchestrator/`：Demo开发完整 skill 包，含 assets、references、scripts、tests
@@ -74,7 +74,7 @@ source /tmp/product-expert-agent-venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements-dev.txt
 python -m unittest tests/test_product_expert_agent.py
-python -m unittest discover -s skills/single-product-competitor-analysis/tests -p "test_*.py"
+python -m unittest discover -s skills/research-toolkit/tests -p "test_*.py"
 python -m unittest discover -s skills/education-prd-orchestrator/tests -p "test_*.py"
 python -m unittest discover -s skills/ai-planning-orchestrator/tests -p "test_*.py"
 python -m unittest discover -s skills/product-demo-orchestrator/tests -p "test_*.py"
