@@ -304,7 +304,134 @@ curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/comple
 
 创建缓存会收取额外存储费用，需评估实际场景后使用。
 
-## 8. 各厂商模型参数文档
+## 8. 多模态调用
+
+### 8.1 图片理解
+
+通过 `image_url` content part 传入图片。**必须用 base64 编码**（平台无法访问外网 URL）。
+
+```bash
+curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "Authorization: Bearer {Secret_Key}" \
+  -d '{
+    "model": "Doubao-Seed-2.0-Mini-0215",
+    "messages": [{
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "描述这张图片"},
+        {"type": "image_url", "image_url": {"url": "data:image/png;base64,{BASE64_DATA}"}}
+      ]
+    }],
+    "temperature": 0.7
+  }'
+```
+
+**限制**：
+- 外网图片 URL 会触发服务端 120 秒超时 → 必须 base64
+- 最小图片尺寸 14×14 像素
+- 支持 PNG / JPEG 格式
+
+### 8.2 视频理解
+
+通过 `video_url` content part 传入视频，仅 Pro 模型支持。
+
+```bash
+curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "Authorization: Bearer {Secret_Key}" \
+  -d '{
+    "model": "Doubao-Seed-2.0-Pro-0215",
+    "messages": [{
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "描述视频内容"},
+        {"type": "video_url", "video_url": {"url": "https://example.com/video.mp4"}}
+      ]
+    }],
+    "temperature": 0.7
+  }'
+```
+
+**注意**：视频理解耗时较长（30-60 秒），超时建议设为 120 秒。
+
+### 8.3 视觉定位 Grounding
+
+让模型定位图片中目标物体，返回 `<bbox>x1 y1 x2 y2</bbox>` 格式坐标（值域 0-999，归一化）。
+
+```bash
+curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "Authorization: Bearer {Secret_Key}" \
+  -d '{
+    "model": "Doubao-Seed-2.0-Pro-0215",
+    "messages": [{
+      "role": "user",
+      "content": [
+        {"type": "text", "text": "定位图片中每个物体的位置，用<bbox>坐标标注"},
+        {"type": "image_url", "image_url": {"url": "data:image/png;base64,{BASE64_DATA}"}}
+      ]
+    }],
+    "temperature": 0.2
+  }'
+```
+
+### 8.4 续写模式
+
+通过 assistant message 的 `prefix: true`，让模型从指定文本续写。
+
+```bash
+curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions" \
+  -H "Content-Type: application/json; charset=utf-8" \
+  -H "Authorization: Bearer {Secret_Key}" \
+  -d '{
+    "model": "Doubao-Seed-2.0-Mini-0215",
+    "messages": [
+      {"role": "user", "content": "写一首关于春天的诗"},
+      {"role": "assistant", "content": "春风拂面", "prefix": true}
+    ],
+    "temperature": 0.7
+  }'
+```
+
+### 8.5 content type 支持范围
+
+| content type | 支持状态 |
+|---|---|
+| `text` | YES |
+| `image_url` | YES（base64 推荐） |
+| `video_url` | YES（Pro 模型） |
+| `input_audio` | 未测试 |
+| `file` | NO（报 InvalidParameter） |
+
+## 9. 平台能力限制
+
+### 9.1 不支持的功能
+
+| 功能 | 表现 | 替代方案 |
+|---|---|---|
+| `response_format`（json_object / json_schema） | InvalidParameter | system prompt 约束 + 低温度 + 输出校验 |
+| `/v1/files` File API | 404 | 文档内容先提取为文本再传入 |
+| `/v1/responses` Responses API | 404 | 使用 Chat Completions API |
+| `file` content type | InvalidParameter | 图片用 image_url，视频用 video_url |
+| 外网图片/视频 URL | 120 秒超时 | base64 编码嵌入 |
+
+### 9.2 深度思考实测说明
+
+- 默认**自动开启**，无需传参数；`reasoning_content` 和 `reasoning_tokens` 会自动返回
+- 顶层 `"thinking": "enabled"` 字符串参数可能报 `Mismatch type`（平台代理层解析问题）
+- 关闭思考：`"thinking": "disabled"` 在部分场景可生效，但不保证所有模型
+
+### 9.3 结构化输出实测说明
+
+`response_format` 参数在幻视平台完全不可用（三个模型均报错），推荐做法：
+
+1. system prompt 中写明"你只能输出合法JSON"
+2. 设置 `temperature: 0.1`（低温度提高格式稳定性）
+3. 代码中做 JSON 校验 + 自动重试
+4. 详见示例 `examples/api-cookbook/10_structured_json_output.py`
+
+## 11. 各厂商模型参数文档
 
 平台接入方式基于 OpenAI 基本格式，不同厂商的模型参数参考：
 
@@ -316,9 +443,9 @@ curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/comple
 | Claude | [请求体](https://platform.claude.com/docs/en/build-with-claude/working-with-messages) | 同请求文档 |
 | DeepSeek | [请求体](https://api-docs.deepseek.com/zh-cn/api/create-chat-completion) | 同请求文档 |
 
-## 9. 问题排查
+## 12. 问题排查
 
-### 9.1 X-Trace-Id 链路追踪
+### 12.1 X-Trace-Id 链路追踪
 
 每次调用 `chat/completions` 响应头中会返回唯一 `X-Trace-Id`，排查问题时提供此 ID 给平台研发。
 
@@ -344,7 +471,7 @@ for key, value in response.headers.items():
     print(f"{key}: {value}")
 ```
 
-### 9.2 常见问题
+### 12.2 常见问题
 
 | 问题 | 原因 | 解决 |
 |---|---|---|
@@ -354,7 +481,7 @@ for key, value in response.headers.items():
 | 缓存未命中 | `previous_response_id` 错误或 TTL 过期 | 检查缓存 ID 是否正确，是否在 TTL 范围内 |
 | `json_schema` 不支持 | 当前模型不支持结构化输出 | 在 Prompt 中显式要求 JSON 格式，并用 `temperature: 0.2` 降温 |
 
-## 10. TypeScript 模型客户端参考实现
+## 13. TypeScript 模型客户端参考实现
 
 ```typescript
 const HELLOBIKE_CONFIG = {
