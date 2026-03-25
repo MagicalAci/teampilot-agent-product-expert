@@ -12,7 +12,7 @@
 ## 当前版本
 
 - Slug：`product-expert`
-- Version：`0.5.0`
+- Version：`0.5.1`
 - Repo：`MagicalAci/teampilot-agent-product-expert`
 
 ## 架构特性
