@@ -99,10 +99,24 @@ ai-planning-orchestrator/
 │   ├── example-invoke.md             ← 四条指令调用示例
 │   ├── example-script-command.md     ← /AI脚本 使用示例
 │   ├── example-test-command.md       ← /AI测试 使用示例
-│   └── example-validation-command.md ← 内置脚本使用示例
+│   ├── example-validation-command.md ← 内置脚本使用示例
+│   └── api-cookbook/                  ← ★ API 能力积木库（可运行示例代码）
+│       ├── README.md                 ← cookbook 索引
+│       ├── 01_text_generation.py     ← 文本生成
+│       ├── 02_streaming.py           ← 流式输出
+│       ├── 03_deep_thinking.py       ← 深度思考
+│       ├── 04_continuation_prefix.py ← 续写模式
+│       ├── 05_context_caching.py     ← 上下文缓存
+│       ├── 06_multi_turn_context.py  ← 多轮对话
+│       ├── 07_image_understanding.py ← 图片理解
+│       ├── 08_video_understanding.py ← 视频理解
+│       ├── 09_visual_grounding.py    ← 视觉定位 Grounding
+│       ├── 10_structured_json_output.py ← 结构化 JSON 输出
+│       └── 11_multi_agent_pipeline.py   ← 多 Agent 串联编排
 ├── references/
 │   ├── README.md                     ← 参考文档索引
-│   ├── hellobike-platform-api.md     ← 幻视平台 API + 模型选型 + 缓存
+│   ├── hellobike-platform-api.md     ← 幻视平台 API + 模型选型 + 缓存 + 多模态
+│   ├── platform-capabilities.md      ← ★ 平台能力实测矩阵
 │   ├── execution-sop.md              ← 执行 SOP
 │   ├── developer-handoff.md          ← 开发交接说明
 │   ├── review-checklist.md           ← 评审清单
@@ -120,10 +134,12 @@ ai-planning-orchestrator/
 1. `SKILL.md`
 2. `references/execution-sop.md`
 3. `references/hellobike-platform-api.md`
-4. `assets/ai-prd-template.md`
-5. `references/review-checklist.md`
-6. `references/developer-handoff.md`
-7. `references/package-scope.md`
+4. `references/platform-capabilities.md` — ★ 先看平台实际支持什么
+5. `examples/api-cookbook/README.md` — ★ 按需取用能力积木
+6. `assets/ai-prd-template.md`
+7. `references/review-checklist.md`
+8. `references/developer-handoff.md`
+9. `references/package-scope.md`
 
 ## 内置模型选型
 
@@ -132,8 +148,22 @@ ai-planning-orchestrator/
 | 简单文案 / 分类 / 提取 / 高并发 | `Doubao-Seed-2.0-Mini-0215` | 成本最低，响应最快 |
 | 内容创作 / 数据分析 / 结构化输出 | `Doubao-Seed-2.0-Lite-0215` | 均衡型，质量稳定 |
 | 复杂推理 / Agent / 多模态 / 长链路 | `Doubao-Seed-2.0-Pro-0215` | 旗舰全能 |
+| 图片理解 / 视觉定位 / 视频理解 | `Doubao-Seed-2.0-Pro-0215` | 多模态首选 |
 
-详细 API 端点、鉴权、缓存、超时配置见 `references/hellobike-platform-api.md`。
+详细 API 端点、鉴权、缓存、多模态、超时配置见 `references/hellobike-platform-api.md`。
+平台实际支持哪些能力、哪些有限制，见 `references/platform-capabilities.md`。
+
+## API 能力积木库
+
+每个 API 能力都有独立可运行的 Python 示例，位于 `examples/api-cookbook/`。
+
+```bash
+pip install requests
+python examples/api-cookbook/01_text_generation.py
+python examples/api-cookbook/11_multi_agent_pipeline.py
+```
+
+在 AI 策划中按需组合这些积木搭建多 Agent 流程，详见 `examples/api-cookbook/README.md`。
 
 ## 命令矩阵
 

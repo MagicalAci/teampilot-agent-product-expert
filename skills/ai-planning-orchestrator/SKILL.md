@@ -209,8 +209,26 @@ Prompt 本体统一检查：
 | 简单文案 / 分类 / 提取 / 高并发 | `Doubao-Seed-2.0-Mini-0215` | 成本最低，响应最快，效果≈1.6 |
 | 内容创作 / 数据分析 / 结构化输出 | `Doubao-Seed-2.0-Lite-0215` | 均衡型，超越 1.8，成本优化 |
 | 复杂推理 / Agent / 多模态 / 长链路 | `Doubao-Seed-2.0-Pro-0215` | 旗舰全能，复杂任务首选 |
+| 图片理解 / 视觉定位 Grounding | `Doubao-Seed-2.0-Pro-0215` | 多模态能力最强 |
+| 视频理解 | `Doubao-Seed-2.0-Pro-0215` | 仅 Pro 支持 |
 
 默认先用 Mini，效果不够再升级。详细 API 文档见 `references/hellobike-platform-api.md`。
+
+## API Capability Cookbook
+
+每个 API 能力都有独立可运行的示例代码，位于 `examples/api-cookbook/`。
+
+在 AI 策划中，这些示例不是让你照抄，而是按需组合的"能力积木"：
+
+| 积木 | 适用场景 | 示例 |
+|------|---------|------|
+| 文本生成 + 结构化输出 | 简单生成类任务 | `01` + `10` |
+| 深度思考 + 结构化输出 | 需要推理的分析任务 | `03` + `10` |
+| 上下文缓存 | 长 System Prompt 降本 | `05` |
+| 图片/视频理解 + Grounding | 多模态审核/识别 | `07` / `08` + `09` |
+| 多 Agent Pipeline | 完整业务流程 | `11` |
+
+详见 `examples/api-cookbook/README.md`。
 
 ## Resources
 
@@ -219,10 +237,12 @@ Prompt 本体统一检查：
 - 开发 README 模板：`assets/developer-readme-template.md`
 - 脚本包清单模板：`assets/script-bundle-manifest-template.md`
 - **平台 API 文档**：`references/hellobike-platform-api.md`
+- **平台能力实测矩阵**：`references/platform-capabilities.md`
 - 执行 SOP：`references/execution-sop.md`
 - 评审清单：`references/review-checklist.md`
 - 脚本交付范围：`references/package-scope.md`
 - 开发交接说明：`references/developer-handoff.md`
 - 示例指令：`examples/example-invoke.md`
+- **API 能力积木库**：`examples/api-cookbook/README.md`
 - 脚本用法：`examples/example-validation-command.md`
 - Scripts 索引：`scripts/README.md`
