@@ -7,8 +7,8 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.3.0
-  notes: 新增 Demo开发 能力，支持 Web、H5 与 SwiftUI demo 的 brief、设计系统、脚手架、打磨、校验与交接。
+  version: 0.4.0
+  notes: 新增任务领航规则 (task-navigator.mdc)，Agent 主动阅读 brief 并输出分阶段工作规划，而非被动等待用户选择能力。
 dependencies:
   skills:
     - skills/single-product-competitor-analysis/SKILL.md
