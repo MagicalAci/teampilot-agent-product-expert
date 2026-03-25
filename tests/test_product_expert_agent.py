@@ -13,9 +13,8 @@ class ProductExpertAgentRepositoryTest(unittest.TestCase):
         manifest = MANIFEST_PATH.read_text(encoding="utf-8")
 
         expected_snippets = [
-            "version: 0.3.0",
-            "title: 单产品分析",
-            "command: /竞品分析",
+            "title: 调研分析",
+            "command: /深度调研",
             "title: 产品策划",
             "command: /产品策划",
             "title: AI策划",
@@ -34,10 +33,12 @@ class ProductExpertAgentRepositoryTest(unittest.TestCase):
     def test_router_mentions_aliases_and_subflows(self):
         router = ROUTER_PATH.read_text(encoding="utf-8")
         for command in [
-            "/单产品分析",
-            "/竞品分析",
+            "/深度调研",
             "/爬取",
-            "/竞品引导",
+            "/体验引导",
+            "/调研安装",
+            "/调研体检",
+            "/调研授权",
             "/产品策划",
             "/产品策划校验",
             "/AI策划",
@@ -57,11 +58,11 @@ class ProductExpertAgentRepositoryTest(unittest.TestCase):
     def test_readme_lists_direct_usage_commands(self):
         readme = README_PATH.read_text(encoding="utf-8")
         for snippet in [
-            "单产品分析",
+            "调研分析",
             "产品策划",
             "AI策划",
             "Demo开发",
-            "/单产品分析 豆包爱学",
+            "/深度调研 豆包爱学",
             "/产品策划 家长端留存提升方案",
             "/AI策划 PRD 生成 Agent",
             "/Demo开发 AI 陪练产品首页 demo，目标平台：H5",
