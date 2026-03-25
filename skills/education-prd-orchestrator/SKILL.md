@@ -1,13 +1,14 @@
 ---
 name: education-prd-orchestrator
-display_name: "教育产品策划主编排"
-description: "证据驱动的产品策划主 Skill，支持产品定义闸门、章节编排、配图与文档校验的一体化 PRD 交付。"
+display_name: "产品策划主编排"
+description: "覆盖从用户画像到 PRD 交付的完整产品策划能力，支持全流程编排、阶段跳入和已有产物校验。"
 category: product
-version: "1.0.0"
+version: "2.0.0"
 review_criteria:
   - label: "入口指令可用性：/产品策划 与 /产品策划校验 能分别触发编写与校验流程。"
-  - label: "任务卡冻结：在写作前明确交付物、受众、决策问题与范围。"
+  - label: "任务卡冻结：在执行前明确交付物、受众、决策问题与范围。"
   - label: "证据先行：结论形成前完成证据清单与证据包整理。"
+  - label: "上游方法论覆盖：根据任务需要使用用户画像、用户故事、用户旅程、痛点抽象、方案构思、假设验证、功能优先级等方法论。"
   - label: "定义闸门：稳定冻结产品定义、角色关系、非范围与 V1 主链路后再写后续章节。"
   - label: "章节编排一致性：章节输出与最新定义、证据口径保持一致。"
   - label: "图文一致：总览图与功能架构图与章节定义一致，且导出 PNG 后正确引用。"
@@ -21,7 +22,7 @@ review_criteria:
 
 ## Quick Start
 
-Use this skill as the single orchestrator for conclusion-oriented PRD work.
+Use this skill as the single orchestrator for full-cycle product planning, from user research through PRD delivery.
 
 This package is designed to work as a portable personal skill under `~/.cursor/skills/education-prd-orchestrator/`.
 Default outputs should go to a standalone delivery root such as `outputs/<slug>/`.
@@ -36,24 +37,30 @@ Before calling local scripts, bootstrap the managed runtime once:
 
 ### 1. `/产品策划 [主题]`
 
-用于启动或继续一次产品文档工作。
+用于启动或继续一次产品策划工作。
 
 适用场景：
 
-- 从 0 开始写 PRD
+- 从 0 到 1 做完整产品策划（画像 → 故事 → 旅程 → 痛点 → 方案 → 假设 → 优先级 → PRD）
+- 只补某一个阶段（如只做用户画像，或只写 PRD）
 - 迭代已有 PRD
-- 只补某一章
-- 只补总览图
 - 把一次产品工作流沉淀成 SOP 或 skill
 
 默认行为：
 
 1. 冻结任务卡
 2. 建证据包
-3. 过定义闸门
-4. 路由章节 agent
-5. 补图
-6. 同步版本并校验
+3. 用户画像
+4. 用户故事
+5. 用户旅程
+6. 核心痛点抽象
+7. 方案构思
+8. 核心假设
+9. 功能列表与优先级
+10. 过定义闸门
+11. 路由章节 agent（PRD 写作）
+12. 补图
+13. 同步版本并校验
 
 ### 2. `/产品策划校验 [文档或主题]`
 
@@ -65,6 +72,7 @@ Before calling local scripts, bootstrap the managed runtime once:
 - 图和文是否一致
 - 是否缺总领层
 - 是否缺证据支撑
+- 上游阶段产物（画像、故事、优先级等）是否与 PRD 一致
 - 版本与索引是否同步
 
 默认行为：
@@ -74,21 +82,25 @@ Before calling local scripts, bootstrap the managed runtime once:
 3. 输出缺口、风险和修正建议
 4. 如果用户明确要求，也可直接修正文档
 
-Default execution order:
+## 完整产品策划路径
 
-1. Freeze the task card
-2. Gather evidence
-3. Pass the definition gate
-4. Route the relevant chapter agent
-5. Add overview or chapter diagrams
-6. Sync versions and validate
+```
+冻结任务卡 → 建证据包 → 用户画像 → 用户故事 → 用户旅程
+    → 核心痛点抽象 → 方案构思 → 核心假设 → 功能列表与优先级
+    → 定义闸门 → PRD 章节写作 → 配图 → 同步校验
+```
 
-If the user only wants one chapter, one diagram, or the SOP itself, run the smallest useful subset, but do not skip the definition gate unless the upstream definition is already stable in the current document.
+如果用户只要其中某个阶段，运行最小有用子集。但跳入后续阶段时，必须继承上游已有的稳定产物。
 
 ## Default Deliverables
 
 - Portable output root: `outputs/<slug>/`
 - Main document: `outputs/<slug>/prd.md`
+- User persona: `outputs/<slug>/user-persona.md`
+- User stories: `outputs/<slug>/user-stories.md`
+- User journey: `outputs/<slug>/user-journey.md`
+- Hypothesis log: `outputs/<slug>/hypothesis.md`
+- Feature priority: `outputs/<slug>/feature-priority.md`
 - Diagram assets: `outputs/<slug>/images/`
 - HTML drafts: `outputs/<slug>/html/`
 - Chart assets: `outputs/<slug>/charts/`
@@ -106,40 +118,114 @@ For folder conventions, read [references/folder-structure.md](references/folder-
 
 ## Workflow
 
-### 1. Freeze the task card
+### Phase 1. Freeze the task card
 
 - Confirm the target deliverable, audience, decision question, and current scope.
+- Determine the starting point: full-cycle from scratch, jump-in at a specific phase, or iterate existing documents.
 - Reuse the stable document if the user is clearly iterating an existing file.
 - If there are multiple plausible goals, stop and ask the user to choose.
 
-### 2. Gather evidence
+### Phase 2. Gather evidence
 
 - Read the `Evidence Agent` section in [references/agent-map.md](references/agent-map.md).
 - Build an evidence inventory before drafting conclusions.
 - If CSV, XLSX, screenshots, transcripts, or current PRD files exist, use scripts for the mechanical pass and keep human judgment for interpretation.
 
-### 3. Pass the definition gate
+### Phase 3. User Persona（用户画像）
+
+- Read the methodology: [references/methodology/user-persona.md](references/methodology/user-persona.md)
+- Read the `Persona Agent` section in [references/agent-map.md](references/agent-map.md).
+- Based on evidence, build 2-4 user personas.
+- Output to `outputs/<slug>/user-persona.md` using template [assets/user-persona-template.md](assets/user-persona-template.md).
+- Mark primary persona. Tag data confidence for each persona.
+- User checkpoint: if evidence is insufficient to distinguish personas, stop and ask.
+
+### Phase 4. User Story（用户故事）
+
+- Read the methodology: [references/methodology/user-story.md](references/methodology/user-story.md)
+- Read the `Story Agent` section in [references/agent-map.md](references/agent-map.md).
+- For each persona, convert core goals and pain points into user stories with acceptance criteria.
+- Group stories into Epics.
+- Output to `outputs/<slug>/user-stories.md` using template [assets/user-story-template.md](assets/user-story-template.md).
+
+### Phase 5. User Journey（用户旅程）
+
+- Read the methodology: [references/methodology/user-journey.md](references/methodology/user-journey.md)
+- Read the `Journey Agent` section in [references/agent-map.md](references/agent-map.md).
+- Map the primary persona's end-to-end experience, marking emotions, touchpoints, pain points and opportunities.
+- Identify key moments: Aha Moment, decision points, friction points.
+- Output to `outputs/<slug>/user-journey.md` using template [assets/user-journey-template.md](assets/user-journey-template.md).
+- If multi-role, map each role's journey and mark interaction nodes.
+
+### Phase 6. Pain Point Abstraction（核心痛点抽象）
+
+- Read the methodology: [references/methodology/pain-point-abstraction.md](references/methodology/pain-point-abstraction.md)
+- Read the `Pain Point Agent` section in [references/agent-map.md](references/agent-map.md).
+- Aggregate all pain points from personas, journeys, evidence.
+- De-duplicate, merge, and abstract upward to 3-5 core problem domains.
+- Rank by impact breadth, depth, solvability, and strategic alignment.
+- User checkpoint: confirm the focused problem domains with user before proceeding.
+
+### Phase 7. Solution Ideation（方案构思）
+
+- Read the methodology: [references/methodology/solution-ideation.md](references/methodology/solution-ideation.md)
+- Read the `Ideation Agent` section in [references/agent-map.md](references/agent-map.md).
+- Generate candidate solutions from product, user, and technical perspectives.
+- Filter, compare, and select the winning direction.
+- User checkpoint: the solution direction must be confirmed by user.
+
+### Phase 8. Core Hypothesis（核心假设）
+
+- Read the methodology: [references/methodology/hypothesis-validation.md](references/methodology/hypothesis-validation.md)
+- Read the `Hypothesis Agent` section in [references/agent-map.md](references/agent-map.md).
+- Extract value, usability, feasibility, and viability assumptions from the chosen solution.
+- Rank by risk × impact. Design validation methods for high-priority hypotheses.
+- Output to `outputs/<slug>/hypothesis.md` using template [assets/hypothesis-template.md](assets/hypothesis-template.md).
+- User checkpoint: confirm which hypotheses are verified, which need validation, which are accepted risks.
+
+### Phase 9. Feature List & Prioritization（功能列表与优先级）
+
+- Read the methodology: [references/methodology/feature-prioritization.md](references/methodology/feature-prioritization.md)
+- Read the `Priority Agent` section in [references/agent-map.md](references/agent-map.md).
+- Decompose solution into concrete features. Link each to user stories and personas.
+- Apply MoSCoW for rough classification, then RICE or ICE for fine ranking.
+- Draw the V1 line. Explicitly list Won't-have items.
+- Output to `outputs/<slug>/feature-priority.md` using template [assets/feature-priority-template.md](assets/feature-priority-template.md).
+- User checkpoint: V1 scope must be confirmed by user.
+
+### Phase 10. Pass the definition gate
 
 - Read the `Definition Agent` section in [references/agent-map.md](references/agent-map.md).
-- Always freeze:
-  - what the product is
-  - dual-end or role relationships
-  - what the product is not
-  - what the V1 main chain is
-- Do not draft late chapters on unstable definitions.
+- Synthesize upstream outputs (persona, story, journey, pain points, solution, hypothesis, features) into:
+  - One-line product definition
+  - Role relationships (if multi-role)
+  - What the product is NOT
+  - V1 main chain
+- Do not draft PRD chapters on unstable definitions.
 
-### 4. Route chapter agents
+### Phase 11. Route chapter agents（PRD 章节写作）
 
 - Read the relevant section in [references/agent-map.md](references/agent-map.md):
-  - Chapter 1 Agent
-  - Chapter 2 Agent
-  - Chapter 3 Agent
-  - Chapter 4 Agent
-  - Chapter 5 Agent
+  - Chapter 1 Agent: 背景与问题
+  - Chapter 2 Agent: 目标用户与场景
+  - Chapter 3 Agent: 产品定义与方案
+  - Chapter 4 Agent: 范围与边界
+  - Chapter 5 Agent: 功能定义
+  - Chapter 6 Agent: 流程与交互
+  - Chapter 7 Agent: 依赖与风险
 
-Default chapter order is `1 -> 5`. If the user only requests one chapter, still inherit the latest stable upstream definition and evidence.
+Default chapter order is `1 -> 7`. If the user only requests one chapter, still inherit the latest stable upstream definition and evidence.
 
-### 5. Add diagrams
+PRD chapters now pull directly from upstream deliverables:
+- Chapter 1 pulls from evidence pack
+- Chapter 2 pulls from user personas and user journeys
+- Chapter 3 pulls from solution ideation and core hypothesis
+- Chapter 4 pulls from feature priority (V1 line + Won't-have)
+- Chapter 5 pulls from feature priority details and user stories
+- Chapter 6 pulls from user journeys and feature interactions
+- Chapter 7 pulls from hypothesis validation and evidence gaps
+
+### Phase 12. Add diagrams
 
 - Read the `Diagram Agent` section in [references/agent-map.md](references/agent-map.md).
 - Overview diagrams come after the chapter conclusion is stable.
@@ -148,7 +234,7 @@ Default chapter order is `1 -> 5`. If the user only requests one chapter, still 
   - one for "what functions exist and how they relate"
 - Export SVG to PNG before inserting into the document.
 
-### 6. Stop at user checkpoints
+### Phase 13. Stop at user checkpoints
 
 - Read [references/user-checkpoints.md](references/user-checkpoints.md).
 - Never silently invent:
@@ -158,10 +244,11 @@ Default chapter order is `1 -> 5`. If the user only requests one chapter, still 
   - missing strategic decisions
 - If evidence is missing or definitions diverge, stop and request exactly what the user must provide next.
 
-### 7. Sync and validate
+### Phase 14. Sync and validate
 
 - Read the `Sync Agent` section in [references/agent-map.md](references/agent-map.md).
 - Update the document version, review handoff notes, and image references inside the portable output root.
+- Ensure upstream deliverables (persona, stories, journey, hypothesis, priority) are consistent with final PRD.
 - If a repository-level product index already exists, sync it as an optional mirror instead of treating it as a hard requirement.
 - Run the validation scripts before claiming completion.
 
@@ -176,6 +263,20 @@ Non-negotiable rules:
 - Do not output internal reasoning or tool logs into the final document.
 - Use one stable term for one concept.
 - Keep diagrams and text on the same product definition.
+
+## Product Methodology Knowledge Base
+
+The following reference files serve as methodology knowledge base. They are NOT mandatory invocations — agents should consult them when the current phase needs methodological guidance:
+
+- User Persona: [references/methodology/user-persona.md](references/methodology/user-persona.md)
+- User Story: [references/methodology/user-story.md](references/methodology/user-story.md)
+- User Journey: [references/methodology/user-journey.md](references/methodology/user-journey.md)
+- Pain Point Abstraction: [references/methodology/pain-point-abstraction.md](references/methodology/pain-point-abstraction.md)
+- Solution Ideation: [references/methodology/solution-ideation.md](references/methodology/solution-ideation.md)
+- Core Hypothesis: [references/methodology/hypothesis-validation.md](references/methodology/hypothesis-validation.md)
+- Feature Prioritization: [references/methodology/feature-prioritization.md](references/methodology/feature-prioritization.md)
+
+Read only when the current phase needs it. Do not preload all methodology files at once.
 
 ## Scripts
 
@@ -204,6 +305,7 @@ Use scripts for mechanical work only. Use agent references for product judgment.
 
 ## Success Criteria
 
+- Upstream deliverables (persona, stories, journey, pain points, hypothesis, feature priority) are consistent and traceable.
 - The product definition is consistent across all chapters and diagrams.
 - Every chapter is evidence-backed and conclusion-oriented.
 - Required user checkpoints were not skipped.
@@ -218,16 +320,18 @@ Use scripts for mechanical work only. Use agent references for product judgment.
 - Prompt rules: [references/prompt-rules.md](references/prompt-rules.md)
 - Folder structure: [references/folder-structure.md](references/folder-structure.md)
 - User checkpoints: [references/user-checkpoints.md](references/user-checkpoints.md)
-- Example invocations: [examples/example-invoke.md](examples/example-invoke.md)
-- Example validation command: [examples/example-validation-command.md](examples/example-validation-command.md)
-- Example checkpoint asks: [examples/example-user-checkpoint.md](examples/example-user-checkpoint.md)
-- Example chapter outputs: [examples/example-chapter-output.md](examples/example-chapter-output.md)
-- Example diagram brief: [examples/example-diagram-brief.md](examples/example-diagram-brief.md)
-- Portable benchmark: [examples/portable-benchmark/README.md](examples/portable-benchmark/README.md)
-- Benchmark case: [examples/hanxue-liaoliao-benchmark/README.md](examples/hanxue-liaoliao-benchmark/README.md)
+- Evidence rules: [references/evidence-rules.md](references/evidence-rules.md)
+- HTML design rules: [references/html-design-rules.md](references/html-design-rules.md)
+- Visualization protocol: [references/visualization-protocol.md](references/visualization-protocol.md)
 - Package scope: [references/package-scope.md](references/package-scope.md)
 - Developer handoff: [references/developer-handoff.md](references/developer-handoff.md)
-- PRD template asset: [assets/prd-template.md](assets/prd-template.md)
+- Review criteria: [references/review-criteria.md](references/review-criteria.md)
+- PRD template: [assets/prd-template.md](assets/prd-template.md)
+- User persona template: [assets/user-persona-template.md](assets/user-persona-template.md)
+- User story template: [assets/user-story-template.md](assets/user-story-template.md)
+- User journey template: [assets/user-journey-template.md](assets/user-journey-template.md)
+- Hypothesis template: [assets/hypothesis-template.md](assets/hypothesis-template.md)
+- Feature priority template: [assets/feature-priority-template.md](assets/feature-priority-template.md)
 - INDEX log template: [assets/index-log-template.md](assets/index-log-template.md)
 - User checkpoint template: [assets/user-checkpoint-template.md](assets/user-checkpoint-template.md)
 - Diagram brief template: [assets/diagram-brief-template.md](assets/diagram-brief-template.md)
@@ -235,8 +339,12 @@ Use scripts for mechanical work only. Use agent references for product judgment.
 - Chart template: [assets/chart-template.html](assets/chart-template.html)
 - Search plan template: [assets/search-plan-template.md](assets/search-plan-template.md)
 - Evidence log template: [assets/evidence-log-template.csv](assets/evidence-log-template.csv)
-- Evidence rules: [references/evidence-rules.md](references/evidence-rules.md)
-- HTML design rules: [references/html-design-rules.md](references/html-design-rules.md)
-- Visualization protocol: [references/visualization-protocol.md](references/visualization-protocol.md)
+- Example invocations: [examples/example-invoke.md](examples/example-invoke.md)
+- Example validation command: [examples/example-validation-command.md](examples/example-validation-command.md)
+- Example checkpoint asks: [examples/example-user-checkpoint.md](examples/example-user-checkpoint.md)
+- Example chapter outputs: [examples/example-chapter-output.md](examples/example-chapter-output.md)
+- Example diagram brief: [examples/example-diagram-brief.md](examples/example-diagram-brief.md)
+- Portable benchmark: [examples/portable-benchmark/README.md](examples/portable-benchmark/README.md)
+- Benchmark case: [examples/hanxue-liaoliao-benchmark/README.md](examples/hanxue-liaoliao-benchmark/README.md)
 
 Read only the files needed for the current phase. Keep the orchestration path small and deterministic.

@@ -4,8 +4,10 @@
 
 ## 当前资产
 
+### PRD 与交付
+
 - `prd-template.md`
-  - 新建 PRD 时的最小骨架
+  - 通用 PRD 模板（7 章结构）
 - `index-log-template.md`
   - 产品索引里的工作日志和版本记录模板
 - `user-checkpoint-template.md`
@@ -20,6 +22,19 @@
   - 搜索问题、关键词和批次计划模板
 - `evidence-log-template.csv`
   - 证据登记表模板，用于把来源和判断显式绑定
+
+### 产品策划上游阶段
+
+- `user-persona-template.md`
+  - 用户画像卡片模板
+- `user-story-template.md`
+  - 用户故事列表模板（含 Epic、验收标准、故事地图）
+- `user-journey-template.md`
+  - 用户旅程图模板（含关键时刻、情绪曲线）
+- `hypothesis-template.md`
+  - 核心假设清单模板（含风险-影响矩阵）
+- `feature-priority-template.md`
+  - 功能优先级模板（含 RICE 评分、V1 线、依赖关系）
 
 ## 使用原则
 
