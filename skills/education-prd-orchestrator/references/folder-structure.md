@@ -13,6 +13,12 @@ education-prd-orchestrator/
 │   └── openai.yaml
 ├── assets/
 │   ├── README.md
+│   ├── prd-template.md
+│   ├── user-persona-template.md
+│   ├── user-story-template.md
+│   ├── user-journey-template.md
+│   ├── hypothesis-template.md
+│   ├── feature-priority-template.md
 │   └── ...
 ├── examples/
 │   ├── README.md
@@ -22,18 +28,19 @@ education-prd-orchestrator/
 │       └── ...
 ├── references/
 │   ├── README.md
+│   ├── methodology/
+│   │   ├── user-persona.md
+│   │   ├── user-story.md
+│   │   ├── user-journey.md
+│   │   ├── pain-point-abstraction.md
+│   │   ├── solution-ideation.md
+│   │   ├── hypothesis-validation.md
+│   │   └── feature-prioritization.md
 │   └── ...
 ├── scripts/
-    ├── README.md
-    ├── run_pipeline.py
-    ├── init_product_planning_delivery.py
-    ├── bootstrap_product_planning_tools.py
-    ├── export_svg_to_png.py
-    ├── validate_prd_assets.py
-    └── eppo/
-        ├── __init__.py
-        ├── cli.py
-        └── runtime.py
+│   ├── README.md
+│   ├── run_pipeline.py
+│   └── ...
 └── tests/
     └── ...
 ```
@@ -44,7 +51,12 @@ education-prd-orchestrator/
 
 放模板资产和可复用骨架：
 
-- PRD 模板
+- PRD 模板（通用 7 章结构）
+- 用户画像模板
+- 用户故事模板
+- 用户旅程模板
+- 核心假设模板
+- 功能优先级模板
 - INDEX 日志模板
 - 用户检查点模板
 - 配图 brief 模板
@@ -58,6 +70,8 @@ education-prd-orchestrator/
 ### `references/`
 
 放流程规则、agent 说明、文件结构、prompt 规范。
+
+`references/methodology/` 子目录放产品方法论知识库。
 
 也承载对最终提交文档的审核标准。
 
@@ -82,6 +96,11 @@ education-prd-orchestrator/
 ```text
 outputs/<slug>/
 ├── prd.md
+├── user-persona.md
+├── user-stories.md
+├── user-journey.md
+├── hypothesis.md
+├── feature-priority.md
 ├── images/
 │   ├── *.svg
 │   └── *.png
@@ -138,5 +157,6 @@ outputs/<slug>/review/
 - CSV / XLSX
 - 现有 PRD 或既有方案文档
 - 知识库文档
+- 用户访谈记录
 
 这些属于任务输入，不属于 skill 资产。

@@ -2,7 +2,7 @@
 
 这里放的是 `education-prd-orchestrator` 的规则层材料。
 
-它们不是案例，也不是脚本，而是“这个 skill 怎么编排、怎么判断、怎么停下来问用户、怎么审”的基线文档。
+它们不是案例，也不是脚本，而是"这个 skill 怎么编排、怎么判断、怎么停下来问用户、怎么审"的基线文档。
 
 ## 推荐阅读顺序
 
@@ -18,16 +18,28 @@
 10. `package-scope.md`
 11. `developer-handoff.md`
 
+## 方法论知识库
+
+`methodology/` 目录下放产品方法论参考文件，按需阅读：
+
+1. `methodology/user-persona.md` — 用户画像方法论
+2. `methodology/user-story.md` — 用户故事方法论
+3. `methodology/user-journey.md` — 用户旅程图方法论
+4. `methodology/pain-point-abstraction.md` — 核心痛点抽象方法论
+5. `methodology/solution-ideation.md` — 方案构思方法论
+6. `methodology/hypothesis-validation.md` — 核心假设方法论
+7. `methodology/feature-prioritization.md` — 功能列表与优先级方法论
+
 ## 文件作用
 
 - `sop.md`
-  - 产品文档工作的标准执行顺序
+  - 产品策划工作的标准执行顺序（完整 14 步链路）
 - `orchestration-rules.md`
-  - 主编排器的调度边界
+  - 主编排器的调度边界和阶段依赖
 - `agent-map.md`
-  - 内部 evidence / definition / chapter / diagram / sync agent 的职责地图
+  - 内部全部 agent 的职责地图（evidence / persona / story / journey / pain-point / ideation / hypothesis / priority / definition / chapter / diagram / sync）
 - `user-checkpoints.md`
-  - 哪些情况必须停下来让用户参与
+  - 哪些情况必须停下来让用户参与（8 类检查点）
 - `prompt-rules.md`
   - 所有内部 agent 共享的写作和表达约束
 - `folder-structure.md`
