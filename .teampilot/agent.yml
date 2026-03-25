@@ -7,8 +7,8 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.4.0
-  notes: 调研分析能力全面升级为 Research Toolkit，合并 SPCA 质量体系 + LRS 工具链，支持多任务类型（单产品/方向/全景/用户研究），新增 DeerFlow 深度研究、MediaCrawler 社媒采集、QR 授权、跨平台 bootstrap；同时新增任务领航规则 (task-navigator.mdc)。
+  version: 0.5.0
+  notes: 调研分析能力全面升级为 Research Toolkit，合并 SPCA 质量体系 + LRS 工具链，支持多任务类型（单产品/方向/全景/用户研究），新增 DeerFlow 深度研究、MediaCrawler 社媒采集、QR 授权、跨平台 bootstrap；新增任务领航规则 (task-navigator.mdc) 实现 Agent 主动规划。
 dependencies:
   skills:
     - skills/research-toolkit/SKILL.md

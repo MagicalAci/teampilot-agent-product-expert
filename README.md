@@ -12,8 +12,13 @@
 ## 当前版本
 
 - Slug：`product-expert`
-- Version：`0.3.0`
+- Version：`0.5.0`
 - Repo：`MagicalAci/teampilot-agent-product-expert`
+
+## 架构特性
+
+- **任务领航规则**（`task-navigator.mdc`，`alwaysApply: true`）：Agent 在任务启动后主动阅读 brief，分析目标，匹配能力组合，输出分阶段工作规划，征求确认后按计划执行。
+- **命令路由规则**（`product-expert-commands.mdc`）：用户发出 `/指令` 时精确路由到对应 Skill。
 
 ## 四个能力点
 
@@ -51,7 +56,7 @@
 1. 在 Cursor 或 TeamPilot 中安装这个 Agent。
 2. 使用 `/查看能力` 查看四个能力点及其子命令。
 3. 按任务类型直接进入对应命令：
-   - 单产品分析：`/单产品分析 豆包爱学`
+   - 调研分析：`/深度调研 豆包爱学`
    - 产品策划：`/产品策划 家长端留存提升方案`
    - AI策划：`/AI策划 PRD 生成 Agent`
    - Demo开发：`/Demo开发 AI 陪练产品首页 demo，目标平台：H5`
