@@ -275,6 +275,7 @@ The following reference files serve as methodology knowledge base. They are NOT 
 - Solution Ideation: [references/methodology/solution-ideation.md](references/methodology/solution-ideation.md)
 - Core Hypothesis: [references/methodology/hypothesis-validation.md](references/methodology/hypothesis-validation.md)
 - Feature Prioritization: [references/methodology/feature-prioritization.md](references/methodology/feature-prioritization.md)
+- Feature Module Design: [references/methodology/feature-module-design.md](references/methodology/feature-module-design.md)
 
 Read only when the current phase needs it. Do not preload all methodology files at once.
 
