@@ -136,8 +136,13 @@ cursor:
     - key: sql-query
       title: SQL查询
       command: /SQL
-      description: 自然语言查询星火工坊数据库，输出分析报告（结论+数据表+图表）
+      description: 快速版 — 自然语言查询数据库，聊天内直接输出结论+表格+图表，不写文件
       example: /SQL 帮我看下星卡最近的用户和订单情况
+    - key: sql-deep
+      title: SQL深度分析
+      command: /SQL深度
+      description: 深度版 — 自然语言查询数据库，生成 HTML 看板 + CSV 数据表 + 完整洞察分析
+      example: /SQL深度 帮我出一份绘本产品的完整运营分析报告
     - key: capabilities
       title: 查看能力
       command: /查看能力

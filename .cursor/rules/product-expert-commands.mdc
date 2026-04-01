@@ -28,11 +28,12 @@ alwaysApply: false
 
 ## AIBI SQL 数据查询命令
 
-- `/SQL [自然语言提问]`：进入 `skills/aibi-query/SKILL.md`，自动识别目标数据库、生成 SQL、查询 DBOPS、输出分析报告
+- `/SQL [自然语言提问]`：进入 `skills/aibi-query/SKILL.md`，**快速版** — 聊天内直接输出结论+表格+图表，不写任何文件
+- `/SQL深度 [自然语言提问]`：进入 `skills/aibi-query/SKILL.md`，**深度版** — 生成 HTML 看板 + CSV 数据表 + 完整洞察
 
 ### 自然语言触发
 
-以下表达也会路由到 `aibi-query`：
+以下表达也会路由到 `aibi-query`（默认快速版，含"报告/看板/HTML/导出"等词自动切深度版）：
 - "帮我查下数据" / "跑个数" / "看下指标"
 - "星卡数据" / "绘本用户情况" / "泡泡玩具订阅"
 - "运营分析" / "数据看板" / "出个数据报告"
