@@ -70,11 +70,109 @@
 - 首次使用：需申请 DBOPS 只读权限 + 提供 SSO Token，Skill 会自动引导
 - 附带资料：63 张表完整结构、11 个查询案例、DBOPS API 规范、HTML 看板模板
 
-## 快速开始
+## 一键安装（复制下方整段内容粘贴到 Cursor 聊天框即可）
 
-1. 在 Cursor 或 TeamPilot 中安装这个 Agent。
-2. 使用 `/查看能力` 查看五个能力点及其子命令。
-3. 按任务类型直接进入对应命令：
+> 以下指令适用于所有团队成员。要求：已有 GitHub 仓库访问权限（公司内部已授权）。
+
+<details>
+<summary><b>点击展开 → 复制整段发给 Cursor</b></summary>
+
+```
+请帮我安装并启用「产品专家 Agent」，直接执行，不要只解释。
+
+## 第一步：拉取仓库
+
+运行以下命令把 Agent 仓库克隆到本地：
+
+```bash
+AGENT_DIR="$HOME/TeamPilot/agents/product-expert"
+mkdir -p "$AGENT_DIR"
+
+# 如果已存在则更新，否则克隆
+if [ -d "$AGENT_DIR/.git" ]; then
+  cd "$AGENT_DIR" && git pull origin main
+else
+  git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGENT_DIR"
+fi
+
+echo "✅ 仓库就绪: $AGENT_DIR"
+```
+
+如果 git clone 提示权限不足，请先运行 `gh auth login` 登录 GitHub，或联系管理员添加你的 GitHub 账号到仓库协作者。不要卡在这一步，告诉我具体报错信息我来帮你解决。
+
+## 第二步：部署 Cursor Rules 和 Skills
+
+运行以下命令，把 Agent 的规则和技能链接到当前 Cursor 工作区：
+
+```bash
+AGENT_DIR="$HOME/TeamPilot/agents/product-expert"
+WORKSPACE=$(pwd)
+
+# 部署 Cursor Rules
+mkdir -p "$WORKSPACE/.cursor/rules"
+for rule in "$AGENT_DIR/.cursor/rules/"*.mdc; do
+  cp "$rule" "$WORKSPACE/.cursor/rules/$(basename $rule)"
+done
+
+# 部署 Skills
+mkdir -p "$WORKSPACE/skills"
+for skill_dir in "$AGENT_DIR/skills/"*/; do
+  skill_name=$(basename "$skill_dir")
+  if [ ! -d "$WORKSPACE/skills/$skill_name" ]; then
+    ln -s "$skill_dir" "$WORKSPACE/skills/$skill_name"
+  fi
+done
+
+# 部署 Policies
+mkdir -p "$WORKSPACE/policies"
+cp "$AGENT_DIR/policies/"*.md "$WORKSPACE/policies/" 2>/dev/null
+
+echo "✅ Rules、Skills、Policies 已部署到当前工作区"
+ls "$WORKSPACE/.cursor/rules/"
+ls "$WORKSPACE/skills/"
+```
+
+## 第三步：读取以下文件了解能力
+
+- `~/TeamPilot/agents/product-expert/.teampilot/agent.yml`
+- `~/TeamPilot/agents/product-expert/.cursor/rules/product-expert-commands.mdc`
+
+## 当前版本信息
+
+- 名称：产品专家 Agent（`product-expert`）
+- 版本：`0.9.0`
+- 仓库：`MagicalAci/teampilot-agent-product-expert`（私仓，团队成员已授权访问）
+- 简介：内置调研分析、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。
+
+## 五项核心能力入口
+
+| 命令 | 能力 | 说明 |
+|------|------|------|
+| `/深度调研 [主题]` | 调研分析 | 单产品/方向/全景/用户研究，自带社媒采集、质量门禁、三轮事实核查 |
+| `/产品策划 [主题]` | 产品策划 | 证据驱动的 PRD 交付，覆盖任务卡、章节编排、配图校验 |
+| `/AI策划 [主题]` | AI策划 | AI PRD、脚本开发、测试报告、最小交接包 |
+| `/Demo开发 [主题]` | Demo开发 | Web/H5/SwiftUI demo，brief→设计系统→脚手架→打磨→校验 |
+| `/SQL [提问]` | SQL快速查询 | 自然语言查询星火工坊数据库，聊天内直接输出结论+表格+图表 |
+| `/SQL深度 [提问]` | SQL深度分析 | 生成 HTML 看板 + CSV 数据表 + 完整洞察分析 |
+| `/查看能力` | 能力总览 | 列出所有能力和子命令 |
+
+## 第四步：用中文回复我
+
+1. 是否安装成功（git clone + rules/skills 部署两步的结果）
+2. 本地安装到了哪个目录
+3. 这个 Agent 当前版本能做什么（读 agent.yml 后总结）
+4. 列出所有核心能力入口命令
+5. 推荐我先从哪个命令开始，以及原因
+```
+
+</details>
+
+## 安装后使用
+
+安装完成后，在任意 Cursor 工作区中：
+
+1. 使用 `/查看能力` 查看五个能力点及其子命令
+2. 按任务类型直接进入对应命令：
    - 调研分析：`/深度调研 豆包爱学`
    - 产品策划：`/产品策划 家长端留存提升方案`
    - AI策划：`/AI策划 PRD 生成 Agent`
