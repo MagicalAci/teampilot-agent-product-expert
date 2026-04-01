@@ -4,7 +4,7 @@
 
 - Agent manifest：`.teampilot/agent.yml`
 - Cursor 命令规则：`.cursor/rules/product-expert-commands.mdc`
-- 三个完整能力包：`skills/`
+- 五个完整能力包：`skills/`
 - 提交与评审约束：`policies/`
 - MCP 依赖说明：`mcps/README.md`
 - 仓库级回归测试：`tests/`
@@ -20,7 +20,7 @@
 - **任务领航规则**（`task-navigator.mdc`，`alwaysApply: true`）：Agent 在任务启动后主动阅读 brief，分析目标，匹配能力组合，输出分阶段工作规划，征求确认后按计划执行。
 - **命令路由规则**（`product-expert-commands.mdc`）：用户发出 `/指令` 时精确路由到对应 Skill。
 
-## 四个能力点
+## 五个能力点
 
 ### 1. 调研分析（Research Toolkit）
 
@@ -51,15 +51,36 @@
 - 子命令：`/Demo设计系统`、`/Demo脚手架`、`/Demo打磨`、`/Demo校验`
 - 适用场景：Web、H5、SwiftUI demo，产品演示页，评审演示骨架，产品 walkthrough 与开发交接
 
+### 5. SQL 数据查询分析（AIBI）
+
+- 主 skill：`skills/aibi-query/SKILL.md`
+- 命令：
+  - `/SQL [提问]` — **快速版**，聊天内直接输出结论 + 数据表 + 图表，不写文件
+  - `/SQL深度 [提问]` — **深度版**，生成 HTML 看板 + CSV 数据表 + 完整洞察分析
+- 适用场景：查看业务运营数据、分析核心指标、生成数据看板、跑 SQL 查询
+- 数据库覆盖：
+
+| 数据库 | 业务 | 线上数据 |
+|--------|------|----------|
+| sparklab_starcard | 星卡（追星小卡鉴定 + 站姐活动电商） | ✅ |
+| sparklab_picbook | 绘本（AI 绘本阅读硬件 + 语音合成） | ✅ |
+| sg_sparklab_poptoy | 泡泡玩具（AI 玩偶社区 + 聊天 + IAP） | ✅ |
+| 其他 5 个库 | 测肤/社交/作业等 | ❌ 暂未部署 |
+
+- 首次使用：需申请 DBOPS 只读权限 + 提供 SSO Token，Skill 会自动引导
+- 附带资料：63 张表完整结构、11 个查询案例、DBOPS API 规范、HTML 看板模板
+
 ## 快速开始
 
 1. 在 Cursor 或 TeamPilot 中安装这个 Agent。
-2. 使用 `/查看能力` 查看四个能力点及其子命令。
+2. 使用 `/查看能力` 查看五个能力点及其子命令。
 3. 按任务类型直接进入对应命令：
    - 调研分析：`/深度调研 豆包爱学`
    - 产品策划：`/产品策划 家长端留存提升方案`
    - AI策划：`/AI策划 PRD 生成 Agent`
    - Demo开发：`/Demo开发 AI 陪练产品首页 demo，目标平台：H5`
+   - SQL 快速查询：`/SQL 帮我看下星卡最近的用户和订单情况`
+   - SQL 深度分析：`/SQL深度 出一份绘本产品的完整运营分析报告`
 
 ## 目录说明
 
@@ -67,6 +88,7 @@
 - `skills/education-prd-orchestrator/`：产品策划完整 skill 包，含 assets、examples、references、scripts、tests、fixtures
 - `skills/ai-planning-orchestrator/`：AI策划完整 skill 包，含 assets、examples、references、scripts、tests
 - `skills/product-demo-orchestrator/`：Demo开发完整 skill 包，含 assets、references、scripts、tests
+- `skills/aibi-query/`：SQL 数据查询分析 skill 包，含 references（数据库全景/查询案例/查询规范）、templates（HTML 看板）、scripts（Token 管理）
 - `policies/submission-review-contract.md`：统一提交与评审契约
 - `mcps/README.md`：单产品分析依赖的 MCP 与降级说明
 - `tests/test_product_expert_agent.py`：仓库级能力映射与入口回归
