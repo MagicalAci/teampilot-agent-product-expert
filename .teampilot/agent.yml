@@ -7,7 +7,7 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.8.0
+  version: 0.9.0
   notes: 产品策划能力升级——新增功能需求详情写作规范。PRD 第五章强制使用「模块|需求描述|原型图」表格 + 嵌套编号结构，每个功能点必须覆盖入口、页面组成、交互分支、条件激活、异常处理和空状态；禁止写入色值/字号/圆角等设计规格。规范同步写入 prd-template、agent-map、prompt-rules 和 review-criteria 四个文件。
 dependencies:
   skills:
