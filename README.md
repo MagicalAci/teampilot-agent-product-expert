@@ -70,90 +70,61 @@
 - 首次使用：需申请 DBOPS 只读权限 + 提供 SSO Token，Skill 会自动引导
 - 附带资料：63 张表完整结构、11 个查询案例、DBOPS API 规范、HTML 看板模板
 
-## 一键安装（复制下方整段内容粘贴到 Cursor 聊天框即可）
+## 一键安装（复制代码块内容粘贴到 Cursor 聊天框即可）
 
-> 以下指令适用于所有团队成员。要求：已有 GitHub 仓库访问权限（公司内部已授权）。
+> 无需 GitHub 账号或仓库权限，任何团队成员均可直接安装。
 
-<details>
-<summary><b>点击展开 → 复制整段发给 Cursor</b></summary>
+````text
+请在 Cursor 中帮我安装并启用 产品专家 Agent。
+请直接执行安装，不要只解释命令。
 
-> **使用方法**：复制下面虚线之间的全部内容，粘贴到 Cursor 聊天框发送即可。
+## 第一步：执行安装
 
----
+直接运行下面这条命令：
 
-请帮我安装并启用「产品专家 Agent」，直接执行，不要只解释。
+curl -fsSL https://teampilot.magicalaci.cn/api/agents/product-expert/install?format=script&version=0.9.0 | bash
 
-**第一步：拉取仓库**
+如果上面的命令执行失败或超时，改用下面的备用方式：
 
-运行以下命令把 Agent 仓库克隆到本地：
+AGENT_DIR="$HOME/TeamPilot/agents/product-expert/0.9.0"
+mkdir -p "$AGENT_DIR"
+git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGENT_DIR"
 
-    AGENT_DIR="$HOME/TeamPilot/agents/product-expert"
-    mkdir -p "$AGENT_DIR"
-    if [ -d "$AGENT_DIR/.git" ]; then
-      cd "$AGENT_DIR" && git pull origin main
-    else
-      git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGENT_DIR"
-    fi
-    echo "✅ 仓库就绪: $AGENT_DIR"
+无论哪种方式，安装失败都不要卡住，直接把报错信息告诉我。
 
-如果 git clone 提示权限不足，请先运行 `gh auth login` 登录 GitHub，或联系管理员添加你的 GitHub 账号到仓库协作者。不要卡在这一步，告诉我具体报错信息我来帮你解决。
+## 第二步：安装完成后读取这些文件
 
-**第二步：部署 Cursor Rules 和 Skills**
+- ~/TeamPilot/agents/product-expert/0.9.0/QUICKSTART.md
+- ~/TeamPilot/agents/product-expert/0.9.0/.teampilot/agent.yml
+- 不要依赖仓库 README.md 作为当前版本能力和命令的最终事实源；README 只能补充背景。
 
-运行以下命令，把 Agent 的规则和技能链接到当前 Cursor 工作区：
+如果 QUICKSTART.md 不存在，则读取以下文件代替：
+- ~/TeamPilot/agents/product-expert/0.9.0/.cursor/rules/product-expert-commands.mdc
 
-    AGENT_DIR="$HOME/TeamPilot/agents/product-expert"
-    WORKSPACE=$(pwd)
-    mkdir -p "$WORKSPACE/.cursor/rules"
-    for rule in "$AGENT_DIR/.cursor/rules/"*.mdc; do
-      cp "$rule" "$WORKSPACE/.cursor/rules/$(basename $rule)"
-    done
-    mkdir -p "$WORKSPACE/skills"
-    for skill_dir in "$AGENT_DIR/skills/"*/; do
-      skill_name=$(basename "$skill_dir")
-      if [ ! -d "$WORKSPACE/skills/$skill_name" ]; then
-        ln -s "$skill_dir" "$WORKSPACE/skills/$skill_name"
-      fi
-    done
-    mkdir -p "$WORKSPACE/policies"
-    cp "$AGENT_DIR/policies/"*.md "$WORKSPACE/policies/" 2>/dev/null
-    echo "✅ Rules、Skills、Policies 已部署到当前工作区"
-    ls "$WORKSPACE/.cursor/rules/"
-    ls "$WORKSPACE/skills/"
+## 当前版本信息
 
-**第三步：读取以下文件了解能力**
+- 名称：产品专家 Agent（product-expert）
+- 版本：0.9.0
+- 仓库：MagicalAci/teampilot-agent-product-expert
+- 简介：内置调研分析（单产品/方向/全景/用户研究）、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。
+- 本地目录：~/TeamPilot/agents/product-expert/0.9.0
 
-- `~/TeamPilot/agents/product-expert/.teampilot/agent.yml`
-- `~/TeamPilot/agents/product-expert/.cursor/rules/product-expert-commands.mdc`
+## 核心能力入口参考
 
-**当前版本信息**
+- /深度调研：统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，自带 DeerFlow 深度研究、MediaCrawler 社媒采集、质量门禁、逐章写作与三轮事实核查。
+- /产品策划：证据驱动的产品策划与 PRD 交付能力，覆盖任务卡冻结、定义闸门、章节编排、配图与校验。
+- /AI策划：面向 AI 方案落地的产品能力，覆盖 AI PRD、脚本开发、测试报告与最小交接包。
+- /Demo开发：面向 Web、H5 与 SwiftUI 的产品 demo 开发能力，覆盖 brief、设计系统、脚手架、打磨、校验与交接。
+- /SQL：星火工坊 AIBI 数据查询分析能力，自然语言提问自动生成 SQL 查询 DBOPS 数据库，输出分析报告。支持快速版（纯聊天输出）和深度版（HTML看板+CSV）。覆盖 sparklab_starcard、sparklab_picbook、sg_sparklab_poptoy 三个线上库。
 
-- 名称：产品专家 Agent（`product-expert`）
-- 版本：`0.9.0`
-- 仓库：`MagicalAci/teampilot-agent-product-expert`（私仓，团队成员已授权访问）
-- 简介：内置调研分析、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。
+## 第三步：最后用中文回复我
 
-**五项核心能力入口**
-
-- `/深度调研 [主题]` — 调研分析：单产品/方向/全景/用户研究，自带社媒采集、质量门禁、三轮事实核查
-- `/产品策划 [主题]` — 产品策划：证据驱动的 PRD 交付，覆盖任务卡、章节编排、配图校验
-- `/AI策划 [主题]` — AI策划：AI PRD、脚本开发、测试报告、最小交接包
-- `/Demo开发 [主题]` — Demo开发：Web/H5/SwiftUI demo，brief→设计系统→脚手架→打磨→校验
-- `/SQL [提问]` — SQL快速查询：自然语言查询星火工坊数据库，聊天内直接输出结论+表格+图表
-- `/SQL深度 [提问]` — SQL深度分析：生成 HTML 看板 + CSV 数据表 + 完整洞察分析
-- `/查看能力` — 能力总览：列出所有能力和子命令
-
-**第四步：用中文回复我**
-
-1. 是否安装成功（git clone + rules/skills 部署两步的结果）
-2. 本地安装到了哪个目录
-3. 这个 Agent 当前版本能做什么（读 agent.yml 后总结）
-4. 列出所有核心能力入口命令
-5. 推荐我先从哪个命令开始，以及原因
-
----
-
-</details>
+- 是否安装成功
+- 本地安装到了哪个目录
+- 这个 Agent 当前版本能做什么
+- 当前版本有哪些核心能力入口
+- 推荐我先从哪个命令开始，以及原因
+````
 
 ## 安装后使用
 
