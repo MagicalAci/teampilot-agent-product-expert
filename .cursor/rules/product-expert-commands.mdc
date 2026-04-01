@@ -26,6 +26,23 @@ alwaysApply: false
 - "做个用户研究" / "看看用户怎么说" / "挖一下用户痛点"
 - "这个赛道怎么样" / "方向可行性分析"
 
+## AIBI SQL 数据查询命令
+
+- `/SQL [自然语言提问]`：进入 `skills/aibi-query/SKILL.md`，自动识别目标数据库、生成 SQL、查询 DBOPS、输出分析报告
+
+### 自然语言触发
+
+以下表达也会路由到 `aibi-query`：
+- "帮我查下数据" / "跑个数" / "看下指标"
+- "星卡数据" / "绘本用户情况" / "泡泡玩具订阅"
+- "运营分析" / "数据看板" / "出个数据报告"
+
+### 注意事项
+
+- 仅 sparklab_starcard、sparklab_picbook、sg_sparklab_poptoy 三个库有线上数据
+- 其他库（测肤/社交/作业等）暂无部署，匹配到时需告知用户
+- 首次使用需引导用户申请 DBOPS 只读权限并提供 SSO Token
+
 ## 其他 Skill 命令
 
 - `/产品策划`：进入 `skills/education-prd-orchestrator/SKILL.md`

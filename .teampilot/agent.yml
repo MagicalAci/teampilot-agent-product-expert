@@ -2,7 +2,7 @@ version: 1
 agent:
   slug: product-expert
   name: 产品专家 Agent
-  description: 内置调研分析（单产品/方向/全景/用户研究）、产品策划、AI策划、Demo开发四项完整能力的 Cursor 原生 Agent。
+  description: 内置调研分析（单产品/方向/全景/用户研究）、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。
   repoFullName: MagicalAci/teampilot-agent-product-expert
   cursorOnly: true
   standaloneEnabled: true
@@ -15,12 +15,14 @@ dependencies:
     - skills/education-prd-orchestrator/SKILL.md
     - skills/ai-planning-orchestrator/SKILL.md
     - skills/product-demo-orchestrator/SKILL.md
+    - skills/aibi-query/SKILL.md
   mcps:
     - user-firecrawl
     - user-app-insight
     - user-xiaohongshu
     - user-weibo
     - user-bilibili
+    - user-antv-chart
   templates: []
   policies:
     - policies/submission-review-contract.md
@@ -131,10 +133,15 @@ cursor:
       command: /Demo校验
       description: 校验 demo brief、design system、入口文件与交接文档
       example: /Demo校验 outputs/demo-home
+    - key: sql-query
+      title: SQL查询
+      command: /SQL
+      description: 自然语言查询星火工坊数据库，输出分析报告（结论+数据表+图表）
+      example: /SQL 帮我看下星卡最近的用户和订单情况
     - key: capabilities
       title: 查看能力
       command: /查看能力
-      description: 列出四个核心能力点和子命令
+      description: 列出五个核心能力点和子命令
       example: /查看能力
     - key: check-update
       title: 检查Agent更新
@@ -206,6 +213,20 @@ capabilities:
     skillRefs:
       - skills/product-demo-orchestrator/SKILL.md
     mcpRefs: []
+    templateRefs: []
+    policyRefs:
+      - policies/submission-review-contract.md
+  - key: sql-query
+    title: SQL数据查询
+    description: 星火工坊 AIBI 数据查询分析能力，自然语言提问自动生成 SQL 查询 DBOPS 数据库，输出分析报告。支持快速版（纯聊天输出）和深度版（HTML看板+CSV）。覆盖 sparklab_starcard、sparklab_picbook、sg_sparklab_poptoy 三个线上库。
+    command: /SQL
+    recommendedWhen: 当你需要查看业务数据、分析运营指标、跑 SQL 查询、生成数据看板时使用。
+    inputTemplate: /SQL 帮我看下绘本产品最近的用户和阅读情况
+    outputFormat: 结论洞察（3-5 条）、数据表格（纵排/横排 Markdown 或 CSV）、图表（AntV MCP）、可选 HTML 看板
+    skillRefs:
+      - skills/aibi-query/SKILL.md
+    mcpRefs:
+      - user-antv-chart
     templateRefs: []
     policyRefs:
       - policies/submission-review-contract.md
