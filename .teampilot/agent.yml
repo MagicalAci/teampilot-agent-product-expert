@@ -7,8 +7,8 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.10.1
-  notes: 新增第五项核心能力「SQL 数据查询分析」（/SQL、/SQL深度）。自然语言提问自动生成 SQL 查询星火工坊 DBOPS 数据库，输出带洞察分析的数据报告。支持快速版（纯聊天）和深度版（HTML看板+CSV）。覆盖 sparklab_starcard、sparklab_picbook、sg_sparklab_poptoy 三个线上库。含完整 Token 管理、权限申请引导、63 张表结构文档、11 个查询案例。
+  version: 0.11.0
+  notes: 修正 AIBI SQL 查询环境配置 — 统一使用 UAT 作为线上数据环境（UAT 即生产数据），移除所有对 PROD 的错误引用和 fallback 逻辑。
 dependencies:
   skills:
     - skills/research-toolkit/SKILL.md
