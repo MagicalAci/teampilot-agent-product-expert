@@ -1,0 +1,55 @@
+---
+description: 版本更新时必须同步网页、README、安装指令和 changelog
+globs:
+  - ".teampilot/agent.yml"
+  - "README.md"
+  - "docs/index.html"
+  - "skills/*/SKILL.md"
+---
+
+# 版本同步规则
+
+当 Agent 版本号发生变更时，必须同步更新以下所有位置：
+
+## 版本号同步清单
+
+1. **`.teampilot/agent.yml`** — `release.version` + `release.notes`
+2. **`README.md`** — `Version：\`x.x.x\`` + 安装指令中的版本路径（`version=x.x.x`、`product-expert/x.x.x`）
+3. **`docs/index.html`** — 以下 6 处：
+   - 导航栏版本徽章 `<span>vX.X.X</span>`
+   - 版本条 `<span class="tag">vX.X.X</span>`
+   - 页脚 `Agent vX.X.X`
+   - 安装指令代码块中的 `version=X.X.X` 和 `product-expert/X.X.X`
+   - 安装指令中的 `版本：X.X.X`
+   - **changelog 区域**：新增 `cl-entry latest` 条目，旧的 latest 条目去掉 `latest` class 和 `最新` tag
+
+## Changelog 条目模板
+
+```html
+<div class="cl-entry latest">
+  <div class="cl-dot"></div>
+  <div class="cl-version">
+    <code>vX.X.X</code>
+    <span class="cl-tag">最新</span>
+  </div>
+  <div class="cl-body">
+    <ul>
+      <li>变更描述 1</li>
+      <li>变更描述 2</li>
+    </ul>
+  </div>
+</div>
+```
+
+## 自动化说明
+
+- **版本号**：CI（`auto-release.yml`）会自动同步 agent.yml、README、docs 中的版本号
+- **Changelog**：需要人工在 `docs/index.html` 中添加新条目（CI 不自动生成 changelog）
+- **网站部署**：push 到 main 后 CI（`deploy-pages.yml`）自动部署到 Cloudflare Pages
+- **网站地址**：https://product-expert-agent.pages.dev
+
+## 提交规范
+
+- 版本发布提交以 `release:` 开头（CI 会跳过这类提交避免循环）
+- 功能提交用 `feat:` 前缀 → 触发 minor bump
+- 修复提交用 `fix:` 前缀 → 触发 patch bump

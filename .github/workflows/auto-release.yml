@@ -85,14 +85,29 @@ jobs:
             echo 'RELEASE_EOF'
           } >> "$GITHUB_OUTPUT"
 
-      - name: Update version in agent.yml and README
+      - name: Update version in agent.yml, README, and docs
         if: steps.bump.outputs.bump != 'none'
         run: |
           NEW="${{ steps.bump.outputs.new }}"
+          OLD="${{ steps.bump.outputs.current }}"
 
           sed -i "s/^  version: .*/  version: ${NEW}/" .teampilot/agent.yml
 
           sed -i "s/^- Version：\`.*\`/- Version：\`${NEW}\`/" README.md
+
+          # Update install instructions version in README
+          sed -i "s|version=${OLD}|version=${NEW}|g" README.md
+          sed -i "s|product-expert/${OLD}|product-expert/${NEW}|g" README.md
+
+          # Update docs/index.html version references
+          if [ -f docs/index.html ]; then
+            sed -i "s|<span>v${OLD}</span>|<span>v${NEW}</span>|g" docs/index.html
+            sed -i "s|<span class=\"tag\">v${OLD}</span>|<span class=\"tag\">v${NEW}</span>|g" docs/index.html
+            sed -i "s|Agent v${OLD}|Agent v${NEW}|g" docs/index.html
+            sed -i "s|version=${OLD}|version=${NEW}|g" docs/index.html
+            sed -i "s|product-expert/${OLD}|product-expert/${NEW}|g" docs/index.html
+            sed -i "s|版本：${OLD}|版本：${NEW}|g" docs/index.html
+          fi
 
       - name: Commit, tag, and push
         if: steps.bump.outputs.bump != 'none'
@@ -100,7 +115,7 @@ jobs:
           NEW="${{ steps.bump.outputs.new }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .teampilot/agent.yml README.md
+          git add .teampilot/agent.yml README.md docs/
           git commit -m "release: v${NEW}"
           git tag "v${NEW}"
           git push origin main --tags
