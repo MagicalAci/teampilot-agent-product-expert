@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>产品专家 Agent — TeamPilot</title>
+<meta name="description" content="TeamPilot 产品专家 Agent：内置调研分析、产品策划、AI策划、Demo开发四项完整能力的 Cursor 原生 Agent。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:hsl(220 14% 96%);--surface:hsl(0 0% 100%);--surface-alt:hsl(220 14% 98%);
+  --text:hsl(220 14% 10%);--text-2:hsl(220 10% 40%);--text-3:hsl(220 8% 56%);
+  --border:hsl(220 13% 91%);--border-2:hsl(220 13% 86%);
+  --accent:hsl(234 85% 58%);--accent-soft:hsl(234 85% 96%);--accent-text:hsl(234 85% 42%);
+  --green:hsl(152 60% 42%);--green-soft:hsl(152 60% 94%);--green-text:hsl(152 60% 28%);
+  --amber:hsl(38 92% 50%);--amber-soft:hsl(38 92% 94%);--amber-text:hsl(38 72% 30%);
+  --rose:hsl(346 77% 50%);--rose-soft:hsl(346 77% 96%);--rose-text:hsl(346 77% 34%);
+  --purple:hsl(271 68% 56%);--purple-soft:hsl(271 68% 96%);--purple-text:hsl(271 68% 36%);
+  --radius:12px;--radius-sm:8px;--radius-xs:6px;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:0 4px 12px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.04);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.08),0 4px 12px rgba(0,0,0,.04);
+  --font-sans:'Inter',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;z-index:100;background:hsla(0 0% 100%/.82);backdrop-filter:blur(16px) saturate(1.8);border-bottom:1px solid var(--border)}
+nav .inner{display:flex;align-items:center;justify-content:space-between;height:56px;max-width:1080px;margin:0 auto;padding:0 24px}
+nav .brand{font-weight:700;font-size:15px;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px}
+nav .brand span{background:var(--accent);color:#fff;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;letter-spacing:.02em}
+nav .links{display:flex;gap:24px}
+nav .links a{font-size:14px;font-weight:500;color:var(--text-2);text-decoration:none;transition:color .15s}
+nav .links a:hover{color:var(--accent)}
+.gh-link{display:inline-flex;align-items:center;gap:6px}
+.gh-link svg{width:16px;height:16px}
+
+/* ── HERO ── */
+.hero{padding:80px 0 56px;text-align:center}
+.hero .badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);color:var(--accent-text);font-size:13px;font-weight:600;padding:6px 16px;border-radius:999px;margin-bottom:20px}
+.hero .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-size:clamp(32px,5vw,48px);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:16px}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:18px;color:var(--text-2);max-width:640px;margin:0 auto 28px;line-height:1.7}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--radius-sm);border:none;cursor:pointer;transition:all .15s;text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.btn-secondary{background:var(--surface);color:var(--text);border:1px solid var(--border-2);box-shadow:var(--shadow)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── VERSION INFO ── */
+.version-bar{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:56px;box-shadow:var(--shadow)}
+.version-bar .left{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.version-bar .tag{font-family:var(--font-mono);font-size:13px;font-weight:500;background:var(--green-soft);color:var(--green-text);padding:4px 12px;border-radius:var(--radius-xs)}
+.version-bar .slug{font-family:var(--font-mono);font-size:13px;color:var(--text-3)}
+.version-bar .repo{font-size:13px;color:var(--text-3)}
+.version-bar .repo a{color:var(--accent);text-decoration:none}
+.version-bar .repo a:hover{text-decoration:underline}
+
+/* ── SECTION ── */
+.section{margin-bottom:64px}
+.section-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+.section-title{font-size:28px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.section-desc{font-size:15px;color:var(--text-2);margin-bottom:32px;max-width:640px}
+
+/* ── CAPABILITY CARDS ── */
+.cap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:20px}
+@media(max-width:560px){.cap-grid{grid-template-columns:1fr}}
+.cap-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:box-shadow .2s,transform .2s}
+.cap-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.cap-head{padding:20px 24px 16px;display:flex;align-items:flex-start;gap:14px}
+.cap-icon{width:44px;height:44px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.cap-icon.research{background:var(--accent-soft);color:var(--accent)}
+.cap-icon.planning{background:var(--green-soft);color:var(--green)}
+.cap-icon.ai{background:var(--purple-soft);color:var(--purple)}
+.cap-icon.demo{background:var(--amber-soft);color:var(--amber)}
+.cap-head-text h3{font-size:18px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.cap-head-text h3 .main-cmd{font-family:var(--font-mono);font-size:13px;font-weight:500;background:var(--bg);padding:2px 8px;border-radius:var(--radius-xs);color:var(--text-2)}
+.cap-head-text p{font-size:13px;color:var(--text-2);line-height:1.5}
+.sub-cmds{padding:0 24px 20px;display:flex;flex-wrap:wrap;gap:6px}
+.sub-cmd{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--text-2);background:var(--surface-alt);border:1px solid var(--border);padding:4px 10px;border-radius:var(--radius-xs);cursor:pointer;transition:all .15s;user-select:none;position:relative}
+.sub-cmd:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.sub-cmd:active{transform:scale(.96)}
+.sub-cmd .copied-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--text);color:#fff;font-size:11px;font-family:var(--font-sans);font-weight:500;padding:3px 10px;border-radius:var(--radius-xs);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.sub-cmd .copied-tip.show{opacity:1}
+
+/* ── INSTALL SECTION ── */
+.install-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.install-header{padding:20px 24px 12px}
+.install-header h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.install-header p{font-size:13px;color:var(--text-2)}
+.install-steps{padding:0 24px 24px}
+.install-step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.install-step:last-child{border-bottom:none}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent-text);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-content{flex:1;min-width:0}
+.step-content .label{font-size:14px;font-weight:600;margin-bottom:4px}
+.step-content .desc{font-size:13px;color:var(--text-2);margin-bottom:8px}
+.code-block{position:relative;background:hsl(220 16% 14%);border-radius:var(--radius-xs);padding:14px 16px;padding-right:48px;font-family:var(--font-mono);font-size:13px;color:hsl(220 14% 82%);overflow-x:auto;line-height:1.6;white-space:pre-wrap;word-break:break-all}
+.code-block .copy-btn{position:absolute;top:8px;right:8px;background:hsla(0 0% 100%/.1);border:none;border-radius:var(--radius-xs);padding:6px 8px;cursor:pointer;color:hsl(220 14% 60%);transition:all .15s;display:flex;align-items:center;justify-content:center}
+.code-block .copy-btn:hover{background:hsla(0 0% 100%/.18);color:#fff}
+.code-block .copy-btn.copied{color:var(--green)}
+.copy-icon{width:16px;height:16px}
+
+/* ── CURSOR SETUP (big copy block) ── */
+.cursor-setup{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-top:20px}
+.cursor-setup-header{padding:20px 24px 12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.cursor-setup-header h3{font-size:16px;font-weight:700}
+.cursor-setup-body{padding:0 24px 24px}
+
+/* ── CHANGELOG ── */
+.changelog{position:relative;padding-left:28px}
+.changelog::before{content:'';position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--border-2);border-radius:2px}
+.cl-entry{position:relative;margin-bottom:32px}
+.cl-entry:last-child{margin-bottom:0}
+.cl-dot{position:absolute;left:-28px;top:6px;width:16px;height:16px;border-radius:50%;border:3px solid var(--accent);background:var(--surface);z-index:1}
+.cl-entry.latest .cl-dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.cl-version{display:inline-flex;align-items:center;gap:10px;margin-bottom:6px}
+.cl-version code{font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--text)}
+.cl-version .cl-tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent-text)}
+.cl-date{font-size:12px;color:var(--text-3);margin-bottom:8px}
+.cl-body{font-size:14px;color:var(--text-2);line-height:1.7}
+.cl-body ul{padding-left:18px;margin-top:6px}
+.cl-body li{margin-bottom:4px}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;margin-top:40px}
+footer p{font-size:13px;color:var(--text-3)}
+footer a{color:var(--accent);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  .hero{padding:56px 0 40px}
+  .version-bar{flex-direction:column;align-items:flex-start}
+  .cap-grid{grid-template-columns:1fr}
+  nav .links{gap:14px}
+  nav .links a{font-size:13px}
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="inner">
+    <a class="brand" href="#">产品专家 Agent <span>v0.5.1</span></a>
+    <div class="links">
+      <a href="#capabilities">能力</a>
+      <a href="#install">安装</a>
+      <a href="#changelog">更新日志</a>
+      <a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank" class="gh-link">
+        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="badge"><span class="dot"></span> TeamPilot Cursor 原生 Agent</div>
+    <h1><span class="gradient">产品专家 Agent</span></h1>
+    <p>内置调研分析、产品策划、AI策划、Demo开发四项完整能力。<br>从深度竞品调研到可交付 demo，一个 Agent 搞定产品全链路。</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#install">快速安装</a>
+      <a class="btn btn-secondary" href="#capabilities">查看能力</a>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+<!-- VERSION BAR -->
+<div class="version-bar reveal">
+  <div class="left">
+    <span class="tag">v0.5.1</span>
+    <span class="slug">product-expert</span>
+  </div>
+  <div class="repo">仓库：<a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">MagicalAci/teampilot-agent-product-expert</a></div>
+</div>
+
+<!-- CAPABILITIES -->
+<section class="section" id="capabilities">
+  <div class="section-label reveal">核心能力</div>
+  <div class="section-title reveal">四大能力 × 全量子命令</div>
+  <p class="section-desc reveal">点击任意命令即可复制到剪贴板，在 Cursor 中直接粘贴使用。</p>
+
+  <div class="cap-grid">
+    <!-- 1. Research -->
+    <div class="cap-card reveal">
+      <div class="cap-head">
+        <div class="cap-icon research">🔍</div>
+        <div class="cap-head-text">
+          <h3>调研分析 <span class="main-cmd" onclick="copyCmd(this,'/深度调研')">/深度调研</span></h3>
+          <p>统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，自带 DeerFlow 深度研究、MediaCrawler 社媒采集、质量门禁与三轮事实核查。</p>
+        </div>
+      </div>
+      <div class="sub-cmds">
+        <span class="sub-cmd" onclick="copyCmd(this,'/深度调研 [产品名]')">/深度调研<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/爬取')">/爬取<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/体验引导')">/体验引导<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/调研安装')">/调研安装<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/调研体检')">/调研体检<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/调研授权')">/调研授权<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/调研打包')">/调研打包<span class="copied-tip">已复制</span></span>
+      </div>
+    </div>
+
+    <!-- 2. Product Planning -->
+    <div class="cap-card reveal">
+      <div class="cap-head">
+        <div class="cap-icon planning">📋</div>
+        <div class="cap-head-text">
+          <h3>产品策划 <span class="main-cmd" onclick="copyCmd(this,'/产品策划')">/产品策划</span></h3>
+          <p>证据驱动的产品策划与 PRD 交付能力，覆盖任务卡冻结、定义闸门、章节编排、配图与校验。</p>
+        </div>
+      </div>
+      <div class="sub-cmds">
+        <span class="sub-cmd" onclick="copyCmd(this,'/产品策划 [方案名]')">/产品策划<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/产品策划校验')">/产品策划校验<span class="copied-tip">已复制</span></span>
+      </div>
+    </div>
+
+    <!-- 3. AI Planning -->
+    <div class="cap-card reveal">
+      <div class="cap-head">
+        <div class="cap-icon ai">🤖</div>
+        <div class="cap-head-text">
+          <h3>AI策划 <span class="main-cmd" onclick="copyCmd(this,'/AI策划')">/AI策划</span></h3>
+          <p>面向 AI 方案落地的产品能力，覆盖 AI PRD、Prompt 合同、脚本开发、测试报告与最小交接包。</p>
+        </div>
+      </div>
+      <div class="sub-cmds">
+        <span class="sub-cmd" onclick="copyCmd(this,'/AI策划 [方案名]')">/AI策划<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/AIPRD')">/AIPRD<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/AI脚本')">/AI脚本<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/AI测试')">/AI测试<span class="copied-tip">已复制</span></span>
+      </div>
+    </div>
+
+    <!-- 4. Demo -->
+    <div class="cap-card reveal">
+      <div class="cap-head">
+        <div class="cap-icon demo">🚀</div>
+        <div class="cap-head-text">
+          <h3>Demo开发 <span class="main-cmd" onclick="copyCmd(this,'/Demo开发')">/Demo开发</span></h3>
+          <p>面向 Web、H5 与 SwiftUI 的产品 demo 开发能力，覆盖 brief、设计系统、脚手架、打磨、校验与交接。</p>
+        </div>
+      </div>
+      <div class="sub-cmds">
+        <span class="sub-cmd" onclick="copyCmd(this,'/Demo开发 [描述]，目标平台：H5')">/Demo开发<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/Demo设计系统')">/Demo设计系统<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/Demo脚手架')">/Demo脚手架<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/Demo打磨')">/Demo打磨<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/Demo校验')">/Demo校验<span class="copied-tip">已复制</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Utility commands -->
+  <div class="cap-card reveal" style="margin-top:20px">
+    <div class="cap-head">
+      <div class="cap-icon" style="background:var(--bg);color:var(--text-2)">⚙️</div>
+      <div class="cap-head-text">
+        <h3>通用命令</h3>
+        <p>查看能力清单、检查更新、经验沉淀与版本写回。</p>
+      </div>
+    </div>
+    <div class="sub-cmds">
+      <span class="sub-cmd" onclick="copyCmd(this,'/查看能力')">/查看能力<span class="copied-tip">已复制</span></span>
+      <span class="sub-cmd" onclick="copyCmd(this,'/检查Agent更新')">/检查Agent更新<span class="copied-tip">已复制</span></span>
+      <span class="sub-cmd" onclick="copyCmd(this,'/更新请求')">/更新请求<span class="copied-tip">已复制</span></span>
+      <span class="sub-cmd" onclick="copyCmd(this,'/经验写回')">/经验写回<span class="copied-tip">已复制</span></span>
+      <span class="sub-cmd" onclick="copyCmd(this,'/提交产出')">/提交产出<span class="copied-tip">已复制</span></span>
+      <span class="sub-cmd" onclick="copyCmd(this,'/评审结果')">/评审结果<span class="copied-tip">已复制</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section class="section" id="install">
+  <div class="section-label reveal">快速安装</div>
+  <div class="section-title reveal">在 Cursor 中使用</div>
+  <p class="section-desc reveal">只需三步，把产品专家 Agent 装进你的 Cursor 工作区。</p>
+
+  <div class="install-block reveal">
+    <div class="install-steps">
+      <div class="install-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="label">克隆仓库</div>
+          <div class="desc">把 Agent 仓库克隆到本地任意位置。</div>
+          <div class="code-block" id="code-clone">git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git<button class="copy-btn" onclick="copyBlock('code-clone')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+        </div>
+      </div>
+      <div class="install-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="label">用 Cursor 打开</div>
+          <div class="desc">在 Cursor 中打开克隆下来的文件夹作为工作区。Agent 的 Rules 和 Skills 会被自动加载。</div>
+          <div class="code-block" id="code-open">cursor teampilot-agent-product-expert<button class="copy-btn" onclick="copyBlock('code-open')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+        </div>
+      </div>
+      <div class="install-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="label">开始使用</div>
+          <div class="desc">在 Cursor Chat 里输入任意命令即可开始工作。</div>
+          <div class="code-block" id="code-start">/查看能力<button class="copy-btn" onclick="copyBlock('code-start')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cursor Rules Copy Block -->
+  <div class="cursor-setup reveal">
+    <div class="cursor-setup-header">
+      <h3>Cursor Rules 配置（自动生效）</h3>
+      <button class="btn btn-secondary" style="font-size:12px;padding:6px 14px" onclick="copyRules()">
+        <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        复制完整 Rules
+      </button>
+    </div>
+    <div class="cursor-setup-body">
+      <p style="font-size:13px;color:var(--text-2);margin-bottom:12px">仓库内已包含两个 Cursor Rules 文件，克隆后自动生效，无需手动配置：</p>
+      <div class="code-block" id="code-rules" style="font-size:12px;line-height:1.7">.cursor/rules/
+├── task-navigator.mdc        # alwaysApply: true
+│   → Agent 主动分析任务、规划工作路径、分阶段推进
+│   → 每阶段汇报产出、前后阶段自动衔接上下文
+│
+└── product-expert-commands.mdc   # 按需加载
+    → 命令路由表：/深度调研 /产品策划 /AI策划 /Demo开发 ...
+    → 自然语言触发："帮我调研下 XXX" "做个竞品分析"
+    → 执行原则：先读 Skill 再行动，不跳步，遇 checkpoint 必停<button class="copy-btn" onclick="copyBlock('code-rules')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHANGELOG -->
+<section class="section" id="changelog">
+  <div class="section-label reveal">更新日志</div>
+  <div class="section-title reveal">版本历史</div>
+  <p class="section-desc reveal">每个版本的核心变更记录。</p>
+
+  <div class="changelog reveal">
+    <!-- v0.5.1 -->
+    <div class="cl-entry latest">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.5.1</code>
+        <span class="cl-tag">最新</span>
+      </div>
+      <div class="cl-date">2025-03-27</div>
+      <div class="cl-body">
+        <ul>
+          <li>修复 Research Toolkit 命令重命名后的回归测试</li>
+          <li>新增自动发布工作流（version bump → GitHub Release）</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.5.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version"><code>v0.5.0</code></div>
+      <div class="cl-date">2025-03-27</div>
+      <div class="cl-body">
+        <strong>Research Toolkit 全面升级</strong>
+        <ul>
+          <li>将 SPCA（单产品分析）+ LRS（工具链）合并为统一的 Research Toolkit</li>
+          <li>支持多任务类型：单产品分析、方向调研、市场全景、用户研究</li>
+          <li>新增 DeerFlow 深度研究、MediaCrawler 社媒采集</li>
+          <li>新增 QR 授权、跨平台 bootstrap</li>
+          <li>新增任务领航规则 (task-navigator.mdc)：Agent 主动规划工作路径</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.4.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version"><code>v0.4.0</code></div>
+      <div class="cl-date">2025-03</div>
+      <div class="cl-body">
+        <ul>
+          <li>新增 task-navigator alwaysApply 规则：Agent 启动后主动阅读 brief、分析目标、输出分阶段工作规划</li>
+          <li>产品策划能力增强：全周期方法论 + 通用 PRD 框架</li>
+          <li>AI策划能力增强：API Cookbook（11 个可运行示例）+ 平台能力矩阵</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.3.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version"><code>v0.3.0</code></div>
+      <div class="cl-date">2025-03</div>
+      <div class="cl-body">
+        <ul>
+          <li>新增 Demo 开发能力：支持 Web、H5、SwiftUI demo 全流程</li>
+          <li>覆盖 brief 冻结、设计系统、脚手架初始化、页面打磨、校验与交接</li>
+          <li>首个完整四能力版本</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Earlier -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version"><code>v0.1 – v0.2</code></div>
+      <div class="cl-date">2025-03</div>
+      <div class="cl-body">
+        <ul>
+          <li>初始 Agent 骨架：调研分析（单产品分析）+ 产品策划 + AI策划</li>
+          <li>Agent manifest、命令路由规则、回归测试基础设施</li>
+          <li>MCP 依赖说明与提交评审约束</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK EXAMPLES -->
+<section class="section" id="examples">
+  <div class="section-label reveal">快速体验</div>
+  <div class="section-title reveal">常用指令示例</div>
+  <p class="section-desc reveal">复制到 Cursor Chat 即可开始。</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px" class="reveal">
+    <div class="code-block" id="ex1">/深度调研 豆包爱学<button class="copy-btn" onclick="copyBlock('ex1')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+    <div class="code-block" id="ex2">/产品策划 家长端留存提升方案<button class="copy-btn" onclick="copyBlock('ex2')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+    <div class="code-block" id="ex3">/AI策划 PRD 生成 Agent<button class="copy-btn" onclick="copyBlock('ex3')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+    <div class="code-block" id="ex4">/Demo开发 AI 陪练产品首页 demo，目标平台：H5<button class="copy-btn" onclick="copyBlock('ex4')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+  </div>
+</section>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p>产品专家 Agent · <a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">GitHub</a> · TeamPilot × Cursor</p>
+  </div>
+</footer>
+
+<script>
+function copyCmd(el, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const tip = el.querySelector('.copied-tip');
+    if (tip) { tip.classList.add('show'); setTimeout(() => tip.classList.remove('show'), 1200); }
+  });
+}
+
+function copyBlock(id) {
+  const block = document.getElementById(id);
+  const btn = block.querySelector('.copy-btn');
+  const text = block.childNodes[0].textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = '<svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+    }, 2000);
+  });
+}
+
+function copyRules() {
+  const rulesText = `.cursor/rules/task-navigator.mdc (alwaysApply: true)
+→ Agent 主动分析任务、规划工作路径、分阶段推进
+
+.cursor/rules/product-expert-commands.mdc (按需加载)
+→ 命令路由：/深度调研 /产品策划 /AI策划 /Demo开发 等
+→ 自然语言触发："帮我调研下 XXX" "做个竞品分析"`;
+  navigator.clipboard.writeText(rulesText);
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
