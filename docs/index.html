@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>产品专家 Agent — TeamPilot</title>
-<meta name="description" content="TeamPilot 产品专家 Agent：内置调研分析、产品策划、AI策划、Demo开发四项完整能力的 Cursor 原生 Agent。">
+<meta name="description" content="TeamPilot 产品专家 Agent：内置调研分析、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -19,6 +19,7 @@
   --amber:hsl(38 92% 50%);--amber-soft:hsl(38 92% 94%);--amber-text:hsl(38 72% 30%);
   --rose:hsl(346 77% 50%);--rose-soft:hsl(346 77% 96%);--rose-text:hsl(346 77% 34%);
   --purple:hsl(271 68% 56%);--purple-soft:hsl(271 68% 96%);--purple-text:hsl(271 68% 36%);
+  --teal:hsl(185 62% 42%);--teal-soft:hsl(185 62% 94%);--teal-text:hsl(185 62% 28%);
   --radius:12px;--radius-sm:8px;--radius-xs:6px;
   --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
   --shadow-md:0 4px 12px rgba(0,0,0,.07),0 2px 4px rgba(0,0,0,.04);
@@ -50,7 +51,7 @@ nav .links a:hover{color:var(--accent)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 .hero h1{font-size:clamp(32px,5vw,48px);font-weight:800;letter-spacing:-.03em;line-height:1.15;margin-bottom:16px}
 .hero h1 .gradient{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{font-size:18px;color:var(--text-2);max-width:640px;margin:0 auto 28px;line-height:1.7}
+.hero p{font-size:18px;color:var(--text-2);max-width:680px;margin:0 auto 28px;line-height:1.7}
 .hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--radius-sm);border:none;cursor:pointer;transition:all .15s;text-decoration:none}
 .btn-primary{background:var(--accent);color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.12)}
@@ -84,8 +85,10 @@ nav .links a:hover{color:var(--accent)}
 .cap-icon.planning{background:var(--green-soft);color:var(--green)}
 .cap-icon.ai{background:var(--purple-soft);color:var(--purple)}
 .cap-icon.demo{background:var(--amber-soft);color:var(--amber)}
-.cap-head-text h3{font-size:18px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px}
-.cap-head-text h3 .main-cmd{font-family:var(--font-mono);font-size:13px;font-weight:500;background:var(--bg);padding:2px 8px;border-radius:var(--radius-xs);color:var(--text-2)}
+.cap-icon.sql{background:var(--teal-soft);color:var(--teal)}
+.cap-head-text h3{font-size:18px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cap-head-text h3 .main-cmd{font-family:var(--font-mono);font-size:13px;font-weight:500;background:var(--bg);padding:2px 8px;border-radius:var(--radius-xs);color:var(--text-2);cursor:pointer;transition:all .15s}
+.cap-head-text h3 .main-cmd:hover{border-color:var(--accent);color:var(--accent)}
 .cap-head-text p{font-size:13px;color:var(--text-2);line-height:1.5}
 .sub-cmds{padding:0 24px 20px;display:flex;flex-wrap:wrap;gap:6px}
 .sub-cmd{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--text-2);background:var(--surface-alt);border:1px solid var(--border);padding:4px 10px;border-radius:var(--radius-xs);cursor:pointer;transition:all .15s;user-select:none;position:relative}
@@ -94,29 +97,44 @@ nav .links a:hover{color:var(--accent)}
 .sub-cmd .copied-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--text);color:#fff;font-size:11px;font-family:var(--font-sans);font-weight:500;padding:3px 10px;border-radius:var(--radius-xs);white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
 .sub-cmd .copied-tip.show{opacity:1}
 
+/* ── DB TABLE ── */
+.db-table{margin:0 24px 20px;border:1px solid var(--border);border-radius:var(--radius-xs);overflow:hidden;font-size:13px}
+.db-table table{width:100%;border-collapse:collapse}
+.db-table th{background:var(--bg);font-weight:600;text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);color:var(--text-2);font-size:12px}
+.db-table td{padding:8px 12px;border-bottom:1px solid var(--border)}
+.db-table tr:last-child td{border-bottom:none}
+.db-table .mono{font-family:var(--font-mono);font-size:12px}
+.db-table .status-ok{color:var(--green);font-weight:600}
+.db-table .status-no{color:var(--text-3)}
+
 /* ── INSTALL SECTION ── */
 .install-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
-.install-header{padding:20px 24px 12px}
-.install-header h3{font-size:16px;font-weight:700;margin-bottom:6px}
-.install-header p{font-size:13px;color:var(--text-2)}
-.install-steps{padding:0 24px 24px}
+.install-steps{padding:24px}
 .install-step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
 .install-step:last-child{border-bottom:none}
 .step-num{width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent-text);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 .step-content{flex:1;min-width:0}
 .step-content .label{font-size:14px;font-weight:600;margin-bottom:4px}
 .step-content .desc{font-size:13px;color:var(--text-2);margin-bottom:8px}
+
+/* ── CODE BLOCKS ── */
 .code-block{position:relative;background:hsl(220 16% 14%);border-radius:var(--radius-xs);padding:14px 16px;padding-right:48px;font-family:var(--font-mono);font-size:13px;color:hsl(220 14% 82%);overflow-x:auto;line-height:1.6;white-space:pre-wrap;word-break:break-all}
 .code-block .copy-btn{position:absolute;top:8px;right:8px;background:hsla(0 0% 100%/.1);border:none;border-radius:var(--radius-xs);padding:6px 8px;cursor:pointer;color:hsl(220 14% 60%);transition:all .15s;display:flex;align-items:center;justify-content:center}
 .code-block .copy-btn:hover{background:hsla(0 0% 100%/.18);color:#fff}
 .code-block .copy-btn.copied{color:var(--green)}
 .copy-icon{width:16px;height:16px}
 
-/* ── CURSOR SETUP (big copy block) ── */
-.cursor-setup{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-top:20px}
-.cursor-setup-header{padding:20px 24px 12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.cursor-setup-header h3{font-size:16px;font-weight:700}
-.cursor-setup-body{padding:0 24px 24px}
+/* ── ONE-CLICK INSTALL (hero block) ── */
+.oneclick{background:var(--surface);border:2px solid var(--accent);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-md);margin-top:20px}
+.oneclick-header{padding:20px 24px 12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-bottom:1px solid var(--border)}
+.oneclick-header h3{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+.oneclick-header h3 .tip{font-size:12px;font-weight:500;color:var(--accent-text);background:var(--accent-soft);padding:2px 10px;border-radius:999px}
+.oneclick-header p{font-size:13px;color:var(--text-2);width:100%}
+.oneclick-body{padding:16px 24px 24px}
+.oneclick-code{position:relative;background:hsl(220 16% 14%);border-radius:var(--radius-sm);padding:20px;padding-right:52px;font-family:var(--font-mono);font-size:12px;color:hsl(220 14% 80%);overflow-x:auto;line-height:1.7;white-space:pre-wrap;word-break:break-all;max-height:400px;overflow-y:auto}
+.oneclick-code .copy-btn{position:absolute;top:12px;right:12px;background:var(--accent);border:none;border-radius:var(--radius-xs);padding:8px 14px;cursor:pointer;color:#fff;transition:all .15s;display:flex;align-items:center;gap:6px;font-family:var(--font-sans);font-size:12px;font-weight:600}
+.oneclick-code .copy-btn:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.oneclick-code .copy-btn.copied{background:var(--green)}
 
 /* ── CHANGELOG ── */
 .changelog{position:relative;padding-left:28px}
@@ -132,6 +150,7 @@ nav .links a:hover{color:var(--accent)}
 .cl-body{font-size:14px;color:var(--text-2);line-height:1.7}
 .cl-body ul{padding-left:18px;margin-top:6px}
 .cl-body li{margin-bottom:4px}
+.cl-body strong{color:var(--text)}
 
 /* ── FOOTER ── */
 footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;margin-top:40px}
@@ -158,7 +177,7 @@ footer a:hover{text-decoration:underline}
 <!-- NAV -->
 <nav>
   <div class="inner">
-    <a class="brand" href="#">产品专家 Agent <span>v0.5.1</span></a>
+    <a class="brand" href="#">产品专家 Agent <span>v0.10.0</span></a>
     <div class="links">
       <a href="#capabilities">能力</a>
       <a href="#install">安装</a>
@@ -176,9 +195,9 @@ footer a:hover{text-decoration:underline}
   <div class="container">
     <div class="badge"><span class="dot"></span> TeamPilot Cursor 原生 Agent</div>
     <h1><span class="gradient">产品专家 Agent</span></h1>
-    <p>内置调研分析、产品策划、AI策划、Demo开发四项完整能力。<br>从深度竞品调研到可交付 demo，一个 Agent 搞定产品全链路。</p>
+    <p>内置调研分析、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力。<br>从深度竞品调研到数据看板，一个 Agent 搞定产品全链路。</p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="#install">快速安装</a>
+      <a class="btn btn-primary" href="#install">一键安装</a>
       <a class="btn btn-secondary" href="#capabilities">查看能力</a>
     </div>
   </div>
@@ -189,7 +208,7 @@ footer a:hover{text-decoration:underline}
 <!-- VERSION BAR -->
 <div class="version-bar reveal">
   <div class="left">
-    <span class="tag">v0.5.1</span>
+    <span class="tag">v0.10.0</span>
     <span class="slug">product-expert</span>
   </div>
   <div class="repo">仓库：<a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">MagicalAci/teampilot-agent-product-expert</a></div>
@@ -198,7 +217,7 @@ footer a:hover{text-decoration:underline}
 <!-- CAPABILITIES -->
 <section class="section" id="capabilities">
   <div class="section-label reveal">核心能力</div>
-  <div class="section-title reveal">四大能力 × 全量子命令</div>
+  <div class="section-title reveal">五大能力 × 全量子命令</div>
   <p class="section-desc reveal">点击任意命令即可复制到剪贴板，在 Cursor 中直接粘贴使用。</p>
 
   <div class="cap-grid">
@@ -213,7 +232,7 @@ footer a:hover{text-decoration:underline}
       </div>
       <div class="sub-cmds">
         <span class="sub-cmd" onclick="copyCmd(this,'/深度调研 [产品名]')">/深度调研<span class="copied-tip">已复制</span></span>
-        <span class="sub-cmd" onclick="copyCmd(this,'/爬取')">/爬取<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/爬取 [平台] [关键词]')">/爬取<span class="copied-tip">已复制</span></span>
         <span class="sub-cmd" onclick="copyCmd(this,'/体验引导')">/体验引导<span class="copied-tip">已复制</span></span>
         <span class="sub-cmd" onclick="copyCmd(this,'/调研安装')">/调研安装<span class="copied-tip">已复制</span></span>
         <span class="sub-cmd" onclick="copyCmd(this,'/调研体检')">/调研体检<span class="copied-tip">已复制</span></span>
@@ -228,7 +247,7 @@ footer a:hover{text-decoration:underline}
         <div class="cap-icon planning">📋</div>
         <div class="cap-head-text">
           <h3>产品策划 <span class="main-cmd" onclick="copyCmd(this,'/产品策划')">/产品策划</span></h3>
-          <p>证据驱动的产品策划与 PRD 交付能力，覆盖任务卡冻结、定义闸门、章节编排、配图与校验。</p>
+          <p>证据驱动的产品策划与 PRD 交付能力，覆盖任务卡冻结、定义闸门、章节编排、配图与校验。含功能需求详情写作规范、模块设计方法论与跨文档一致性检查。</p>
         </div>
       </div>
       <div class="sub-cmds">
@@ -243,7 +262,7 @@ footer a:hover{text-decoration:underline}
         <div class="cap-icon ai">🤖</div>
         <div class="cap-head-text">
           <h3>AI策划 <span class="main-cmd" onclick="copyCmd(this,'/AI策划')">/AI策划</span></h3>
-          <p>面向 AI 方案落地的产品能力，覆盖 AI PRD、Prompt 合同、脚本开发、测试报告与最小交接包。</p>
+          <p>面向 AI 方案落地的产品能力，覆盖 AI PRD、Prompt 合同、脚本开发、测试报告与最小交接包。含 API Cookbook（11 个可运行示例）和平台能力矩阵。</p>
         </div>
       </div>
       <div class="sub-cmds">
@@ -271,6 +290,32 @@ footer a:hover{text-decoration:underline}
         <span class="sub-cmd" onclick="copyCmd(this,'/Demo校验')">/Demo校验<span class="copied-tip">已复制</span></span>
       </div>
     </div>
+
+    <!-- 5. SQL / AIBI -->
+    <div class="cap-card reveal">
+      <div class="cap-head">
+        <div class="cap-icon sql">📊</div>
+        <div class="cap-head-text">
+          <h3>SQL数据查询 <span class="main-cmd" onclick="copyCmd(this,'/SQL')">/SQL</span></h3>
+          <p>星火工坊 AIBI 数据查询分析能力。自然语言提问自动生成 SQL 查询 DBOPS 数据库，输出分析报告。支持快速版（纯聊天输出）和深度版（HTML看板+CSV）。</p>
+        </div>
+      </div>
+      <div class="sub-cmds">
+        <span class="sub-cmd" onclick="copyCmd(this,'/SQL 帮我看下星卡最近的用户和订单情况')">/SQL<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/SQL深度 出一份绘本产品的完整运营分析报告')">/SQL深度<span class="copied-tip">已复制</span></span>
+      </div>
+      <div class="db-table">
+        <table>
+          <thead><tr><th>数据库</th><th>业务</th><th>状态</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">sparklab_starcard</td><td>星卡（追星小卡鉴定 + 站姐活动电商）</td><td class="status-ok">线上</td></tr>
+            <tr><td class="mono">sparklab_picbook</td><td>绘本（AI 绘本阅读硬件 + 语音合成）</td><td class="status-ok">线上</td></tr>
+            <tr><td class="mono">sg_sparklab_poptoy</td><td>泡泡玩具（AI 玩偶社区 + 聊天 + IAP）</td><td class="status-ok">线上</td></tr>
+            <tr><td class="mono" style="color:var(--text-3)">其他 5 个库</td><td style="color:var(--text-3)">测肤/社交/作业等</td><td class="status-no">暂未部署</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <!-- Utility commands -->
@@ -295,17 +340,77 @@ footer a:hover{text-decoration:underline}
 
 <!-- INSTALL -->
 <section class="section" id="install">
-  <div class="section-label reveal">快速安装</div>
-  <div class="section-title reveal">在 Cursor 中使用</div>
-  <p class="section-desc reveal">只需三步，把产品专家 Agent 装进你的 Cursor 工作区。</p>
+  <div class="section-label reveal">一键安装</div>
+  <div class="section-title reveal">复制粘贴到 Cursor 聊天框即可</div>
+  <p class="section-desc reveal">无需 GitHub 账号或仓库权限，任何团队成员均可直接安装。</p>
 
-  <div class="install-block reveal">
-    <div class="install-steps">
+  <!-- One-click install block -->
+  <div class="oneclick reveal">
+    <div class="oneclick-header">
+      <h3>安装指令 <span class="tip">复制后粘贴到 Cursor 聊天框</span></h3>
+      <p>Cursor 会自动执行安装、读取配置、并告诉你当前版本能做什么。</p>
+    </div>
+    <div class="oneclick-body">
+      <div class="oneclick-code" id="install-cmd">请在 Cursor 中帮我安装并启用 产品专家 Agent。
+请直接执行安装，不要只解释命令。
+
+## 第一步：执行安装
+
+直接运行下面这条命令：
+
+curl -fsSL https://teampilot.magicalaci.cn/api/agents/product-expert/install?format=script&version=0.9.0 | bash
+
+如果上面的命令执行失败或超时，改用下面的备用方式：
+
+AGENT_DIR="$HOME/TeamPilot/agents/product-expert/0.9.0"
+mkdir -p "$AGENT_DIR"
+git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGENT_DIR"
+
+无论哪种方式，安装失败都不要卡住，直接把报错信息告诉我。
+
+## 第二步：安装完成后读取这些文件
+
+- ~/TeamPilot/agents/product-expert/0.9.0/QUICKSTART.md
+- ~/TeamPilot/agents/product-expert/0.9.0/.teampilot/agent.yml
+- 不要依赖仓库 README.md 作为当前版本能力和命令的最终事实源；README 只能补充背景。
+
+如果 QUICKSTART.md 不存在，则读取以下文件代替：
+- ~/TeamPilot/agents/product-expert/0.9.0/.cursor/rules/product-expert-commands.mdc
+
+## 当前版本信息
+
+- 名称：产品专家 Agent（product-expert）
+- 版本：0.9.0
+- 仓库：MagicalAci/teampilot-agent-product-expert
+- 简介：内置调研分析（单产品/方向/全景/用户研究）、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。
+- 本地目录：~/TeamPilot/agents/product-expert/0.9.0
+
+## 核心能力入口参考
+
+- /深度调研：统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，自带 DeerFlow 深度研究、MediaCrawler 社媒采集、质量门禁、逐章写作与三轮事实核查。
+- /产品策划：证据驱动的产品策划与 PRD 交付能力，覆盖任务卡冻结、定义闸门、章节编排、配图与校验。
+- /AI策划：面向 AI 方案落地的产品能力，覆盖 AI PRD、脚本开发、测试报告与最小交接包。
+- /Demo开发：面向 Web、H5 与 SwiftUI 的产品 demo 开发能力，覆盖 brief、设计系统、脚手架、打磨、校验与交接。
+- /SQL：星火工坊 AIBI 数据查询分析能力，自然语言提问自动生成 SQL 查询 DBOPS 数据库，输出分析报告。支持快速版（纯聊天输出）和深度版（HTML看板+CSV）。覆盖 sparklab_starcard、sparklab_picbook、sg_sparklab_poptoy 三个线上库。
+
+## 第三步：最后用中文回复我
+
+- 是否安装成功
+- 本地安装到了哪个目录
+- 这个 Agent 当前版本能做什么
+- 当前版本有哪些核心能力入口
+- 推荐我先从哪个命令开始，以及原因<button class="copy-btn" onclick="copyInstall()" title="复制安装指令"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> 复制</button></div>
+    </div>
+  </div>
+
+  <!-- Alternative: manual steps -->
+  <div class="install-block reveal" style="margin-top:20px">
+    <div style="padding:20px 24px 8px"><h3 style="font-size:15px;font-weight:700;color:var(--text-2)">手动安装（备选）</h3></div>
+    <div class="install-steps" style="padding-top:0">
       <div class="install-step">
         <div class="step-num">1</div>
         <div class="step-content">
           <div class="label">克隆仓库</div>
-          <div class="desc">把 Agent 仓库克隆到本地任意位置。</div>
           <div class="code-block" id="code-clone">git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git<button class="copy-btn" onclick="copyBlock('code-clone')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
         </div>
       </div>
@@ -313,7 +418,6 @@ footer a:hover{text-decoration:underline}
         <div class="step-num">2</div>
         <div class="step-content">
           <div class="label">用 Cursor 打开</div>
-          <div class="desc">在 Cursor 中打开克隆下来的文件夹作为工作区。Agent 的 Rules 和 Skills 会被自动加载。</div>
           <div class="code-block" id="code-open">cursor teampilot-agent-product-expert<button class="copy-btn" onclick="copyBlock('code-open')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
         </div>
       </div>
@@ -321,33 +425,9 @@ footer a:hover{text-decoration:underline}
         <div class="step-num">3</div>
         <div class="step-content">
           <div class="label">开始使用</div>
-          <div class="desc">在 Cursor Chat 里输入任意命令即可开始工作。</div>
           <div class="code-block" id="code-start">/查看能力<button class="copy-btn" onclick="copyBlock('code-start')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Cursor Rules Copy Block -->
-  <div class="cursor-setup reveal">
-    <div class="cursor-setup-header">
-      <h3>Cursor Rules 配置（自动生效）</h3>
-      <button class="btn btn-secondary" style="font-size:12px;padding:6px 14px" onclick="copyRules()">
-        <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-        复制完整 Rules
-      </button>
-    </div>
-    <div class="cursor-setup-body">
-      <p style="font-size:13px;color:var(--text-2);margin-bottom:12px">仓库内已包含两个 Cursor Rules 文件，克隆后自动生效，无需手动配置：</p>
-      <div class="code-block" id="code-rules" style="font-size:12px;line-height:1.7">.cursor/rules/
-├── task-navigator.mdc        # alwaysApply: true
-│   → Agent 主动分析任务、规划工作路径、分阶段推进
-│   → 每阶段汇报产出、前后阶段自动衔接上下文
-│
-└── product-expert-commands.mdc   # 按需加载
-    → 命令路由表：/深度调研 /产品策划 /AI策划 /Demo开发 ...
-    → 自然语言触发："帮我调研下 XXX" "做个竞品分析"
-    → 执行原则：先读 Skill 再行动，不跳步，遇 checkpoint 必停<button class="copy-btn" onclick="copyBlock('code-rules')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
     </div>
   </div>
 </section>
@@ -359,35 +439,97 @@ footer a:hover{text-decoration:underline}
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.5.1 -->
+    <!-- v0.10.0 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.5.1</code>
+        <code>v0.10.0</code>
         <span class="cl-tag">最新</span>
       </div>
-      <div class="cl-date">2025-03-27</div>
       <div class="cl-body">
         <ul>
-          <li>修复 Research Toolkit 命令重命名后的回归测试</li>
-          <li>新增自动发布工作流（version bump → GitHub Release）</li>
+          <li>新增 GitHub Pages 文档网站（能力展示、一键安装、版本历史）</li>
+          <li>重构一键安装指令，改为单代码块 + TeamPilot API 分发</li>
         </ul>
       </div>
     </div>
 
-    <!-- v0.5.0 -->
+    <!-- v0.9.1 -->
     <div class="cl-entry">
       <div class="cl-dot"></div>
-      <div class="cl-version"><code>v0.5.0</code></div>
-      <div class="cl-date">2025-03-27</div>
+      <div class="cl-version"><code>v0.9.1</code></div>
+      <div class="cl-body">
+        <ul>
+          <li>新增一键安装指令：复制粘贴到 Cursor 聊天框即可自动部署</li>
+          <li>修复一键安装指令中嵌套代码块导致的 Markdown 渲染问题</li>
+          <li>更新 README、MCP 文档和版本号，反映 AIBI SQL 能力上线</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.9.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version"><code>v0.9.0</code></div>
+      <div class="cl-body">
+        <ul>
+          <li>拆分 <code>/SQL</code>（快速版）和 <code>/SQL深度</code>（深度版）为两个独立命令入口</li>
+          <li>快速版：聊天内直接输出结论+表格+图表，不写文件</li>
+          <li>深度版：生成 HTML 看板 + CSV 数据表 + 完整洞察分析</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.8.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version"><code>v0.8.0</code></div>
+      <div class="cl-body">
+        <strong>新增第五项核心能力</strong>
+        <ul>
+          <li>新增「SQL 数据查询分析」能力（AIBI），自然语言提问 → 自动 SQL → 数据报告</li>
+          <li>覆盖 sparklab_starcard、sparklab_picbook、sg_sparklab_poptoy 三个线上库</li>
+          <li>含 63 张表完整结构文档、11 个查询案例、DBOPS API 规范、HTML 看板模板</li>
+          <li>自带 Token 管理、权限申请引导</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.7.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version"><code>v0.7.0</code></div>
+      <div class="cl-body">
+        <ul>
+          <li>新增模块设计方法论、精度盲点检查与跨文档一致性校验</li>
+          <li>功能需求详情写作规范从「建议」升级为「铁律」，强制执行</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.6.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version"><code>v0.6.0</code></div>
+      <div class="cl-body">
+        <ul>
+          <li>产品策划 Skill 新增功能需求详情写作规范</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.5.x -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version"><code>v0.5.0 – v0.5.1</code></div>
       <div class="cl-body">
         <strong>Research Toolkit 全面升级</strong>
         <ul>
           <li>将 SPCA（单产品分析）+ LRS（工具链）合并为统一的 Research Toolkit</li>
           <li>支持多任务类型：单产品分析、方向调研、市场全景、用户研究</li>
-          <li>新增 DeerFlow 深度研究、MediaCrawler 社媒采集</li>
-          <li>新增 QR 授权、跨平台 bootstrap</li>
+          <li>新增 DeerFlow 深度研究、MediaCrawler 社媒采集、QR 授权、跨平台 bootstrap</li>
           <li>新增任务领航规则 (task-navigator.mdc)：Agent 主动规划工作路径</li>
+          <li>新增自动发布工作流（version bump → GitHub Release）</li>
         </ul>
       </div>
     </div>
@@ -396,12 +538,11 @@ footer a:hover{text-decoration:underline}
     <div class="cl-entry">
       <div class="cl-dot"></div>
       <div class="cl-version"><code>v0.4.0</code></div>
-      <div class="cl-date">2025-03</div>
       <div class="cl-body">
         <ul>
-          <li>新增 task-navigator alwaysApply 规则：Agent 启动后主动阅读 brief、分析目标、输出分阶段工作规划</li>
-          <li>产品策划能力增强：全周期方法论 + 通用 PRD 框架</li>
-          <li>AI策划能力增强：API Cookbook（11 个可运行示例）+ 平台能力矩阵</li>
+          <li>新增 task-navigator alwaysApply 规则：Agent 启动后主动分析目标、输出分阶段工作规划</li>
+          <li>产品策划增强：全周期方法论 + 通用 PRD 框架</li>
+          <li>AI策划增强：API Cookbook（11 个可运行示例）+ 平台能力矩阵</li>
         </ul>
       </div>
     </div>
@@ -410,12 +551,10 @@ footer a:hover{text-decoration:underline}
     <div class="cl-entry">
       <div class="cl-dot"></div>
       <div class="cl-version"><code>v0.3.0</code></div>
-      <div class="cl-date">2025-03</div>
       <div class="cl-body">
         <ul>
           <li>新增 Demo 开发能力：支持 Web、H5、SwiftUI demo 全流程</li>
-          <li>覆盖 brief 冻结、设计系统、脚手架初始化、页面打磨、校验与交接</li>
-          <li>首个完整四能力版本</li>
+          <li>首个完整四能力版本（调研分析 + 产品策划 + AI策划 + Demo开发）</li>
         </ul>
       </div>
     </div>
@@ -424,12 +563,10 @@ footer a:hover{text-decoration:underline}
     <div class="cl-entry">
       <div class="cl-dot"></div>
       <div class="cl-version"><code>v0.1 – v0.2</code></div>
-      <div class="cl-date">2025-03</div>
       <div class="cl-body">
         <ul>
-          <li>初始 Agent 骨架：调研分析（单产品分析）+ 产品策划 + AI策划</li>
+          <li>初始 Agent 骨架：调研分析 + 产品策划 + AI策划</li>
           <li>Agent manifest、命令路由规则、回归测试基础设施</li>
-          <li>MCP 依赖说明与提交评审约束</li>
         </ul>
       </div>
     </div>
@@ -444,8 +581,10 @@ footer a:hover{text-decoration:underline}
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px" class="reveal">
     <div class="code-block" id="ex1">/深度调研 豆包爱学<button class="copy-btn" onclick="copyBlock('ex1')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
     <div class="code-block" id="ex2">/产品策划 家长端留存提升方案<button class="copy-btn" onclick="copyBlock('ex2')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
-    <div class="code-block" id="ex3">/AI策划 PRD 生成 Agent<button class="copy-btn" onclick="copyBlock('ex3')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+    <div class="code-block" id="ex3">/AI策划 PRD 生成 Agent<button class="copy-btn" onclick="copyBlock('ex3')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
     <div class="code-block" id="ex4">/Demo开发 AI 陪练产品首页 demo，目标平台：H5<button class="copy-btn" onclick="copyBlock('ex4')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+    <div class="code-block" id="ex5">/SQL 帮我看下星卡最近的用户和订单情况<button class="copy-btn" onclick="copyBlock('ex5')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
+    <div class="code-block" id="ex6">/SQL深度 出一份绘本产品的完整运营分析报告<button class="copy-btn" onclick="copyBlock('ex6')" title="复制"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg></button></div>
   </div>
 </section>
 
@@ -454,7 +593,7 @@ footer a:hover{text-decoration:underline}
 <!-- FOOTER -->
 <footer>
   <div class="container">
-    <p>产品专家 Agent · <a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">GitHub</a> · TeamPilot × Cursor</p>
+    <p>产品专家 Agent v0.10.0 · <a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">GitHub</a> · TeamPilot × Cursor</p>
   </div>
 </footer>
 
@@ -480,14 +619,18 @@ function copyBlock(id) {
   });
 }
 
-function copyRules() {
-  const rulesText = `.cursor/rules/task-navigator.mdc (alwaysApply: true)
-→ Agent 主动分析任务、规划工作路径、分阶段推进
-
-.cursor/rules/product-expert-commands.mdc (按需加载)
-→ 命令路由：/深度调研 /产品策划 /AI策划 /Demo开发 等
-→ 自然语言触发："帮我调研下 XXX" "做个竞品分析"`;
-  navigator.clipboard.writeText(rulesText);
+function copyInstall() {
+  const block = document.getElementById('install-cmd');
+  const btn = block.querySelector('.copy-btn');
+  const text = block.childNodes[0].textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = '<svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><polyline points="20 6 9 17 4 12"/></svg> 已复制';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = '<svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> 复制';
+    }, 2000);
+  });
 }
 
 const observer = new IntersectionObserver((entries) => {
