@@ -7,7 +7,7 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.12.0
+  version: 0.12.1
   notes: 修正 AIBI SQL 查询环境配置 — 统一使用 UAT 作为线上数据环境（UAT 即生产数据），移除所有对 PROD 的错误引用和 fallback 逻辑。
 dependencies:
   skills:
