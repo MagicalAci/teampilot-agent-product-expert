@@ -128,3 +128,11 @@ jobs:
           gh release create "v${{ steps.bump.outputs.new }}" \
             --title "v${{ steps.bump.outputs.new }}" \
             --notes "${{ steps.notes.outputs.body }}"
+
+      - name: Deploy to Cloudflare Pages
+        if: steps.bump.outputs.bump != 'none'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy docs --project-name=product-expert-agent
