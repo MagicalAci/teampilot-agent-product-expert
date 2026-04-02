@@ -46,20 +46,20 @@ skills/aibi-query/
 
 ## ⓪ 数据库线上状态
 
-> **重要：只有以下 3 个库有线上数据可查，其余库暂无部署。**
+> **重要：以下 4 个库有线上数据可查，其余库暂无部署或无权限。**
 
-| 数据库 | 业务 | 表数量 | 线上数据 | 备注 |
-|--------|------|--------|----------|------|
-| **sparklab_starcard** | 星卡（追星小卡鉴定 + 站姐活动电商） | 26 | ✅ 有 | PRO 有真实业务数据 |
-| **sparklab_picbook** | 绘本（AI 绘本阅读硬件 + 语音合成） | 19 | ✅ 有 | PRO 有真实业务数据 |
-| **sg_sparklab_poptoy** | 泡泡玩具（AI 玩偶社区 + 聊天 + IAP） | 18 | ✅ 有 | PRO 有真实业务数据 |
-| sparklab_skinscan | 测肤 | 0 | ❌ 无 | 未部署，暂无表结构和数据 |
-| sparklab_aidating | AI 社交 | 0 | ❌ 无 | 未部署，暂无表结构和数据 |
-| calio_mvp | Calio MVP | 0 | ❌ 无 | 未部署，暂无表结构和数据 |
-| sparklab_homework | 作业 | - | ❌ 不存在 | DBOPS 中未找到逻辑库记录 |
-| sparklab_tellme | TellMe | - | ❌ 无实例 | 逻辑库存在但无物理源 |
+| 数据库 | 业务 | 表数量 | PRO ID | 线上数据 | 备注 |
+|--------|------|--------|--------|----------|------|
+| **sparklab_starcard** | 星卡（追星小卡鉴定 + 站姐活动电商） | 26 | 1198 | ✅ 有 | PRO 有真实业务数据 |
+| **sparklab_picbook** | 绘本（AI 绘本阅读硬件 + 语音合成） | 19 | 1217 | ✅ 有 | PRO 有真实业务数据 |
+| **sg_sparklab_poptoy** | 泡泡玩具（AI 玩偶社区 + 聊天 + IAP） | 18 | 2078 | ✅ 有 | PRO 有真实业务数据 |
+| **sparklab_homework_monito** | 作业监督（AI 专注力监测 + 学习报告） | 11 | 1258 | ✅ 有 | PRO 有真实业务数据 |
+| sparklab_skinscan | 测肤 | 0 | 1215 | ⚠️ 无物理源 | PRO 有逻辑库但无物理实例 |
+| sparklab_tellme | TellMe | 0 | 1260 | ⚠️ 无物理源 | PRO 有逻辑库但无物理实例 |
+| sparklab_aidating | AI 社交 | ? | 2929 | ⚠️ 需申请权限 | PRO 有物理源，需单独申请只读权限 |
+| calio_mvp | Calio MVP | ? | 2932 | ⚠️ 需申请权限 | PRO 有物理源，需单独申请只读权限 |
 
-**当用户查询的业务不在上面三个有数据的库中时，直接告知："该业务数据库暂未部署线上数据，目前仅支持星卡、绘本、泡泡玩具三个库的查询。"**
+**当用户查询的业务不在上面四个可查库中时，直接告知："该业务数据库暂不支持查询，目前支持星卡、绘本、泡泡玩具、作业监督四个库。"**
 
 ---
 
@@ -118,8 +118,9 @@ curl -s --max-time 10 \
 >
 > 打开下面的链接，点击页面 **右上角「申请权限」**，选择 **「只读权限」**：
 > - 星卡：https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sparklab_starcard/1198/info
-> - 绘本：https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sparklab_picbook/1199/info
-> - 泡泡玩具：https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sg_sparklab_poptoy/1200/info
+> - 绘本：https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sparklab_picbook/1217/info
+> - 泡泡玩具：https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sg_sparklab_poptoy/2078/info
+> - 作业监督：https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sparklab_homework_monito/1258/info
 >
 > 权限审批通过后，按以下步骤获取 Token（约 30 秒）：
 >
@@ -160,7 +161,8 @@ echo "TOKEN_SAVED"
 | 星卡、小卡、鉴定、站姐、明星、追星、活动 | `sparklab_starcard` | 星卡 | ✅ |
 | 绘本、阅读、声纹、设备、书架、对话 | `sparklab_picbook` | 绘本 | ✅ |
 | 玩偶、泡泡、社区、聊天、能量、订阅 | `sg_sparklab_poptoy` | 泡泡玩具 | ✅ |
-| 测肤、社交、作业、tellme | — | — | ❌ 暂无数据 |
+| 作业、专注、走神、学习报告、homework、监督 | `sparklab_homework_monito` | 作业监督 | ✅ |
+| 测肤、社交、tellme | — | — | ❌ 暂无数据 |
 
 无法判断 → 明确问用户。匹配到无数据的库 → 告知用户暂不支持。
 
@@ -398,9 +400,25 @@ curl -s --max-time 30 \
 | t_subscription_iap_record | 订阅 | user_new_id, subscription_type(1月/2年), price, currency |
 | t_consumable_iap_record | 内购 | energy_count, price |
 
-### 其他库（暂无线上数据）
+### sparklab_homework_monito（作业监督）— 11 表 ✅ 有线上数据
 
-sparklab_skinscan / sparklab_aidating / calio_mvp / sparklab_homework / sparklab_tellme — 均未部署或无物理实例，暂不支持查询。
+| 核心表 | 说明 | 关键字段 |
+|--------|------|----------|
+| t_homework_user_info | 用户 | guid, user_new_id, nickname, grade(年级), continuous_study_days, total_completed_tasks |
+| t_homework_task_item | 任务项 | guid, user_id, item_type(1作业/2休息/3阅读), item_name, duration(分钟), subject_type(1语文/2数学/3英语/4其他), item_status(0未开始/1进行中/2已完成/3已跳过) |
+| t_homework_focus_score | 专注度 | user_id, task_item_id, focus_score(0-100), record_time |
+| t_homework_distraction | 走神记录 | user_id, task_item_id, image_url(截图), voice_prompt_text(语音提示文案), record_time |
+| t_study_report | 学习报告 | user_id, task_item_id, batch_no, report_status(0生成中/1已完成/2失败), report_json |
+| t_ai_parse_record | AI解析 | user_id, batch_no, input_type(text/image), source_image_url, ai_parse_result(JSON) |
+| t_ai_context_cache | 上下文缓存 | scene_code, model_id, cache_id, ttl_seconds, cache_status(1有效/0失效) |
+| t_homework_task_item_image | 任务图片 | task_item_id, image_url, image_type(1监督过程/2作业成果) |
+| t_homework_virtual_person_config | 虚拟人配置 | config_type(greeting/task_empty/task_guide), time_range, person_name, main_text |
+| t_prompt | Prompt配置 | prompt_name, scene_code, model_id, prompt_context, use_status(0下线/1上线) |
+| t_user_login_record | 登录记录 | user_id, login_date |
+
+### 其他库（暂不支持查询）
+
+sparklab_skinscan / sparklab_tellme — PRO 有逻辑库但无物理实例。sparklab_aidating / calio_mvp — PRO 有物理源但当前无查询权限，需单独申请。
 
 ### 通用表规范
 

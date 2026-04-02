@@ -92,8 +92,9 @@ print_guide() {
   打开以下链接 → 点「申请权限」→ 选「只读」：
 
   星卡:     https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sparklab_starcard/1198/info
-  绘本:     https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sparklab_picbook/1199/info
-  泡泡玩具: https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sg_sparklab_poptoy/1200/info
+  绘本:     https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sparklab_picbook/1217/info
+  泡泡玩具: https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sg_sparklab_poptoy/2078/info
+  作业监督: https://dbops.hellobike.cn/?#/workspace/resource/MySQL/sparklab_homework_monito/1258/info
 
   等权限审批通过后再继续。
 
