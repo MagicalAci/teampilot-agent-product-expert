@@ -177,7 +177,7 @@ footer a:hover{text-decoration:underline}
 <!-- NAV -->
 <nav>
   <div class="inner">
-    <a class="brand" href="#">产品专家 Agent <span>v0.11.0</span></a>
+    <a class="brand" href="#">产品专家 Agent <span>v0.13.0</span></a>
     <div class="links">
       <a href="#capabilities">能力</a>
       <a href="#install">安装</a>
@@ -208,7 +208,7 @@ footer a:hover{text-decoration:underline}
 <!-- VERSION BAR -->
 <div class="version-bar reveal">
   <div class="left">
-    <span class="tag">v0.11.0</span>
+    <span class="tag">v0.13.0</span>
     <span class="slug">product-expert</span>
   </div>
   <div class="repo">仓库：<a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">MagicalAci/teampilot-agent-product-expert</a></div>
@@ -358,11 +358,11 @@ footer a:hover{text-decoration:underline}
 
 直接运行下面这条命令：
 
-curl -fsSL https://teampilot.magicalaci.cn/api/agents/product-expert/install?format=script&version=0.11.0 | bash
+curl -fsSL https://teampilot.magicalaci.cn/api/agents/product-expert/install?format=script&version=0.13.0 | bash
 
 如果上面的命令执行失败或超时，改用下面的备用方式：
 
-AGENT_DIR="$HOME/TeamPilot/agents/product-expert/0.11.0"
+AGENT_DIR="$HOME/TeamPilot/agents/product-expert/0.13.0"
 mkdir -p "$AGENT_DIR"
 git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGENT_DIR"
 
@@ -370,20 +370,20 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 
 ## 第二步：安装完成后读取这些文件
 
-- ~/TeamPilot/agents/product-expert/0.11.0/QUICKSTART.md
-- ~/TeamPilot/agents/product-expert/0.11.0/.teampilot/agent.yml
+- ~/TeamPilot/agents/product-expert/0.13.0/QUICKSTART.md
+- ~/TeamPilot/agents/product-expert/0.13.0/.teampilot/agent.yml
 - 不要依赖仓库 README.md 作为当前版本能力和命令的最终事实源；README 只能补充背景。
 
 如果 QUICKSTART.md 不存在，则读取以下文件代替：
-- ~/TeamPilot/agents/product-expert/0.11.0/.cursor/rules/product-expert-commands.mdc
+- ~/TeamPilot/agents/product-expert/0.13.0/.cursor/rules/product-expert-commands.mdc
 
 ## 当前版本信息
 
 - 名称：产品专家 Agent（product-expert）
-- 版本：0.11.0
+- 版本：0.13.0
 - 仓库：MagicalAci/teampilot-agent-product-expert
 - 简介：内置调研分析（单产品/方向/全景/用户研究）、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。
-- 本地目录：~/TeamPilot/agents/product-expert/0.11.0
+- 本地目录：~/TeamPilot/agents/product-expert/0.13.0
 
 ## 核心能力入口参考
 
@@ -439,12 +439,31 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.12.2 -->
+    <!-- v0.13.0 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.12.2</code>
+        <code>v0.13.0</code>
         <span class="cl-tag">最新</span>
+      </div>
+      <div class="cl-body">
+        <strong>新增作业监督数据库 + 环境修正</strong>
+        <ul>
+          <li>新增第 4 个可查库：<code>sparklab_homework_monito</code>（作业监督，11 张表）</li>
+          <li>完整 schema 文档：用户、任务、专注度、走神、学习报告、AI 解析等</li>
+          <li>新增 9 个作业监督查询案例（年级分布、DAU、专注度、学科时长等）</li>
+          <li>AIBI SQL 查询统一使用 <code>env=PRO</code>，环境名修正 PROD → PRO</li>
+          <li>修正 DBOPS 链接 ID，更新权限申请引导</li>
+          <li>CI/CD 自动部署 + version-sync 规则</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.12.2 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.12.2</code>
       </div>
       <div class="cl-body">
         <strong>AIBI SQL 环境配置 + CI/CD 自动化</strong>
@@ -611,7 +630,7 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 <!-- FOOTER -->
 <footer>
   <div class="container">
-    <p>产品专家 Agent v0.11.0 · <a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">GitHub</a> · TeamPilot × Cursor</p>
+    <p>产品专家 Agent v0.13.0 · <a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">GitHub</a> · TeamPilot × Cursor</p>
   </div>
 </footer>
 
