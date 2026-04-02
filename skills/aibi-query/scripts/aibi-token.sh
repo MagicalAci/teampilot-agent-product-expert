@@ -45,7 +45,7 @@ check_token() {
     echo "⏳ 正在验证 Token 有效性..."
     local response
     response=$(curl -s --max-time 10 \
-        "${API_BASE}/api/v1/db/logicDatabases?env=PROD&logicDbName=sparklab_starcard" \
+        "${API_BASE}/api/v1/db/logicDatabases?env=PRO&logicDbName=sparklab_starcard" \
         -H "Token: $token" 2>/dev/null)
     local code
     code=$(echo "$response" | python3 -c "import sys,json; print(json.load(sys.stdin).get('code','error'))" 2>/dev/null)

@@ -50,9 +50,9 @@ skills/aibi-query/
 
 | 数据库 | 业务 | 表数量 | 线上数据 | 备注 |
 |--------|------|--------|----------|------|
-| **sparklab_starcard** | 星卡（追星小卡鉴定 + 站姐活动电商） | 26 | ✅ 有 | PROD 有真实业务数据 |
-| **sparklab_picbook** | 绘本（AI 绘本阅读硬件 + 语音合成） | 19 | ✅ 有 | PROD 有真实业务数据 |
-| **sg_sparklab_poptoy** | 泡泡玩具（AI 玩偶社区 + 聊天 + IAP） | 18 | ✅ 有 | PROD 有真实业务数据 |
+| **sparklab_starcard** | 星卡（追星小卡鉴定 + 站姐活动电商） | 26 | ✅ 有 | PRO 有真实业务数据 |
+| **sparklab_picbook** | 绘本（AI 绘本阅读硬件 + 语音合成） | 19 | ✅ 有 | PRO 有真实业务数据 |
+| **sg_sparklab_poptoy** | 泡泡玩具（AI 玩偶社区 + 聊天 + IAP） | 18 | ✅ 有 | PRO 有真实业务数据 |
 | sparklab_skinscan | 测肤 | 0 | ❌ 无 | 未部署，暂无表结构和数据 |
 | sparklab_aidating | AI 社交 | 0 | ❌ 无 | 未部署，暂无表结构和数据 |
 | calio_mvp | Calio MVP | 0 | ❌ 无 | 未部署，暂无表结构和数据 |
@@ -101,7 +101,7 @@ fi
 
 ```bash
 curl -s --max-time 10 \
-  'https://hdbs-service-api.hellobike.cn/api/v1/db/logicDatabases?env=PROD&logicDbName=sparklab_starcard' \
+  'https://hdbs-service-api.hellobike.cn/api/v1/db/logicDatabases?env=PRO&logicDbName=sparklab_starcard' \
   -H "Token: $(cat $HOME/.aibi/token)" \
   | python3 -c "import sys,json; d=json.load(sys.stdin); print('TOKEN_VALID' if d.get('code')==200 else 'TOKEN_EXPIRED: '+str(d.get('code',''))+' '+d.get('message',''))"
 ```
@@ -174,7 +174,7 @@ curl -s --max-time 15 \
   -X POST -H 'Content-Type: application/json' \
   -H "Token: $(cat $HOME/.aibi/token)" \
   -d '{
-    "env":"PROD","dbName":"目标库","logicDbName":"目标库",
+    "env":"PRO","dbName":"目标库","logicDbName":"目标库",
     "dbType":"MySQL","queryType":"PHYSICAL","unit":"HZUNIT","limit":5000,
     "sqlContent":"SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, COLUMN_COMMENT FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='"'"'目标库'"'"' AND TABLE_NAME='"'"'目标表'"'"' ORDER BY ORDINAL_POSITION"
   }'
@@ -211,7 +211,7 @@ curl -s --max-time 30 \
   -H 'Content-Type: application/json' \
   -H "Token: $(cat $HOME/.aibi/token)" \
   -d '{
-    "env": "PROD",
+    "env": "PRO",
     "dbName": "库名",
     "logicDbName": "库名",
     "dbType": "MySQL",
@@ -231,7 +231,7 @@ curl -s --max-time 30 \
 | 200 | 成功 | 继续 |
 | 401 | Token 过期 | **自动触发 ② 的 Token 刷新流程** |
 | 400 "非select" | SQL 不合规 | 修改 SQL 后重试 |
-| 400 "连接异常" | 该库在当前环境无实例 | 尝试切换 env（如 PROD→UAT），或确认库名拼写正确 |
+| 400 "连接异常" | 该库在当前环境无实例 | 尝试切换 env（如 PRO→UAT），或确认库名拼写正确 |
 | "无权限" / 403 | 未申请只读权限 | 引导用户前往 DBOPS 申请权限（见 ②.3） |
 
 ---
@@ -432,6 +432,6 @@ sparklab_skinscan / sparklab_aidating / calio_mvp / sparklab_homework / sparklab
 | "当前语句非select语句" | SQL 含非 SELECT | 改为 SELECT 语句 |
 | "查询数据库连接信息异常" | 该库当前 env 无实例 | 切换 env 参数 |
 | "无权限" / "权限不足" / 403 | 用户未申请该库的只读权限 | 引导用户前往 DBOPS 申请权限（见 ②.3） |
-| 返回空数据 | 查询条件过滤了所有行或 UAT 数据量少 | 确认使用 env=PROD 查生产数据，放宽时间范围 |
+| 返回空数据 | 查询条件过滤了所有行或 UAT 数据量少 | 确认使用 env=PRO 查生产数据，放宽时间范围 |
 | curl 超时 | 网络或 SQL 太慢 | 加 `--max-time 60`，优化 SQL |
 | HTML 图表不显示 | CDN 被拦截 | 模板已内置 fallback CDN |
