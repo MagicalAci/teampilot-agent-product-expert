@@ -1,11 +1,11 @@
 ---
 name: product-demo-orchestrator
 display_name: "产品Demo开发编排"
-description: "面向 Web、H5 与 SwiftUI 产品 demo 的重型编排 Skill，覆盖 brief 冻结、设计系统、脚手架初始化、页面打磨、校验与交接。"
+description: "面向 Web、H5 与 SwiftUI 产品 demo 的重型编排 Skill，覆盖 brief 冻结、设计系统、脚手架初始化、页面打磨、校验与交接，以及一键部署上线。"
 category: product
 version: "1.0.0"
 review_criteria:
-  - label: "入口命令完整：/Demo开发、/Demo设计系统、/Demo脚手架、/Demo打磨、/Demo校验 能分别覆盖对应子流程。"
+  - label: "入口命令完整：/Demo开发、/Demo设计系统、/Demo脚手架、/Demo打磨、/Demo校验、/Demo上线 能分别覆盖对应子流程。"
   - label: "brief 冻结合规：开始前明确 demo 目标、受众、平台、时长、必须展示路径与非目标范围。"
   - label: "平台选择正确：Web、H5、SwiftUI 的交付骨架与用户目标一致，不混淆平台约束。"
   - label: "设计系统完整：输出主风格、页面结构、色板、字体、关键组件、反模式与页面级覆盖。"
@@ -15,23 +15,25 @@ review_criteria:
   - label: "校验脚本有效：validate 能识别缺失文件、缺少标题或平台入口异常。"
   - label: "打包结果可交付：package 能产出 zip，且保留 design system、demo 文件与 handoff。"
   - label: "交接信息完整：必须说明运行方式、已知限制、后续研发接手点。"
+  - label: "部署上线可用：deploy 能将 web/h5 demo 部署到云端并返回可访问 URL，SwiftUI 正确拒绝并给出替代建议。"
 ---
 
 # 产品 Demo 开发主 Skill
 
 ## Overview
 
-这是一个面向产品 demo 开发的重型 orchestrator skill，用来把一次 demo 交付拆成稳定的 5 段：
+这是一个面向产品 demo 开发的重型 orchestrator skill，用来把一次 demo 交付拆成稳定的 6 段：
 
 1. 冻结 brief
 2. 产出轻量设计系统
 3. 初始化平台脚手架
 4. 打磨 UI 与交互
 5. 校验、打包与交接
+6. 部署上线与分享
 
 它不是通用前端百科，也不是纯设计文档模板，而是一个“能直接起 demo 交付骨架”的工作流 skill。
 
-## 五条指令
+## 六条指令
 
 ### `/Demo开发 [主题]`
 
@@ -42,6 +44,7 @@ review_criteria:
 3. 选择 stack 并初始化交付骨架
 4. 打磨页面与演示路径
 5. 运行校验并打包
+6. 部署上线并分享链接（可选，用户确认后执行）
 
 ### `/Demo设计系统 [主题]`
 
@@ -58,6 +61,17 @@ review_criteria:
 ### `/Demo校验 [输出目录或主题]`
 
 用于校验已有 demo 资产是否齐全，并输出适合评审与交接的检查结论。
+
+### `/Demo上线 [输出目录或主题]`
+
+将已完成的 Web 或 H5 demo 部署到云端，获取可分享的在线链接。支持四个平台：
+
+- **Vercel**（默认推荐）：支持静态部署 + Serverless Functions，适合需要后端 API / AI 的 demo
+- **Surge.sh**：零配置极速分享，适合纯静态 demo 的快速预览
+- **Netlify**：支持表单处理与 Serverless Functions
+- **Cloudflare Pages**：团队已有凭证，无限带宽，适合长期保留
+
+SwiftUI demo 不支持在线部署，会提示替代方案（录屏 / 代码仓库链接）。
 
 ## 支持的平台
 
@@ -78,6 +92,7 @@ review_criteria:
 - `outputs/<slug>/handoff/developer-handoff.md`
 - `outputs/<slug>/demo/README.md`
 - `outputs/<slug>/demo/web/index.html` 或 `outputs/<slug>/demo/h5/index.html` 或 `outputs/<slug>/demo/swiftui/*.swift`
+- `outputs/<slug>/deploy/deploy-result.md`（部署上线后生成）
 
 ## Workflow
 
@@ -144,6 +159,28 @@ python scripts/run_pipeline.py validate --output-root ./outputs/demo-slug --json
 python scripts/run_pipeline.py package --output-root ./outputs/demo-slug --output ./dist/demo-slug.zip
 ```
 
+### 6. Deploy and share
+
+部署前先确认：
+
+- stack 是否为 `web` 或 `h5`（SwiftUI 不支持）
+- validate 是否通过
+- 用户是否确认要上线
+
+选择平台并部署：
+
+```bash
+python scripts/run_pipeline.py deploy --output-root ./outputs/demo-slug --platform vercel
+```
+
+也可指定项目名和生产模式：
+
+```bash
+python scripts/run_pipeline.py deploy --output-root ./outputs/demo-slug --platform vercel --project-name my-demo --prod
+```
+
+部署成功后，在 `deploy/deploy-result.md` 中记录在线 URL、平台与时间，并在聊天中直接展示可点击链接。
+
 ## User Checkpoints
 
 这些场景必须停下来问用户：
@@ -154,6 +191,10 @@ python scripts/run_pipeline.py package --output-root ./outputs/demo-slug --outpu
 - 用户要求复用现有代码或设计系统，但没有给路径
 - 需要真实品牌素材、图标、截图，而当前上下文里并不存在
 - 用户要求直接出原生工程，但没有说明是样例代码还是可编译工程
+- 部署平台未指定时，推荐并等用户确认
+- 首次使用某部署平台，需要登录认证时
+- demo 可能包含敏感信息（API Key、Token 等）时，发出安全警告
+- SwiftUI demo 请求上线时，提示不支持并给出替代方案
 
 ## Non-Negotiable Rules
 
@@ -163,6 +204,9 @@ python scripts/run_pipeline.py package --output-root ./outputs/demo-slug --outpu
 - 不要把“可交付”理解成只有页面文件，必须有 handoff 和 review 文档
 - 不要只追求好看而忽略 accessibility、metadata 与动效成本
 - 不要把 SwiftUI、Web、H5 三种平台的术语和约束混写
+- 不要在用户未确认的情况下自动执行部署
+- 不要部署包含 API Key、Token 等敏感信息的 demo，必须先警告
+- 不要对 SwiftUI demo 尝试在线部署，必须明确提示不支持并建议替代方案
 
 ## Scripts
 
@@ -172,8 +216,10 @@ python scripts/run_pipeline.py package --output-root ./outputs/demo-slug --outpu
   - 校验 demo brief、design system、review、handoff 与平台入口文件
 - `scripts/package_demo_bundle.py`
   - 把输出目录打成 zip
+- `scripts/deploy_demo.py`
+  - 将 demo 部署到 Vercel / Surge / Netlify / Cloudflare Pages
 - `scripts/run_pipeline.py`
-  - 统一 CLI：`init`、`validate`、`package`、`package-smoke`
+  - 统一 CLI：`init`、`validate`、`package`、`deploy`、`package-smoke`
 
 ## Resources
 
@@ -183,4 +229,5 @@ python scripts/run_pipeline.py package --output-root ./outputs/demo-slug --outpu
 - SwiftUI 模式：`references/swiftui-demo-patterns.md`
 - 打磨清单：`references/demo-polish-checklist.md`
 - 打包与交接：`references/demo-packaging.md`
+- 部署上线：`references/demo-deploy-guide.md`
 - 上游复用说明：`references/upstream-inspirations.md`

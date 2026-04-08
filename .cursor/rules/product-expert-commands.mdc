@@ -54,6 +54,7 @@ alwaysApply: false
 - `/AI测试`：只执行测试与测试报告子流程
 - `/Demo开发`：进入 `skills/product-demo-orchestrator/SKILL.md`
 - `/Demo设计系统` / `/Demo脚手架` / `/Demo打磨` / `/Demo校验`：Demo 子流程
+- `/Demo上线`：将已完成的 Web/H5 demo 部署到云端（Vercel/Surge/Netlify/Cloudflare），进入 `skills/product-demo-orchestrator/SKILL.md` 的部署上线流程
 - `/查看能力`：列出核心能力点与对应子命令
 - `/检查Agent更新`：查看当前版本与新增能力
 - `/更新请求` / `/经验写回`：整理可沉淀的方法并写回 Agent 仓库

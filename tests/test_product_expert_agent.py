@@ -50,6 +50,7 @@ class ProductExpertAgentRepositoryTest(unittest.TestCase):
             "/Demo脚手架",
             "/Demo打磨",
             "/Demo校验",
+            "/Demo上线",
             "/查看能力",
         ]:
             with self.subTest(command=command):

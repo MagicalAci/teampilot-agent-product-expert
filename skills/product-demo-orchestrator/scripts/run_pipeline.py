@@ -12,6 +12,7 @@ from pathlib import Path
 
 
 STACKS = ("web", "h5", "swiftui")
+DEPLOY_PLATFORMS = ("vercel", "surge", "netlify", "cloudflare")
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -33,6 +34,13 @@ def build_parser() -> argparse.ArgumentParser:
     package_parser.add_argument("--output-root", required=True)
     package_parser.add_argument("--output", required=True)
     package_parser.add_argument("--root-name", default="")
+
+    deploy_parser = subparsers.add_parser("deploy", help="Deploy a demo to a cloud platform")
+    deploy_parser.add_argument("--output-root", required=True)
+    deploy_parser.add_argument("--platform", choices=DEPLOY_PLATFORMS, default="vercel")
+    deploy_parser.add_argument("--project-name", default="")
+    deploy_parser.add_argument("--prod", action="store_true")
+    deploy_parser.add_argument("--json", action="store_true")
 
     smoke_parser = subparsers.add_parser("package-smoke", help="Run init + validate + package across stacks")
     smoke_parser.add_argument("--json", action="store_true")
@@ -98,6 +106,29 @@ def cmd_package(args: argparse.Namespace) -> int:
     ]
     if args.root_name:
         command.extend(["--root-name", args.root_name])
+    result = run_command(command)
+    if result.stdout:
+        print(result.stdout.strip())
+    if result.stderr:
+        print(result.stderr.strip(), file=sys.stderr)
+    return result.returncode
+
+
+def cmd_deploy(args: argparse.Namespace) -> int:
+    command = [
+        sys.executable,
+        str(script_path("deploy_demo.py")),
+        "--output-root",
+        args.output_root,
+        "--platform",
+        args.platform,
+    ]
+    if args.project_name:
+        command.extend(["--project-name", args.project_name])
+    if args.prod:
+        command.append("--prod")
+    if args.json:
+        command.append("--json")
     result = run_command(command)
     if result.stdout:
         print(result.stdout.strip())
@@ -186,6 +217,8 @@ def main() -> int:
         return cmd_validate(args)
     if args.command == "package":
         return cmd_package(args)
+    if args.command == "deploy":
+        return cmd_deploy(args)
     if args.command == "package-smoke":
         return cmd_package_smoke(args)
 

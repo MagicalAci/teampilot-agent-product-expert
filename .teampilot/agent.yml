@@ -32,7 +32,7 @@ contracts:
     - 单产品分析需保留任务卡、关键证据、过程记录、最终判断与事实核查痕迹。
     - 产品策划需保留 PRD、图文资产、证据包与 review 交接信息。
     - AI策划需保留 AI PRD、脚本或样例、测试报告，以及必要的开发 README 或打包清单。
-    - Demo开发需保留 demo brief、design system、平台入口文件、preflight checklist、walkthrough 与 developer handoff。
+    - Demo开发需保留 demo brief、design system、平台入口文件、preflight checklist、walkthrough 与 developer handoff。若已部署上线，需保留 deploy-result.md 记录在线 URL。
     - 若 Agent 给出多个备选方案，最终选择与理由必须由人类明确确认。
   reviewChecklist:
     - 确认交付物是否覆盖任务目标、关键要求与约束条件。
@@ -133,6 +133,11 @@ cursor:
       command: /Demo校验
       description: 校验 demo brief、design system、入口文件与交接文档
       example: /Demo校验 outputs/demo-home
+    - key: demo-deploy
+      title: Demo上线
+      command: /Demo上线
+      description: 将已完成的 Web/H5 demo 部署到云端（Vercel/Surge/Netlify/Cloudflare），获取可分享链接
+      example: /Demo上线 outputs/demo-home
     - key: sql-query
       title: SQL查询
       command: /SQL
@@ -210,11 +215,11 @@ capabilities:
       - policies/submission-review-contract.md
   - key: demo-development
     title: Demo开发
-    description: 面向 Web、H5 与 SwiftUI 的产品 demo 开发能力，覆盖 brief、设计系统、脚手架、打磨、校验与交接。
+    description: 面向 Web、H5 与 SwiftUI 的产品 demo 开发能力，覆盖 brief、设计系统、脚手架、打磨、校验、交接与一键部署上线。
     command: /Demo开发
     recommendedWhen: 当你要快速做一个可演示、可讲述、可交接的产品 demo，而不是完整正式工程时使用。
     inputTemplate: /Demo开发 AI 陪练产品首页 demo，目标平台：H5，输出：可演示页面 + design system + walkthrough + handoff。
-    outputFormat: outputs 目录、design system、平台入口文件、preflight checklist、walkthrough、handoff、zip 包
+    outputFormat: outputs 目录、design system、平台入口文件、preflight checklist、walkthrough、handoff、zip 包、部署 URL
     skillRefs:
       - skills/product-demo-orchestrator/SKILL.md
     mcpRefs: []
