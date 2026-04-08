@@ -439,12 +439,32 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.13.0 -->
+    <!-- v0.14.0 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.13.0</code>
+        <code>v0.14.0</code>
         <span class="cl-tag">最新</span>
+      </div>
+      <div class="cl-body">
+        <strong>新增 /Demo上线 部署能力</strong>
+        <ul>
+          <li>新增 <code>/Demo上线</code> 命令，将 Web/H5 demo 一键部署到云端获取可分享链接</li>
+          <li>支持四个平台：Vercel（默认推荐）、Surge.sh（极速分享）、Netlify、Cloudflare Pages</li>
+          <li>新增 <code>deploy_demo.py</code> 部署脚本 + <code>run_pipeline.py deploy</code> 子命令</li>
+          <li>SwiftUI demo 正确拒绝在线部署并给出替代建议</li>
+          <li>完整的四平台指南：安装认证、Serverless Functions、免费额度、故障排除</li>
+          <li>部署结果自动记录到 <code>deploy/deploy-result.md</code></li>
+          <li>新增 4 个 deploy smoke test 覆盖各 stack 场景</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.13.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.13.0</code>
       </div>
       <div class="cl-body">
         <strong>新增作业监督数据库 + 环境修正</strong>

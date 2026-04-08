@@ -48,8 +48,8 @@
 
 - 主 skill：`skills/product-demo-orchestrator/SKILL.md`
 - 主命令：`/Demo开发`
-- 子命令：`/Demo设计系统`、`/Demo脚手架`、`/Demo打磨`、`/Demo校验`
-- 适用场景：Web、H5、SwiftUI demo，产品演示页，评审演示骨架，产品 walkthrough 与开发交接
+- 子命令：`/Demo设计系统`、`/Demo脚手架`、`/Demo打磨`、`/Demo校验`、`/Demo上线`
+- 适用场景：Web、H5、SwiftUI demo，产品演示页，评审演示骨架，产品 walkthrough 与开发交接，一键部署上线分享
 
 ### 5. SQL 数据查询分析（AIBI）
 

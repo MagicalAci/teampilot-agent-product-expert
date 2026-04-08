@@ -8,7 +8,7 @@ agent:
   standaloneEnabled: true
 release:
   version: 0.14.0
-  notes: 修正 AIBI SQL 查询环境配置 — 统一使用 UAT 作为线上数据环境（UAT 即生产数据），移除所有对 PROD 的错误引用和 fallback 逻辑。
+  notes: 新增 /Demo上线 部署能力 — 支持将 Web/H5 demo 一键部署到 Vercel、Surge、Netlify、Cloudflare Pages，获取可分享在线链接。
 dependencies:
   skills:
     - skills/research-toolkit/SKILL.md
