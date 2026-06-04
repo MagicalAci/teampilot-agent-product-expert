@@ -10,6 +10,20 @@ from pathlib import Path
 
 MARKDOWN_IMAGE = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
 HTML_IMAGE = re.compile(r'<img[^>]+src=["\']([^"\']+)["\']')
+FENCED_CODE = re.compile(r"```.*?```|~~~.*?~~~", re.DOTALL)
+INLINE_CODE = re.compile(r"`[^`]*`")
+
+
+def strip_code_segments(text: str) -> str:
+    """Remove fenced code blocks and inline code spans.
+
+    Image references inside markdown code samples are documentation examples
+    (e.g. the PRD template's prototype-image format), not real embedded assets,
+    so they must not be treated as missing files.
+    """
+    text = FENCED_CODE.sub("", text)
+    text = INLINE_CODE.sub("", text)
+    return text
 
 
 def parse_args() -> argparse.Namespace:
@@ -30,6 +44,8 @@ def resolve_path(source: str, file_path: Path) -> Path | None:
 
 def collect_references(file_path: Path) -> list[str]:
     content = file_path.read_text(encoding="utf-8")
+    if file_path.suffix.lower() in {".md", ".markdown"}:
+        content = strip_code_segments(content)
     return MARKDOWN_IMAGE.findall(content) + HTML_IMAGE.findall(content)
 
 

@@ -9,6 +9,16 @@ from typing import Iterable
 PLACEHOLDER_RE = re.compile(
     r"\[(?:待填|待补|产品名|页面名|模块名|图表标题|topic|slug|来源名|URL或本地路径|文件名|要证明的价值|要证明的判断|页面角色|谁被优先服务|用户完成什么|结论数字或一句判断)[^\]]*\]"
 )
+FENCED_CODE_RE = re.compile(r"```.*?```|~~~.*?~~~", re.DOTALL)
+INLINE_CODE_RE = re.compile(r"`[^`]*`")
+
+
+def strip_code_segments(text: str) -> str:
+    """Drop fenced/inline code so example asset references in markdown snippets
+    are not mistaken for real embedded assets."""
+    text = FENCED_CODE_RE.sub("", text)
+    text = INLINE_CODE_RE.sub("", text)
+    return text
 
 
 def delivery_documents(output_root: Path) -> list[Path]:
@@ -103,6 +113,8 @@ def collect_local_asset_refs(file_paths: Iterable[Path], output_root: Path) -> s
     refs: set[str] = set()
     for path in file_paths:
         text = path.read_text(encoding="utf-8")
+        if path.suffix.lower() in {".md", ".markdown"}:
+            text = strip_code_segments(text)
         for match in markdown_image.findall(text) + html_image.findall(text):
             source = match.strip().split("#", 1)[0].split("?", 1)[0]
             if source.startswith(("http://", "https://", "data:")):
