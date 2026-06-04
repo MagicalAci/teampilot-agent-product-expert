@@ -26,9 +26,10 @@
 
 - 主 skill：`skills/research-toolkit/SKILL.md`
 - 主命令：`/深度调研 [产品/方向]`
-- 子命令：`/爬取`、`/体验引导`、`/调研安装`、`/调研体检`、`/调研授权`、`/调研打包`
-- 适用场景：单产品深度分析、方向/赛道调研、市场全景对比、用户研究、自定义调研
-- 工具链：DeerFlow 深度研究、MediaCrawler/XHS-Downloader 社媒采集、MCP 并行采集
+- 子命令：`/海外调研`、`/爬取`、`/体验引导`、`/调研安装`、`/调研体检`、`/调研授权`、`/调研打包`
+- 适用场景：单产品深度分析、方向/赛道调研、市场全景对比、用户研究、海外/出海调研、自定义调研
+- 工具链：DeerFlow 深度研究、MediaCrawler/XHS-Downloader 国内社媒采集、last30days 海外社媒采集（Reddit/X/YouTube/HN/TikTok/Polymarket）、MCP 并行采集
+- 双通道：国内通道（小红书/微博/B站/知乎）+ 海外通道（last30days 引擎，按需 `npx skills add mvanhorn/last30days-skill -g` 安装，不可用时自动降级）
 
 ### 2. 产品策划
 
@@ -133,6 +134,7 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 1. 使用 `/查看能力` 查看五个能力点及其子命令
 2. 按任务类型直接进入对应命令：
    - 调研分析：`/深度调研 豆包爱学`
+   - 海外调研：`/海外调研 Perplexity`
    - 产品策划：`/产品策划 家长端留存提升方案`
    - AI策划：`/AI策划 PRD 生成 Agent`
    - Demo开发：`/Demo开发 AI 陪练产品首页 demo，目标平台：H5`
@@ -141,7 +143,7 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 
 ## 目录说明
 
-- `skills/research-toolkit/`：单产品分析完整 skill 包，含 assets、examples、references、scripts、tests、schemas、fixtures
+- `skills/research-toolkit/`：调研分析完整 skill 包，含国内/海外双采集通道（海外通道见 `protocols/overseas-research.md` + `references/last30days-connector.md`），含 assets、examples、references、scripts、tests、schemas、fixtures
 - `skills/education-prd-orchestrator/`：产品策划完整 skill 包，含 assets、examples、references、scripts、tests、fixtures
 - `skills/ai-planning-orchestrator/`：AI策划完整 skill 包，含 assets、examples、references、scripts、tests
 - `skills/product-demo-orchestrator/`：Demo开发完整 skill 包，含 assets、references、scripts、tests

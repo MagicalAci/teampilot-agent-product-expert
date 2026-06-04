@@ -11,6 +11,7 @@ alwaysApply: false
 ## Research Toolkit 调研分析命令
 
 - `/深度调研 [产品/方向]`：进入 `skills/research-toolkit/SKILL.md`，AI 自动识别任务类型（单产品/方向/全景/用户研究），走完整调研流程
+- `/海外调研 [主题]`：进入 `skills/research-toolkit/SKILL.md` 的海外通道（`protocols/overseas-research.md`），用 last30days 引擎对 Reddit/X/YouTube/HN/TikTok/Polymarket 等海外平台采集并归一，引擎不可用时按协议降级
 - `/爬取 [平台] [关键词]`：作为 `research-toolkit` 的主动社媒采集子流程执行（MediaCrawler / XHS-Downloader）
 - `/体验引导`：作为 `research-toolkit` 的 App/Web 实测引导子流程执行
 - `/调研安装`：安装 DeerFlow + MediaCrawler + XHS-Downloader 工具链
@@ -25,6 +26,7 @@ alwaysApply: false
 - "XXX 竞品分析" / "XXX 产品调研" / "XXX 市场调研"
 - "做个用户研究" / "看看用户怎么说" / "挖一下用户痛点"
 - "这个赛道怎么样" / "方向可行性分析"
+- "海外怎么看 XXX" / "Reddit/X/YouTube 上 XXX 口碑" / "XXX 出海/海外竞品舆情" → 海外通道（`/海外调研`）
 
 ## AIBI SQL 数据查询命令
 

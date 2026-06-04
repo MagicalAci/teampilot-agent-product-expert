@@ -48,6 +48,11 @@ cursor:
       command: /深度调研
       description: 调研分析主入口，AI 自动识别任务类型（单产品/方向/全景/用户研究），走完整流程
       example: /深度调研 Kimi学习版
+    - key: overseas-research
+      title: 海外调研
+      command: /海外调研
+      description: 海外通道快捷入口，用 last30days 引擎对 Reddit/X/YouTube/HN/TikTok/Polymarket 等海外平台采集并归一
+      example: /海外调研 Perplexity
     - key: crawl
       title: 爬取
       command: /爬取
@@ -171,11 +176,11 @@ cursor:
 capabilities:
   - key: research-toolkit
     title: 调研分析
-    description: 统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，自带 DeerFlow 深度研究、MediaCrawler 社媒采集、质量门禁、逐章写作与三轮事实核查。
+    description: 统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，含国内/海外双采集通道（国内 DeerFlow + MediaCrawler 社媒，海外 last30days 覆盖 Reddit/X/YouTube/HN/TikTok/Polymarket），自带质量门禁、逐章写作与三轮事实核查。
     command: /深度调研
-    recommendedWhen: 当你需要深入分析产品、验证方向可行性、对比竞品、挖掘用户痛点时使用。
+    recommendedWhen: 当你需要深入分析产品、验证方向可行性、对比竞品、挖掘用户痛点，或调研海外/出海产品舆情时使用。
     inputTemplate: /深度调研 Kimi学习版
-    outputFormat: 任务卡、平台 summary/data、DeerFlow 深度报告、体验报告、章节成稿、事实核查与最终报告
+    outputFormat: 任务卡、国内平台 summary/data、海外通道 overseas summary/data、DeerFlow 深度报告、体验报告、章节成稿、事实核查与最终报告
     skillRefs:
       - skills/research-toolkit/SKILL.md
     mcpRefs:

@@ -227,11 +227,12 @@ footer a:hover{text-decoration:underline}
         <div class="cap-icon research">🔍</div>
         <div class="cap-head-text">
           <h3>调研分析 <span class="main-cmd" onclick="copyCmd(this,'/深度调研')">/深度调研</span></h3>
-          <p>统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，自带 DeerFlow 深度研究、MediaCrawler 社媒采集、质量门禁与三轮事实核查。</p>
+          <p>统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，含国内/海外双采集通道（国内 DeerFlow + MediaCrawler，海外 last30days 覆盖 Reddit/X/YouTube/HN/TikTok/Polymarket），自带质量门禁与三轮事实核查。</p>
         </div>
       </div>
       <div class="sub-cmds">
         <span class="sub-cmd" onclick="copyCmd(this,'/深度调研 [产品名]')">/深度调研<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/海外调研 [主题]')">/海外调研<span class="copied-tip">已复制</span></span>
         <span class="sub-cmd" onclick="copyCmd(this,'/爬取 [平台] [关键词]')">/爬取<span class="copied-tip">已复制</span></span>
         <span class="sub-cmd" onclick="copyCmd(this,'/体验引导')">/体验引导<span class="copied-tip">已复制</span></span>
         <span class="sub-cmd" onclick="copyCmd(this,'/调研安装')">/调研安装<span class="copied-tip">已复制</span></span>
@@ -388,7 +389,8 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 
 ## 核心能力入口参考
 
-- /深度调研：统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，自带 DeerFlow 深度研究、MediaCrawler 社媒采集、质量门禁、逐章写作与三轮事实核查。
+- /深度调研：统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，含国内/海外双采集通道，自带 DeerFlow 深度研究、MediaCrawler 社媒采集、质量门禁、逐章写作与三轮事实核查。
+- /海外调研：海外通道快捷入口 — 用 last30days 引擎对 Reddit/X/YouTube/HN/TikTok/Polymarket 等海外平台采集并归一，引擎不可用时自动降级。
 - /产品策划：证据驱动的产品策划与 PRD 交付能力，覆盖任务卡冻结、定义闸门、章节编排、配图与校验。
 - /AI策划：面向 AI 方案落地的产品能力，覆盖 AI PRD、脚本开发、测试报告与最小交接包。
 - /Demo开发：面向 Web、H5 与 SwiftUI 的产品 demo 开发能力，覆盖 brief、设计系统、脚手架、打磨、校验、交接与一键部署上线。
@@ -440,12 +442,30 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.14.0 -->
+    <!-- v0.15.0 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.14.0</code>
+        <code>v0.15.0</code>
         <span class="cl-tag">最新</span>
+      </div>
+      <div class="cl-body">
+        <strong>新增海外调研通道（/海外调研）</strong>
+        <ul>
+          <li>新增 <code>/海外调研</code> 命令，集成 last30days 引擎覆盖 Reddit/X/YouTube/HN/TikTok/Polymarket 等海外平台</li>
+          <li>调研分析升级为国内/海外双采集通道，海外结果归一到 <code>03-normalized/overseas/</code> 标准件并接入写作/核查/配图流水线</li>
+          <li>新增 <code>protocols/overseas-research.md</code> 海外通道协议与 <code>references/last30days-connector.md</code> 连接器说明</li>
+          <li>连接器模式：引擎按需 <code>npx skills add mvanhorn/last30days-skill -g</code> 安装，不可用时自动降级为 firecrawl/exa + WebSearch</li>
+          <li>新增海外连接器契约测试，修复历史 CI 红线后全量测试转绿</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.14.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.14.0</code>
       </div>
       <div class="cl-body">
         <strong>新增 /Demo上线 部署能力</strong>

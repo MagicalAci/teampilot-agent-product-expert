@@ -118,3 +118,20 @@ bash "~/.cursor/skills/research-toolkit/scripts/bootstrap-macos.sh" repair
 - 不允许把“工具没装好”伪装成“平台没数据”
 - 不允许只写总结、不落 `data.csv`
 - 不允许跨平台共用一个 CSV
+
+## 9. 海外通道工具（last30days）
+
+海外通道（Reddit / X / YouTube / HN / TikTok / Polymarket 等）统一由 `last30days` 引擎覆盖，按连接器方式管理，详见 `../references/last30days-connector.md`。
+
+| 状态 | 判定 | 处理方式 |
+|---|---|---|
+| `已安装` | 检测路径下存在 `last30days.py` 且系统 Python 3.12+ 可用 | 直接进入海外采集 |
+| `需安装` | 未检测到引擎 | 提示 `npx skills add mvanhorn/last30days-skill -g`（或 `/调研安装`），用户拒装则降级 |
+| `需登录初始化` | 引擎在但缺平台 Key（X / TikTok / IG 等） | 提示补 Key，仅缺的平台进入降级；免费平台正常跑 |
+| `当前降级模式` | 引擎不可用 / Python < 3.12 / 引擎报错 | 降级为 `user-firecrawl` / `user-exa` + `WebSearch` 逐平台补抓，`summary.md` 写明盲区 |
+
+边界：
+
+- 引擎本体不进本仓库，也不在本仓库 3.9 venv 内运行（引擎需系统 Python 3.12+）
+- Reddit / HN / Polymarket / GitHub 免费开箱即用，无需 Key
+- 缺 Key 的平台只允许明确降级，不允许假装已覆盖

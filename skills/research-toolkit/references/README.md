@@ -17,6 +17,12 @@
    - `visualization-protocol.md`
    - `review-gate-protocol.md`
 
+## 连接器说明（外部工具）
+
+- `deerflow-runtime.md` — DeerFlow 深度研究引擎连接器
+- `mediacrawler-connector.md` — MediaCrawler / XHS-Downloader 国内社媒连接器
+- `last30days-connector.md` — last30days 海外调研引擎连接器（Reddit/X/YouTube/HN/TikTok/Polymarket 等），配套协议 `protocols/overseas-research.md`
+
 ## 说明
 
 - `references/` 更像导航层和总说明层
