@@ -149,6 +149,7 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 - `skills/product-demo-orchestrator/`：Demo开发完整 skill 包，含 assets、references、scripts、tests
 - `skills/aibi-query/`：SQL 数据查询分析 skill 包，含 references（数据库全景/查询案例/查询规范）、templates（HTML 看板）、scripts（Token 管理）
 - `policies/submission-review-contract.md`：统一提交与评审契约
+- `policies/agent-team-methodology.md`：团队架构与技能编写方法论（蒸馏适配自 [revfactory/harness](https://github.com/revfactory/harness)，Apache-2.0），支撑多子代理编排与 `/经验写回`·`/更新请求` 自我进化
 - `mcps/README.md`：单产品分析依赖的 MCP 与降级说明
 - `tests/test_product_expert_agent.py`：仓库级能力映射与入口回归
 

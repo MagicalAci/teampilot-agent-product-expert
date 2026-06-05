@@ -30,9 +30,16 @@
 - 必须保留 demo brief、design system、平台入口文件、preflight checklist、demo walkthrough 与 developer handoff
 - 如果执行的是 `/Demo校验`，需要明确指出缺失资产、标题缺口或平台入口异常
 
+### 技能写回（`/经验写回`、`/更新请求`）
+
+- 新增或重构技能时，遵循 `agent-team-methodology.md` 第二、三部分：Description 写清触发与边界、Why-First 正文、渐进式披露
+- 必须配套契约测试（存在性 + 关键标记 + 触发词），并跑通全量测试后再合并
+- 涉及多子代理编排的，按 `agent-team-methodology.md` 第一部分选定团队架构模式
+
 ## 评审时重点确认
 
 - 是否真正回答了任务目标
 - 是否保留了足够证据与判断依据
 - 是否存在应回写到 Agent 仓库的方法论增量
 - 是否通过对应能力的 smoke test、校验脚本或结构完整性检查
+- 技能写回是否遵循 `agent-team-methodology.md` 并补齐契约测试
