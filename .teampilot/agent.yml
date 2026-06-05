@@ -7,7 +7,7 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.18.1
+  version: 0.19.0
   notes: 新增 /Demo上线 部署能力 — 支持将 Web/H5 demo 一键部署到 Vercel、Surge、Netlify、Cloudflare Pages，获取可分享在线链接。
 dependencies:
   skills:
