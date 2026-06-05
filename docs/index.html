@@ -442,12 +442,29 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.16.0 -->
+    <!-- v0.17.0 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.16.0</code>
+        <code>v0.17.0</code>
         <span class="cl-tag">最新</span>
+      </div>
+      <div class="cl-body">
+        <strong>新增 /安全扫描 + 借鉴 ECC 运维方法论</strong>
+        <ul>
+          <li>新增 <code>policies/agent-security-scan.md</code>：<code>/安全扫描</code> 安全自检连接器，集成 AgentShield（ecc-agentshield，MIT）</li>
+          <li>扫描配置/指令文件的密钥、过宽权限、提示注入、风险 MCP、Hook 注入；按需安装、不可用降级为人工自检</li>
+          <li>方法论库新增「借鉴 ECC」节：持续学习(Instincts)增强经验写回、Token 优化、worktree 并行、验证循环(evals)</li>
+          <li>接入命令路由与提交评审契约（写回前先跑安全扫描）；新增契约测试</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.16.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.16.0</code>
       </div>
       <div class="cl-body">
         <strong>内置团队架构与技能编写方法论</strong>

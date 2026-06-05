@@ -60,6 +60,7 @@ alwaysApply: false
 - `/查看能力`：列出核心能力点与对应子命令
 - `/检查Agent更新`：查看当前版本与新增能力
 - `/更新请求` / `/经验写回`：整理可沉淀的方法并写回 Agent 仓库
+- `/安全扫描`：按 `policies/agent-security-scan.md` 用 AgentShield 扫描 Agent 配置/指令文件的安全漏洞（密钥/权限/注入/MCP/Hook），不可用时降级为人工自检清单；写回前应先跑一次
 
 ## 执行原则
 

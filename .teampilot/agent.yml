@@ -27,6 +27,7 @@ dependencies:
   policies:
     - policies/submission-review-contract.md
     - policies/agent-team-methodology.md
+    - policies/agent-security-scan.md
 contracts:
   submitChecklist:
     - 交付物必须明确对应本次能力入口，并落在该能力约定的标准目录结构中。
@@ -174,6 +175,11 @@ cursor:
       command: /经验写回
       description: 把本次可沉淀的方法、提示词或判断框架写回为 Agent 仓库 PR
       example: /经验写回 把这次竞品拆解模板沉淀到单产品分析能力里
+    - key: security-scan
+      title: 安全扫描
+      command: /安全扫描
+      description: 用 AgentShield 扫描 Agent 配置/指令文件的安全漏洞（密钥/权限/注入/MCP/Hook），不可用时降级为人工自检
+      example: /安全扫描
 capabilities:
   - key: research-toolkit
     title: 调研分析
