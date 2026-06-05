@@ -7,7 +7,7 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.22.0
+  version: 0.23.0
   notes: AI能力系统性升级 Phase 2(P1) — 在Phase1(13项P0)之上新增6个P1协议(上下文预算/AgentOps生命周期build→eval→ship→govern/Prompt自动优化GEPA-DSPy升级判据/输出契约schema/自建MCP工具创作/安全红队清单)，扩展3个既有方法论(团队成本与运行时安全/安全扫描MCP运行时风险/评测轨迹与red-team)，新增knowledge跨任务知识库脚手架与aibi Table-RAG-lite及多轮查询改写；P0+P1契约测试全绿。
 dependencies:
   skills:

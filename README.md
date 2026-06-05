@@ -12,7 +12,7 @@
 ## 当前版本
 
 - Slug：`product-expert`
-- Version：`0.22.0`
+- Version：`0.23.0`
 - Repo：`MagicalAci/teampilot-agent-product-expert`
 
 ## 架构特性
@@ -83,11 +83,11 @@
 
 直接运行下面这条命令：
 
-curl -fsSL https://teampilot.magicalaci.cn/api/agents/product-expert/install?format=script&version=0.22.0 | bash
+curl -fsSL https://teampilot.magicalaci.cn/api/agents/product-expert/install?format=script&version=0.23.0 | bash
 
 如果上面的命令执行失败或超时，改用下面的备用方式：
 
-AGENT_DIR="$HOME/TeamPilot/agents/product-expert/0.22.0"
+AGENT_DIR="$HOME/TeamPilot/agents/product-expert/0.23.0"
 mkdir -p "$AGENT_DIR"
 git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGENT_DIR"
 
@@ -95,12 +95,12 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 
 ## 第二步：安装完成后读取这些文件
 
-- ~/TeamPilot/agents/product-expert/0.22.0/QUICKSTART.md
-- ~/TeamPilot/agents/product-expert/0.22.0/.teampilot/agent.yml
+- ~/TeamPilot/agents/product-expert/0.23.0/QUICKSTART.md
+- ~/TeamPilot/agents/product-expert/0.23.0/.teampilot/agent.yml
 - 不要依赖仓库 README.md 作为当前版本能力和命令的最终事实源；README 只能补充背景。
 
 如果 QUICKSTART.md 不存在，则读取以下文件代替：
-- ~/TeamPilot/agents/product-expert/0.22.0/.cursor/rules/product-expert-commands.mdc
+- ~/TeamPilot/agents/product-expert/0.23.0/.cursor/rules/product-expert-commands.mdc
 
 ## 当前版本信息
 
@@ -108,7 +108,7 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 - 版本：0.21.0
 - 仓库：MagicalAci/teampilot-agent-product-expert
 - 简介：内置调研分析（单产品/方向/全景/用户研究）、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。
-- 本地目录：~/TeamPilot/agents/product-expert/0.22.0
+- 本地目录：~/TeamPilot/agents/product-expert/0.23.0
 
 ## 核心能力入口参考
 
