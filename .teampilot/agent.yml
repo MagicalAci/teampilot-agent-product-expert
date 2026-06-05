@@ -8,7 +8,7 @@ agent:
   standaloneEnabled: true
 release:
   version: 0.22.0
-  notes: AI能力系统性升级 Phase 1 — 基于12域·~700条SOTA调研综合(research/ai-capability-upgrade/SYNTHESIS.md)，新增11个跨能力AI能力协议(推理范式/编排运行时双账本/自检与接地/检索/跨会话记忆接claude-mem/意图路由与对话/工具使用/运行时安全间接注入与HITL/成本纪律预算护栏/Agent轨迹评测/能力注册表)+intent-router规则+task-navigator预检判定块+run_eval轨迹grader+结构化输出强约束；8个P0契约测试全绿。
+  notes: AI能力系统性升级 Phase 2(P1) — 在Phase1(13项P0)之上新增6个P1协议(上下文预算/AgentOps生命周期build→eval→ship→govern/Prompt自动优化GEPA-DSPy升级判据/输出契约schema/自建MCP工具创作/安全红队清单)，扩展3个既有方法论(团队成本与运行时安全/安全扫描MCP运行时风险/评测轨迹与red-team)，新增knowledge跨任务知识库脚手架与aibi Table-RAG-lite及多轮查询改写；P0+P1契约测试全绿。
 dependencies:
   skills:
     - skills/research-toolkit/SKILL.md
@@ -42,6 +42,12 @@ dependencies:
     - policies/agent-safety-protocol.md
     - policies/cost-discipline-methodology.md
     - policies/agent-trajectory-eval.md
+    - policies/context-budget.md
+    - policies/agentops-lifecycle.md
+    - policies/prompt-optimization-protocol.md
+    - policies/output-contract.md
+    - policies/mcp-tool-authoring.md
+    - policies/red-team-checklist.md
 contracts:
   submitChecklist:
     - 交付物必须明确对应本次能力入口，并落在该能力约定的标准目录结构中。

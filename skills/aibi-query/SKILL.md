@@ -168,6 +168,9 @@ echo "TOKEN_SAVED"
 
 ### 3.2 查阅表结构
 
+> **多轮 follow-up**：当用户说"再深一点 / 换个库 / 它的趋势呢"等省略式追问时，先按 `policies/intent-routing-and-dialog.md` + `policies/retrieval-protocol.md` 做 **history-aware 查询改写**（补全成自洽独立问题、携带前文实体）再继续，避免丢上下文。
+> **Table-RAG-lite（按需检索表/案例）**：当前 4 库可**全量读** `references/数据库全景.md`；当库/表增多（如 >~30 表或多库联查）时，改为**按问题语义检索相关表 + 相关 few-shot 案例**再注入上下文（而非全量塞 schema），见 `policies/retrieval-protocol.md`。
+
 **先读取 `references/数据库全景.md` 获取完整表结构。** 如需更精确的字段信息：
 
 ```bash

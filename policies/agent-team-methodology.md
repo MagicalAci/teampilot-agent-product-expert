@@ -169,6 +169,7 @@ README/CHANGELOG 等附属文档、技能生成过程的元信息（测试结果
 - 模型分级路由：简单转换/确定性任务用轻量模型或直接编辑，复杂推理/架构才上重模型
 - 系统提示瘦身 + 上下文是公共资源：每句都问"模型已知吗？没有它会出错吗？"（与第二部分"节约上下文"一致）
 - 长任务用后台/子代理隔离上下文，主代理只收摘要
+- **落地约定见 `cost-discipline-methodology.md`**：模型/思考分级决策表、三层缓存复用门禁、任务级预算护栏（超限收敛、**限流即停用不重试**）、级联式派发（低档采集 + 高档仅做裁决）；上下文 write/select/compress/isolate 见 `context-budget.md`
 
 ### 3. 并行（worktree / cascade）
 
@@ -185,7 +186,7 @@ README/CHANGELOG 等附属文档、技能生成过程的元信息（测试结果
 
 ### 5. 安全自检
 
-涉及配置/指令/脚本写回时，按 `agent-security-scan.md` 跑 `/安全扫描`（AgentShield 连接器），把安全检查纳入自我进化闭环。
+涉及配置/指令/脚本写回时，按 `agent-security-scan.md` 跑 `/安全扫描`（AgentShield 连接器，含 MCP 运行时风险），把安全检查纳入自我进化闭环。运行时防线（间接注入/输入输出校验/高风险动作 HITL）见 `agent-safety-protocol.md`，发布前过 `red-team-checklist.md`；整条自我进化生命周期见 `agentops-lifecycle.md`。
 
 ---
 

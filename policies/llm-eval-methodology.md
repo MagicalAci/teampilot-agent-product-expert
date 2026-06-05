@@ -239,9 +239,13 @@ LLM-judge 不是"调个 API 打个分"，要当成**需要自己被验证的 ML 
 
 ---
 
+> **单轮 vs 轨迹**：本文件是**单轮 EDD**（一条 input→output）。评 **agent 的整条 run**——完成率 / 工具调用准确率 / 计划质量 / 步骤效率 / 在线可观测（run-trace）——见 `policies/agent-trajectory-eval.md`（与本文件互补、不重复）。安全 eval / 越狱注入红队见 `policies/red-team-checklist.md`。
+
 ## 何时查阅本方法论
 
 - 写 `/AI评测`、`/AI调优`、`/评测集` → 查第 2–5 节 + `references/eval-driven-development.md`
+- 评 agent 轨迹 / 完成判定 / 工具调用 / 在线可观测 → `policies/agent-trajectory-eval.md`
+- 安全 eval / red-team（注入·越狱·外泄·越权）→ `policies/red-team-checklist.md`
 - 设计 LLM-as-judge / 量规 → 查第 3 节 + `assets/judge-rubric-template.md`
 - 接 CI / 跑自动化评测台 → 查第 4 节 + `references/eval-harness-guide.md`
 - 调优提示词 / 出调优报告 → 查第 5 节 + `assets/tuning-report-template.md`

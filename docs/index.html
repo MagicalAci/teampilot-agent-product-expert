@@ -445,12 +445,28 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.22.0 -->
+    <!-- v0.23.0 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.22.0</code>
+        <code>v0.23.0</code>
         <span class="cl-tag">最新</span>
+      </div>
+      <div class="cl-body">
+        <strong>AI 能力系统性升级 · Phase 2（6 个 P1 协议 + 既有方法论扩展）</strong>
+        <ul>
+          <li>新增 6 个 P1 协议（<code>policies/</code>）：上下文预算（write/select/compress/isolate）、AgentOps 生命周期（build→eval→ship→govern + 准入门禁）、自动 Prompt 优化（GEPA/DSPy 升级判据）、输出契约（schema + reask）、自建 MCP/工具创作、安全红队清单（注入/越狱/外泄/越权）</li>
+          <li>扩展既有：<code>agent-team-methodology</code>（成本落地约定 + 运行时安全指针）、<code>agent-security-scan</code>（MCP 运行时风险：工具投毒/rug-pull/不可信响应）、<code>llm-eval-methodology</code>（轨迹评测 + red-team 指引）</li>
+          <li>新增 <code>knowledge/</code> 跨任务知识库脚手架；<code>aibi-query</code> 接入 Table-RAG-lite 与多轮 history-aware 查询改写；新增 P1 契约测试，全仓回归通过</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.22.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.22.0</code>
       </div>
       <div class="cl-body">
         <strong>AI 能力系统性升级 · Phase 1（13 项 P0 能力协议 + 自我进化闭环脊椎）</strong>
