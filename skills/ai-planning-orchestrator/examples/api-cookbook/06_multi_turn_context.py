@@ -3,11 +3,12 @@
 通过维护 messages 数组实现多轮对话，模型能理解完整对话历史。
 """
 
+import os
 import json
 import requests
 
 API_URL = "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions"
-SECRET_KEY = "sk-Vh5iZI1erTwgnXKXbGQsqbC_saQknnGO2a90byMFSKA"
+SECRET_KEY = os.environ.get("HELLOBIKE_API_KEY", "")
 HEADERS = {
     "Content-Type": "application/json; charset=utf-8",
     "Authorization": f"Bearer {SECRET_KEY}",

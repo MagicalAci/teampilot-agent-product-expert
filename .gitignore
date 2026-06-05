@@ -13,6 +13,12 @@ venv/
 env/
 ENV/
 
+# Secrets / env files (never commit real credentials)
+.env
+.env.*
+!.env.example
+!.env.*.template
+
 # Test / coverage artifacts
 .pytest_cache/
 .coverage

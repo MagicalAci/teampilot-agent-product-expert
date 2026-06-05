@@ -4,11 +4,12 @@ Doubao-Seed-2.0 系列默认开启深度思考，返回 reasoning_content 字段
 适合需要推理链的复杂分析任务。
 """
 
+import os
 import json
 import requests
 
 API_URL = "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions"
-SECRET_KEY = "sk-Vh5iZI1erTwgnXKXbGQsqbC_saQknnGO2a90byMFSKA"
+SECRET_KEY = os.environ.get("HELLOBIKE_API_KEY", "")
 HEADERS = {
     "Content-Type": "application/json; charset=utf-8",
     "Authorization": f"Bearer {SECRET_KEY}",

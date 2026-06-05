@@ -3,11 +3,12 @@
 最简单的 API 调用，验证连通性和基本参数。
 """
 
+import os
 import json
 import requests
 
 API_URL = "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions"
-SECRET_KEY = "sk-Vh5iZI1erTwgnXKXbGQsqbC_saQknnGO2a90byMFSKA"
+SECRET_KEY = os.environ.get("HELLOBIKE_API_KEY", "")
 HEADERS = {
     "Content-Type": "application/json; charset=utf-8",
     "Authorization": f"Bearer {SECRET_KEY}",

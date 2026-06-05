@@ -12,7 +12,7 @@
 | 项 | 值 |
 |---|---|
 | **APPID** | `AppHomeworkMonitorService` |
-| **Secret Key** | `sk-Vh5iZI1erTwgnXKXbGQsqbC_saQknnGO2a90byMFSKA` |
+| **Secret Key** | `${HELLOBIKE_API_KEY}` |
 | **Agent ID** | `1349344319163531264` |
 
 > 以上凭证用于盯盯学习监督业务，其他业务需在幻视平台申请自己的 APPID 和 Secret Key。
@@ -128,7 +128,7 @@ Authorization: Bearer {Secret_Key}
 ```bash
 curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions" \
   -H "Content-Type: application/json; charset=utf-8" \
-  -H "Authorization: Bearer sk-Vh5iZI1erTwgnXKXbGQsqbC_saQknnGO2a90byMFSKA" \
+  -H "Authorization: Bearer ${HELLOBIKE_API_KEY}" \
   -H "X-App-Id: AppHomeworkMonitorService" \
   -H "X-Agent-Id: 1349344319163531264" \
   -d '{
@@ -147,7 +147,7 @@ curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/comple
 ```bash
 curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions" \
   -H "Content-Type: application/json; charset=utf-8" \
-  -H "Authorization: Bearer sk-Vh5iZI1erTwgnXKXbGQsqbC_saQknnGO2a90byMFSKA" \
+  -H "Authorization: Bearer ${HELLOBIKE_API_KEY}" \
   -H "Accept: text/event-stream" \
   -H "X-App-Id: AppHomeworkMonitorService" \
   -H "X-Agent-Id: 1349344319163531264" \
@@ -166,7 +166,7 @@ curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/comple
 ```bash
 curl -X POST "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions" \
   -H "Content-Type: application/json; charset=utf-8" \
-  -H "Authorization: Bearer sk-Vh5iZI1erTwgnXKXbGQsqbC_saQknnGO2a90byMFSKA" \
+  -H "Authorization: Bearer ${HELLOBIKE_API_KEY}" \
   -H "X-App-Id: AppHomeworkMonitorService" \
   -H "X-Agent-Id: 1349344319163531264" \
   -d '{
@@ -488,7 +488,7 @@ const HELLOBIKE_CONFIG = {
   chatUrl: process.env.HELLOBIKE_CHAT_URL
     || 'https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions',
   secretKey: process.env.HELLOBIKE_SECRET_KEY
-    || 'sk-Vh5iZI1erTwgnXKXbGQsqbC_saQknnGO2a90byMFSKA',
+    || '${HELLOBIKE_API_KEY}',
   appId: process.env.HELLOBIKE_APP_ID
     || 'AppHomeworkMonitorService',
   agentId: process.env.HELLOBIKE_AGENT_ID

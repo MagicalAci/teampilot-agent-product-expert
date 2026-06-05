@@ -4,6 +4,7 @@
 坐标格式: <bbox>x1 y1 x2 y2</bbox>，值域 0-999（归一化坐标）。
 """
 
+import os
 import base64
 import struct
 import zlib
@@ -11,7 +12,7 @@ import json
 import requests
 
 API_URL = "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions"
-SECRET_KEY = "sk-Vh5iZI1erTwgnXKXbGQsqbC_saQknnGO2a90byMFSKA"
+SECRET_KEY = os.environ.get("HELLOBIKE_API_KEY", "")
 HEADERS = {
     "Content-Type": "application/json; charset=utf-8",
     "Authorization": f"Bearer {SECRET_KEY}",
