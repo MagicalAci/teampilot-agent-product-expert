@@ -7,7 +7,7 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.21.0
+  version: 0.22.0
   notes: AI能力系统性升级 Phase 1 — 基于12域·~700条SOTA调研综合(research/ai-capability-upgrade/SYNTHESIS.md)，新增11个跨能力AI能力协议(推理范式/编排运行时双账本/自检与接地/检索/跨会话记忆接claude-mem/意图路由与对话/工具使用/运行时安全间接注入与HITL/成本纪律预算护栏/Agent轨迹评测/能力注册表)+intent-router规则+task-navigator预检判定块+run_eval轨迹grader+结构化输出强约束；8个P0契约测试全绿。
 dependencies:
   skills:
