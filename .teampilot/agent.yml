@@ -7,7 +7,7 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.24.0
+  version: 0.25.0
   notes: 评测闭环脊椎实跑点亮 — 在P0/P1/P2三阶段之上，用真实轨迹评测集端到端跑通扩展后的run_eval.py(tool_called/tool_sequence/tool_args_match/step_efficiency/task_completion轨迹grader)，演示pass@k+回归检测+fail-under门禁阻断(好版100%→退化版33%检出回归并阻断)；新增轨迹grader执行测试(不止验标记、实跑验证)；引用完整性确认(35处零断链)。自此"研究→综合→增强→评测→发布"自我进化闭环全链路实证可跑。
 dependencies:
   skills:
