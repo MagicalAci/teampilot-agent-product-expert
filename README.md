@@ -152,6 +152,8 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 - `policies/agent-team-methodology.md`：团队架构与技能编写方法论（蒸馏适配自 [revfactory/harness](https://github.com/revfactory/harness)，Apache-2.0；并借鉴 [affaan-m/ECC](https://github.com/affaan-m/ECC) 的持续学习/Token优化/并行/验证循环），支撑多子代理编排与 `/经验写回`·`/更新请求` 自我进化
 - `policies/agent-security-scan.md`：`/安全扫描` 安全自检连接器（AgentShield / [affaan-m/ECC](https://github.com/affaan-m/ECC)，MIT），按需安装、不可用降级，写回前检查配置/指令的安全漏洞
 - `scripts/security_self_check.py`：仓库级安全自检门禁（硬编码密钥 + `.env` 卫生），已接入 CI（`security-self-check.yml`）
+- `policies/prompt-engineering-techniques.md`：提示词工程方法论（22 技术蒸馏自 [NirDiamant/Prompt_Engineering](https://github.com/NirDiamant/Prompt_Engineering)），强化 AI策划 与技能编写
+- `policies/image-prompt-connector.md`：`/图片提示词` 连接器（[nano-banana-pro](https://github.com/YouMind-OpenLab/nano-banana-pro-prompts-recommend-skill)，MIT），从 10000+ Gemini 图片提示词检索/改写出图提示词
 - `mcps/README.md`：单产品分析依赖的 MCP 与降级说明
 - `tests/test_product_expert_agent.py`：仓库级能力映射与入口回归
 

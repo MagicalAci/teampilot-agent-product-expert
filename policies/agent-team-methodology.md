@@ -79,7 +79,7 @@
 
 ## 第二部分：技能编写方法论
 
-用于 `/经验写回`、`/更新请求` 沉淀新技能，或新增/重构现有 skill 时。
+用于 `/经验写回`、`/更新请求` 沉淀新技能，或新增/重构现有 skill 时。Description 与提示词写法另见 `policies/prompt-engineering-techniques.md`（零样本/少样本/CoT/角色/受限生成等 22 个技术）。
 
 ### 1. Description 是唯一触发器
 

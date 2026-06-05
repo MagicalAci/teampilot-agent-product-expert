@@ -61,6 +61,7 @@ alwaysApply: false
 - `/检查Agent更新`：查看当前版本与新增能力
 - `/更新请求` / `/经验写回`：整理可沉淀的方法并写回 Agent 仓库
 - `/安全扫描`：按 `policies/agent-security-scan.md` 用 AgentShield 扫描 Agent 配置/指令文件的安全漏洞（密钥/权限/注入/MCP/Hook），不可用时降级为人工自检清单；写回前应先跑一次
+- `/图片提示词 [需求]`：按 `policies/image-prompt-connector.md` 用 nano-banana-pro 从 10000+ Gemini 图片提示词里检索/改写出图提示词（产品配图/Demo 视觉/海报/缩略图），按需 `npx skills i` 安装、不可用降级为手写提示词骨架
 
 ## 执行原则
 

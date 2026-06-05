@@ -28,6 +28,8 @@ dependencies:
     - policies/submission-review-contract.md
     - policies/agent-team-methodology.md
     - policies/agent-security-scan.md
+    - policies/prompt-engineering-techniques.md
+    - policies/image-prompt-connector.md
 contracts:
   submitChecklist:
     - 交付物必须明确对应本次能力入口，并落在该能力约定的标准目录结构中。
@@ -180,6 +182,11 @@ cursor:
       command: /安全扫描
       description: 用 AgentShield 扫描 Agent 配置/指令文件的安全漏洞（密钥/权限/注入/MCP/Hook），不可用时降级为人工自检
       example: /安全扫描
+    - key: image-prompt
+      title: 图片提示词
+      command: /图片提示词
+      description: 用 nano-banana-pro 从 10000+ Gemini 图片提示词里检索/改写出图提示词（产品配图/Demo 视觉/海报/缩略图），按需安装、不可用降级
+      example: /图片提示词 白底产品图
 capabilities:
   - key: research-toolkit
     title: 调研分析

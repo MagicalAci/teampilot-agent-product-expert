@@ -30,6 +30,8 @@ review_criteria:
 
 它不是某个业务的专用写作器，而是一套"先策划、再写 PRD、再开发脚本、再测试验证"的固定方法。
 
+> **写 Prompt 合同 / 系统提示前**：查阅 `policies/prompt-engineering-techniques.md`（提示词工程方法论：零样本/少样本/CoT/自洽/角色/受限生成/任务分解/指令工程/提示安全/有效性评估等 22 个技术 + Prompt 合同最小清单）。多子代理编排见 `policies/agent-team-methodology.md`。
+
 ## 四条指令
 
 ### `/AI策划 [主题]`
