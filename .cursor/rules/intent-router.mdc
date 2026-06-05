@@ -1,0 +1,40 @@
+---
+description: 产品专家 Agent 运行时意图路由与澄清门禁
+globs:
+alwaysApply: false
+---
+
+# 运行时意图路由规则
+
+当用户输入**不是**明确斜杠命令、或意图存在歧义时，先做意图判定再行动。完整方法论见 `policies/intent-routing-and-dialog.md`，能力例句/槽位见 `policies/capability-registry.yaml`。
+
+## 每轮路由判定（结构化）
+
+收到自然语言输入，先在心里得出（必要时显式给出）：
+
+```
+reasoning: <为什么判为这个意图>
+intent: <调研分析 | 产品策划 | AI策划 | Demo开发 | SQL查询 | 超范围 | 多意图>
+confidence: <高 | 中 | 低>
+need_clarify: <是 | 否>（关键槽位是否缺失）
+out_of_scope: <是 | 否>
+```
+
+## 三层 + 兜底
+
+1. **命令层**：是 `/xxx` → 直接进对应能力（见 `product-expert-commands.mdc`）。
+2. **语义层**：自然语言 → 比对 `capability-registry.yaml` 例句判 intent + 置信度。
+3. **兜底**：
+   - `confidence=低` 或匹配不到 → **不硬猜**，回退 `task-navigator` 或走澄清门禁。
+   - `out_of_scope=是`（非五能力，如"订机票/今天天气"）→ **护栏拒答**：说明能力边界 + 给替代途径。
+   - 命中多意图 → 输出组合 **pipeline 提案**（如 调研→PRD→Demo），请用户确认。
+
+## ask-or-act 澄清门禁
+
+- 按目标能力的关键槽位检查缺失（如 调研缺"对象"、SQL 缺"库/指标"、Demo 缺"主题/平台"）。
+- **缺关键槽 → 一次性集中问全**；槽齐 → 直接开跑。判据：问的价值 > 打断成本（EVPI/信息增益）。
+- 高风险/不可逆动作前显式复述确认（接 `agent-safety-protocol.md`）。
+
+## 注意
+- 低置信/无证据/超范围 → 降级表达或转人工，**不静默硬答**。
+- 与 `task-navigator.mdc` 的预检判定块协同：本规则管"进门判定"，navigator 管"判定后的分阶段规划"。

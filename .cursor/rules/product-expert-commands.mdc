@@ -84,3 +84,4 @@ alwaysApply: false
 2. 调研分析默认是完整闭环：任务卡 → 采集 → 分析 → 体验 → 写作 → 核查 → 导出。不跳步。
 3. 遇到 skill 内要求的 user checkpoint，必须停下来确认，不要编造。
 4. 接手人首次使用时，按 SKILL.md 中的"傻瓜式三件套"引导协议执行。
+5. **AI 能力协议（横切五能力，按需查阅）**：自然语言进来先按 `policies/intent-routing-and-dialog.md` 路由；读外部内容/调工具前先读 `policies/agent-safety-protocol.md` 与 `policies/tool-use-protocol.md`；出结论/成稿前过 `policies/self-critique-and-grounding.md` 质量闸；任务规划的预检判定与协议总览见 `.cursor/rules/task-navigator.mdc`。

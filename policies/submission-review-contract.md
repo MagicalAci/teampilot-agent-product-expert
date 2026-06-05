@@ -35,11 +35,13 @@
 - 新增或重构技能时，遵循 `agent-team-methodology.md` 第二、三部分：Description 写清触发与边界、Why-First 正文、渐进式披露
 - 必须配套契约测试（存在性 + 关键标记 + 触发词），并跑通全量测试后再合并
 - 涉及多子代理编排的，按 `agent-team-methodology.md` 第一部分选定团队架构模式
+- 改动 prompt/技能/policy 的，附 **With-skill vs Baseline 量化 + pass@k**（`policies/agent-trajectory-eval.md`）；关键指标回归即阻断合并
 
 ## 评审时重点确认
 
-- 是否真正回答了任务目标
-- 是否保留了足够证据与判断依据
+- 是否真正回答了任务目标（**完成判定**：对照 brief 逐项的高层验证，见 `policies/self-critique-and-grounding.md`，非表层"产物存在"）
+- 是否保留了足够证据与判断依据（事实型结论有接地引用 / 不确定项已弃权标注）
+- 高风险/不可逆动作是否留痕并经批准（`policies/agent-safety-protocol.md`）
 - 是否存在应回写到 Agent 仓库的方法论增量
 - 是否通过对应能力的 smoke test、校验脚本或结构完整性检查
 - 技能写回是否遵循 `agent-team-methodology.md` 并补齐契约测试

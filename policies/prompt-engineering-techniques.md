@@ -14,7 +14,7 @@
 | 输出格式/风格要稳定 | 少样本（Few-Shot）给 2-3 个范例 + 格式规范 |
 | 需要推理/计算/多步判断 | 思维链（CoT）"一步步想" |
 | 答案易抖动、要更可靠 | 自洽（Self-Consistency）多路径取多数 |
-| 输出必须结构化（JSON/表格） | 受限生成 + 格式规范 + 负向约束 |
+| 输出必须结构化（JSON/表格） | 受限生成 + 格式规范 + 负向约束（强约束见第 4 节）|
 | 要特定视角/专业身份 | 角色提示（Role Prompting）|
 | 任务太大太复杂 | 任务分解 + 提示链（Prompt Chaining）|
 | 要把策略稳定落地成可执行 | 指令工程 + 模板与变量 |
@@ -78,8 +78,32 @@
 
 ---
 
+---
+
+## 4. 结构化输出强约束（升级第 8 技术"受限生成"）
+
+第 8 技术"受限生成"只是**提示模型**输出 JSON——这是**软约束**，会 schema 漂移。要可靠结构化产物，按下面的**强约束决策树**（能强约束就别只靠提示）：
+
+```
+① 模型一方能力可用？（OpenAI json_schema + strict:true / Anthropic 工具 strict /
+   Gemini response_schema）→ 首选，禁止只靠提示输出 JSON
+② 自托管模型 → 受限解码（XGrammar / llguidance / Outlines；vLLM guided_json）
+③ 都不行（如 Cursor 内纯提示）→ Pydantic/Zod 定 schema + 校验 + reask 兜底
+```
+
+**两条铁律**：
+1. **能 strict / schema / 受限解码就别靠提示输出 JSON**（软约束不可靠）。
+2. **schema 合规 ≠ 语义正确**——结构对了不代表内容对，必须再叠加语义断言（接 `self-critique-and-grounding.md` 与 `agent-trajectory-eval.md`）。
+
+**reask 兜底**：解析/校验失败 → 把错误回喂模型重试（≤3 次，退避）→ 仍失败则降级默认值 / 转人工；`refusal`/拒答当一等错误处理（Instructor 模式）。
+
+> 落地：`/AI脚本` 的 Prompt 合同"输出段"标注约束级别（一方 strict / 受限解码 / 提示+校验 reask 三选一）。自动 prompt 优化（DSPy/GEPA）与统一 output schema 契约见 SYNTHESIS 路线图 P1（`prompt-optimization-protocol.md` / `output-contract.md`）。
+
+---
+
 ## 何时查阅
 
 - 写 `/AI策划`、`/AIPRD`、`/AI脚本` 的提示词 → 查第 1、3 节
+- 输出要可靠结构化 → 查第 4 节（结构化输出强约束）
 - 写/重构技能的 Description 与正文 → 配 `agent-team-methodology.md` 第二、三部分
 - 出图提示词 → 配 `image-prompt-connector.md`

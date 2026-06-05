@@ -113,6 +113,15 @@ def grade_assertion(output: str, assertion: dict, judge_cmd: str | None, case: d
             return (None, "judge 跳过（未配置 --judge-cmd）")
         return _run_judge(output, assertion, judge_cmd, case)
 
+    if atype in {
+        "tool_called",
+        "tool_args_match",
+        "tool_sequence",
+        "step_efficiency",
+        "task_completion",
+    }:
+        return _grade_trajectory(atype, output, assertion, judge_cmd, case)
+
     return (False, f"未知断言类型: {atype}")
 
 
@@ -145,6 +154,85 @@ def _run_judge(output, assertion: dict, judge_cmd: str, case: dict):
     if score is None:
         return (False, "judge 未返回 score")
     return (score >= min_score, f"judge 分 {score} (阈值 {min_score})")
+
+
+# ---------------------------------------------------------------------------
+# Agent 轨迹 grader（评一条 run 的工具调用/步骤/完成度，见 policies/agent-trajectory-eval.md）
+# ---------------------------------------------------------------------------
+
+def _as_obj(output):
+    """把 output 解析成轨迹 dict；失败返回 None。"""
+    if isinstance(output, dict):
+        return output
+    if isinstance(output, str):
+        try:
+            obj = json.loads(output)
+        except json.JSONDecodeError:
+            return None
+        return obj if isinstance(obj, dict) else None
+    return None
+
+
+def _extract_tool_calls(obj: dict) -> list[dict]:
+    """提取工具调用 [{'name':.., 'args':{..}}, ...]，兼容多种字段名。"""
+    calls = obj.get("tool_calls") or obj.get("toolCalls") or []
+    norm = []
+    for c in calls:
+        if isinstance(c, dict):
+            norm.append(
+                {
+                    "name": c.get("name") or c.get("tool"),
+                    "args": c.get("args") or c.get("arguments") or {},
+                }
+            )
+        elif isinstance(c, str):
+            norm.append({"name": c, "args": {}})
+    return norm
+
+
+def _grade_trajectory(atype, output, assertion: dict, judge_cmd, case: dict):
+    obj = _as_obj(output)
+    if obj is None:
+        return (False, "无法解析为轨迹对象（需 JSON dict，含 tool_calls/steps）")
+    value = assertion.get("value")
+    calls = _extract_tool_calls(obj)
+    names = [c["name"] for c in calls]
+
+    if atype == "tool_called":
+        wanted = value if isinstance(value, list) else [value]
+        missing = [w for w in wanted if w not in names]
+        return (not missing, f"缺工具调用 {missing}" if missing else f"已调用 {wanted}")
+
+    if atype == "tool_args_match":
+        if not isinstance(value, dict):
+            return (False, "tool_args_match 的 value 应为 {tool, args}")
+        tool = value.get("tool")
+        want_args = value.get("args", {}) or {}
+        for c in calls:
+            if c["name"] == tool and all(c["args"].get(k) == v for k, v in want_args.items()):
+                return (True, f"{tool} 参数匹配 {want_args}")
+        return (False, f"{tool} 未以匹配参数 {want_args} 调用")
+
+    if atype == "tool_sequence":
+        seq = value if isinstance(value, list) else [value]
+        it = iter(names)
+        ok = all(any(n == s for n in it) for s in seq)
+        return (ok, f"工具应按子序列 {seq}（实际 {names}）")
+
+    if atype == "step_efficiency":
+        steps = obj.get("steps")
+        n = len(steps) if isinstance(steps, list) else len(calls)
+        return (n <= int(value), f"步数 {n} 应 ≤ {value}")
+
+    if atype == "task_completion":
+        completed = obj.get("completed")
+        if isinstance(completed, bool):
+            return (completed, "completed 标志")
+        if judge_cmd:
+            return _run_judge(output, assertion, judge_cmd, case)
+        return (None, "task_completion 跳过（无 completed 标志且未配 --judge-cmd）")
+
+    return (False, f"未知轨迹断言: {atype}")
 
 
 def grade_attempt(output, assertions: list[dict], judge_cmd, case: dict):

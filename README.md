@@ -105,7 +105,7 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 ## 当前版本信息
 
 - 名称：产品专家 Agent（product-expert）
-- 版本：0.20.0
+- 版本：0.21.0
 - 仓库：MagicalAci/teampilot-agent-product-expert
 - 简介：内置调研分析（单产品/方向/全景/用户研究）、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。
 - 本地目录：~/TeamPilot/agents/product-expert/0.21.0

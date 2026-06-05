@@ -445,12 +445,28 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.20.0 -->
+    <!-- v0.22.0 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.20.0</code>
+        <code>v0.22.0</code>
         <span class="cl-tag">最新</span>
+      </div>
+      <div class="cl-body">
+        <strong>AI 能力系统性升级 · Phase 1（13 项 P0 能力协议 + 自我进化闭环脊椎）</strong>
+        <ul>
+          <li>新增 11 个跨能力 AI 能力协议（<code>policies/</code>）：推理范式、编排运行时（双账本/恢复/MAST 防护）、自检与接地、检索、跨会话记忆（接 claude-mem）、意图路由与对话、工具使用、运行时安全（间接注入 / HITL 审批闸）、成本纪律（预算护栏）、Agent 轨迹评测、能力注册表</li>
+          <li>新增 <code>.cursor/rules/intent-router.mdc</code> 运行时路由规则；<code>task-navigator.mdc</code> 加「预检判定块」串联全部协议；扩 <code>run_eval.py</code> 加 agent 轨迹 / 工具调用 grader（闭环脊椎）；提示词库新增结构化输出强约束</li>
+          <li>基于 12 域 · ~700 条 SOTA 调研综合（<code>research/ai-capability-upgrade/SYNTHESIS.md</code>）；新增 8 个 P0 契约测试，全仓回归通过</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.21.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.21.0</code>
       </div>
       <div class="cl-body">
         <strong>AI策划新增评测驱动开发（EDD）闭环</strong>

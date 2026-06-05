@@ -1,0 +1,134 @@
+# 能力注册表（Capability Registry）— 五能力单一真源
+#
+# 用途：意图路由（utterances 例句）+ 澄清门禁（slots 必填槽位）+ 能力发现（metadata）。
+# 消费方：policies/intent-routing-and-dialog.md、.cursor/rules/intent-router.mdc、
+#         .cursor/rules/task-navigator.mdc、tests/ 契约测试。
+# 约定：每能力 ≥10 条 utterances（正例）+ ≥3 条必填 slots + 元数据；
+#       命中分数低于阈值或匹配不到 → 走澄清/护栏（见 intent-routing-and-dialog.md）。
+version: 1
+
+capabilities:
+  - key: research-toolkit
+    title: 调研分析
+    command: /深度调研
+    skill: skills/research-toolkit/SKILL.md
+    recommended_when: 需要分析产品、验证方向、对比竞品、挖用户痛点、调研海外舆情
+    deliverables: 任务卡、平台 summary/data、深度报告、体验报告、章节成稿、事实核查、最终报告
+    depends_on: [user-firecrawl, user-app-insight, user-xiaohongshu, user-weibo, user-bilibili]
+    required_slots:
+      - {name: object, desc: 调研对象（产品/方向/赛道名）, validate: 非空}
+      - {name: research_type, desc: 单产品/方向/全景/用户研究, validate: 枚举}
+      - {name: scope, desc: 平台范围/深度, validate: 可缺省取默认}
+    utterances:
+      - 帮我调研下豆包爱学
+      - 看看 Kimi 学习版怎么样
+      - 分析一下这个 AI 学习产品
+      - 这个赛道现在值不值得做
+      - 做个竞品分析对比几家
+      - 挖一下用户对它的吐槽和痛点
+      - 看看用户都怎么评价
+      - 海外 Reddit 上大家怎么看 Perplexity
+      - 这个方向可行性分析一下
+      - 帮我看看市场上同类产品有哪些
+      - 出一份某产品的深度调研报告
+      - 它的口碑和增长情况如何
+
+  - key: product-planning
+    title: 产品策划
+    command: /产品策划
+    skill: skills/education-prd-orchestrator/SKILL.md
+    recommended_when: 从 0 到 1 写 PRD，或校验已有产品文档/图文/证据链
+    deliverables: PRD、流程、图文资产、证据包、review 交接
+    depends_on: []
+    required_slots:
+      - {name: topic, desc: 产品/方案主题, validate: 非空}
+      - {name: goal, desc: 要解决的问题/目标, validate: 非空}
+      - {name: scope, desc: 范围与约束, validate: 可缺省追问}
+    utterances:
+      - 帮我写个家长端留存提升方案的 PRD
+      - 出一份产品需求文档
+      - 从零设计这个功能的方案
+      - 把这个想法写成 PRD
+      - 帮我做产品策划
+      - 校验下这份 prd 写得全不全
+      - 这个产品方案的功能清单梳理一下
+      - 设计一下这个产品的核心流程
+      - 写一份功能规格说明
+      - 帮我把需求结构化成文档
+      - 产品方案的用户故事和验收标准
+      - 这版 PRD 的证据链帮我审一下
+
+  - key: ai-planning
+    title: AI策划
+    command: /AI策划
+    skill: skills/ai-planning-orchestrator/SKILL.md
+    recommended_when: 方案核心依赖 LLM/Prompt/工具调用/结构化输出/Agent，或要评测调优 AI 输出
+    deliverables: 提示词策略卡、AI PRD、脚本与样例、测试报告、评测集、评分量规、评测报告、调优报告
+    depends_on: []
+    required_slots:
+      - {name: ai_feature, desc: AI 功能/Agent 主题, validate: 非空}
+      - {name: io_contract, desc: 输入输出契约/结构化要求, validate: 可缺省追问}
+      - {name: quality_need, desc: 是否需要评测/调优, validate: 枚举}
+    utterances:
+      - 帮我策划一个 PRD 生成 Agent
+      - 把这个策略写成提示词
+      - 先定策略再写 prompt
+      - 这个 AI 服务怎么做稳，要重试降级
+      - 给这个提示词搭个评测体系
+      - 建个黄金评测集
+      - 评测一下这两版提示词哪个好
+      - 提示词不达标怎么调优
+      - 用 LLM-as-judge 给输出打分
+      - 做个 pass@k 回归
+      - 设计一个课堂讲题 Agent 的方案
+      - 结构化输出老是漂移怎么办
+
+  - key: demo-development
+    title: Demo开发
+    command: /Demo开发
+    skill: skills/product-demo-orchestrator/SKILL.md
+    recommended_when: 快速做可演示/可讲述/可交接的产品 demo（非正式工程）
+    deliverables: demo brief、design system、平台入口文件、preflight checklist、walkthrough、handoff、部署 URL
+    depends_on: []
+    required_slots:
+      - {name: theme, desc: demo 主题/产品, validate: 非空}
+      - {name: platform, desc: 目标平台（Web/H5/SwiftUI）, validate: 枚举}
+      - {name: style, desc: 设计风格/参考, validate: 可缺省取默认}
+    utterances:
+      - 帮我做个 AI 陪练产品首页的 demo
+      - 做一个可演示的页面，目标 H5
+      - 快速搭个原型给老板看
+      - 这个产品做个高保真 demo
+      - 给我一个能跑的演示页面
+      - 做个落地页 demo
+      - 把这个设计稿做成可点的 demo
+      - demo 帮我打磨一下动效和无障碍
+      - 校验下这个 demo 交接齐不齐
+      - 把这个 demo 部署上线给个链接
+      - 做个 SwiftUI 的演示界面
+      - 我要一个可讲述的产品 demo
+
+  - key: sql-query
+    title: SQL数据查询
+    command: /SQL
+    skill: skills/aibi-query/SKILL.md
+    recommended_when: 查业务数据、分析运营指标、跑 SQL、生成数据看板
+    deliverables: 结论洞察、数据表格、图表（AntV）、可选 HTML 看板
+    depends_on: [user-antv-chart]
+    required_slots:
+      - {name: db, desc: 目标库（sparklab_starcard/sparklab_picbook/sg_sparklab_poptoy）, validate: 三库枚举}
+      - {name: metric, desc: 要看的指标/问题, validate: 非空}
+      - {name: time_range, desc: 时间范围, validate: 可缺省取默认}
+    utterances:
+      - 帮我查下星卡最近的用户和订单
+      - 跑个数看看绘本的阅读情况
+      - 看下泡泡玩具的订阅指标
+      - 帮我查下数据
+      - 出个运营分析
+      - 这个产品最近留存怎么样
+      - 给我拉一份数据看板
+      - 用 SQL 查一下日活趋势
+      - 帮我做个数据报告导出来
+      - 看下指标有没有异常
+      - 绘本用户最近增长如何
+      - 星卡的付费转化率是多少

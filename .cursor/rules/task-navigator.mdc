@@ -14,11 +14,19 @@ alwaysApply: true
 
 当 TeamPilot 任务工作区初始化完成后：
 
-1. **阅读任务材料**：`tasks/{task}/brief.md`、`tasks/{task}/context/`、`knowledge/`
+1. **阅读任务材料**：`tasks/{task}/brief.md`、`tasks/{task}/context/`、`knowledge/`；并**先检索历史记忆**（`policies/memory-protocol.md`：命中同类经验/口径/踩坑则纳入规划）
 2. **分析任务需求**：理解目标、约束、交付要求
 3. **匹配能力组合**：根据任务特征，从你的能力库中选取合适的组合和执行顺序
-4. **输出分阶段规划**：每阶段标明使用哪个能力、做什么、预期产出什么
-5. **征求用户确认**：在用户明确同意规划后再开始执行
+4. **预检判定块**（输出规划前先过，每项一句话，引用对应 protocol）：
+   - **路由与澄清**：意图 + 置信度；关键槽位缺失→一次性问全（`policies/intent-routing-and-dialog.md` + `capability-registry.yaml`）
+   - **单/多代理 + read/write**：write-heavy 强一致→单代理；read-heavy 可并行→扇出（`policies/orchestration-runtime.md`）
+   - **推理范式**：确定性→workflow；边做边修→ReAct；可并行工具→ReWOO（`policies/agent-reasoning-paradigms.md`）
+   - **知识供给**：需在语料/记忆找证据→走检索协议（`policies/retrieval-protocol.md`）
+   - **成本预估**：高扇出阶段标档位/预算/可否复用旧产物（`policies/cost-discipline-methodology.md`）
+   - **高风险标记**：含外发/删除/写库/发布→标 HITL 审批点（`policies/agent-safety-protocol.md`）
+5. **输出分阶段规划**：每阶段标明使用哪个能力、做什么、预期产出什么，并标注「推理范式 / 单或多代理（理由）/ 成本」
+6. **征求用户确认**：在用户明确同意规划后再开始执行
+7. **每阶段产出前过质量闸**：自检 + 接地引用 + 完成判定（`policies/self-critique-and-grounding.md`）
 
 **规划输出格式示例**：
 ```
@@ -87,4 +95,5 @@ alwaysApply: true
 ## 编排与自我进化方法论
 
 - 当一个任务需要**多子代理协作/并行**（如多平台采集、多视角分析、生成-检验）时，先查 `policies/agent-team-methodology.md` 第一部分选定团队架构模式（流水线/扇出扇入/专家池/生成-检验/监督者/层级委托），再派子代理；并行单批不超过 4 个，子代理只回主代理、由主代理裁决。
-- 当执行 `/经验写回`、`/更新请求` **生成或重构技能**时，遵循 `policies/agent-team-methodology.md` 第二、三部分（Description 触发、Why-First、渐进式披露、With-skill vs Baseline 测试、配套契约测试后再合并）。
+- 当执行 `/经验写回`、`/更新请求` **生成或重构技能**时，遵循 `policies/agent-team-methodology.md` 第二、三部分（Description 触发、Why-First、渐进式披露、With-skill vs Baseline 测试、配套契约测试后再合并）；自我进化的量化闭环（轨迹评测 + With-skill vs Baseline）见 `policies/agent-trajectory-eval.md`。
+- **AI 能力协议库（按需查阅，预检判定块已引用）**：推理范式 `policies/agent-reasoning-paradigms.md`、编排运行时 `policies/orchestration-runtime.md`、自检与接地 `policies/self-critique-and-grounding.md`、检索 `policies/retrieval-protocol.md`、记忆 `policies/memory-protocol.md`、意图路由与对话 `policies/intent-routing-and-dialog.md`、工具使用 `policies/tool-use-protocol.md`、运行时安全 `policies/agent-safety-protocol.md`、成本纪律 `policies/cost-discipline-methodology.md`、轨迹评测 `policies/agent-trajectory-eval.md`。
