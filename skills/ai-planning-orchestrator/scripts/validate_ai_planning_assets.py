@@ -34,6 +34,33 @@ BUNDLE_README_HEADINGS = (
     "## 8. 目标项目还需补的能力",
 )
 
+STRATEGY_CARD_HEADINGS = (
+    "## 1. 策略规则集",
+    "## 2. 映射设计",
+    "## 3. 六段 Prompt",
+    "## 4. 覆盖率自检",
+)
+
+EVAL_REPORT_HEADINGS = (
+    "## 1. 评测对象",
+    "## 2. 评测集",
+    "## 3. 评测体系",
+    "## 4. 总体结果",
+    "## 6. 失败用例与聚类",
+    "## 7. 与基线对比",
+)
+
+TUNING_REPORT_HEADINGS = (
+    "## 1. 调优对象",
+    "## 2. 失败归因",
+    "## 3. 变更清单",
+    "## 4. A/B 对比",
+    "## 5. 回归结论",
+    "## 6. 采用决策",
+)
+
+VALID_BUCKETS = {"production", "adversarial", "edge", "failure_replay"}
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -42,6 +69,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--prd", help="AI PRD markdown file")
     parser.add_argument("--test-report", help="AI test report markdown file")
     parser.add_argument("--bundle-readme", help="Developer README markdown file")
+    parser.add_argument("--strategy-card", help="Prompt strategy card markdown file")
+    parser.add_argument("--eval-report", help="AI eval report markdown file")
+    parser.add_argument("--tuning-report", help="AI tuning report markdown file")
+    parser.add_argument("--eval-dataset", help="Eval dataset JSONL file to validate")
     parser.add_argument(
         "--require-file",
         action="append",
@@ -61,6 +92,32 @@ def validate_markdown(path: Path, headings: tuple[str, ...]) -> dict:
     return result
 
 
+def validate_eval_dataset(path: Path) -> dict:
+    result = {"path": str(path), "exists": path.exists(), "total": 0, "errors": []}
+    if not path.exists():
+        return result
+    for idx, raw in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        try:
+            case = json.loads(line)
+        except json.JSONDecodeError as exc:
+            result["errors"].append(f"#{idx} JSON 解析失败: {exc}")
+            continue
+        result["total"] += 1
+        if not case.get("id"):
+            result["errors"].append(f"#{idx} 缺少 id")
+        if case.get("bucket") not in VALID_BUCKETS:
+            result["errors"].append(f"#{idx} bucket 非法: {case.get('bucket')!r}")
+        if "input" not in case:
+            result["errors"].append(f"#{idx} 缺少 input")
+        assertions = case.get("assertions")
+        if not isinstance(assertions, list) or not assertions:
+            result["errors"].append(f"#{idx} assertions 应为非空数组")
+    return result
+
+
 def main() -> int:
     args = parse_args()
     summary: dict[str, object] = {"documents": {}, "missing_files": []}
@@ -77,6 +134,21 @@ def main() -> int:
         summary["documents"]["bundle_readme"] = validate_markdown(
             Path(args.bundle_readme).resolve(), BUNDLE_README_HEADINGS
         )
+    if args.strategy_card:
+        summary["documents"]["strategy_card"] = validate_markdown(
+            Path(args.strategy_card).resolve(), STRATEGY_CARD_HEADINGS
+        )
+    if args.eval_report:
+        summary["documents"]["eval_report"] = validate_markdown(
+            Path(args.eval_report).resolve(), EVAL_REPORT_HEADINGS
+        )
+    if args.tuning_report:
+        summary["documents"]["tuning_report"] = validate_markdown(
+            Path(args.tuning_report).resolve(), TUNING_REPORT_HEADINGS
+        )
+
+    if args.eval_dataset:
+        summary["eval_dataset"] = validate_eval_dataset(Path(args.eval_dataset).resolve())
 
     missing_files = []
     for item in args.require_file:
@@ -91,7 +163,9 @@ def main() -> int:
         (not value["exists"]) or bool(value["missing_headings"])
         for value in summary["documents"].values()
     )
-    if has_document_issue or missing_files:
+    dataset = summary.get("eval_dataset")
+    has_dataset_issue = bool(dataset) and ((not dataset["exists"]) or bool(dataset["errors"]))
+    if has_document_issue or missing_files or has_dataset_issue:
         return 1
     return 0
 

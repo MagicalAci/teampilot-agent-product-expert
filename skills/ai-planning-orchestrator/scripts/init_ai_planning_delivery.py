@@ -28,6 +28,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Overwrite existing files",
     )
+    parser.add_argument(
+        "--with-eval",
+        action="store_true",
+        help="Also scaffold eval-driven-development deliverables (strategy card, eval dataset, judge rubric, eval/tuning reports)",
+    )
     return parser.parse_args()
 
 
@@ -64,6 +69,17 @@ def main() -> int:
         "developer-readme-template.md": output_dir / f"{args.slug}-bundle-readme.md",
         "script-bundle-manifest-template.md": output_dir / f"{args.slug}-bundle-manifest.md",
     }
+
+    if args.with_eval:
+        templates.update(
+            {
+                "prompt-strategy-card-template.md": output_dir / f"{args.slug}-prompt-strategy-card.md",
+                "eval-dataset-template.jsonl": output_dir / f"{args.slug}-eval-dataset.jsonl",
+                "judge-rubric-template.md": output_dir / f"{args.slug}-judge-rubric.md",
+                "eval-report-template.md": output_dir / f"{args.slug}-eval-report.md",
+                "tuning-report-template.md": output_dir / f"{args.slug}-tuning-report.md",
+            }
+        )
 
     created = []
     for template_name, output_path in templates.items():

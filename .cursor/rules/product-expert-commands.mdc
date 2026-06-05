@@ -50,10 +50,13 @@ alwaysApply: false
 
 - `/产品策划`：进入 `skills/education-prd-orchestrator/SKILL.md`
 - `/产品策划校验`：进入 `skills/education-prd-orchestrator/SKILL.md`，以校验已有产物为主
-- `/AI策划`：进入 `skills/ai-planning-orchestrator/SKILL.md`，默认串起 AI PRD、AI脚本、AI测试
-- `/AIPRD`：只执行 AI PRD 子流程
-- `/AI脚本`：只执行脚本与样例子流程
-- `/AI测试`：只执行测试与测试报告子流程
+- `/AI策划`：进入 `skills/ai-planning-orchestrator/SKILL.md`，默认串起 AI PRD、AI脚本、AI测试（视质量要求再接评测/调优）
+- `/AIPRD`：只执行 AI PRD 子流程（含提示词策略卡：先定策略再撰写，见 `references/prompt-strategy-first.md`）
+- `/AI脚本`：只执行脚本与样例子流程（按 `references/ai-service-construction.md` 工程化）
+- `/AI测试`：只执行测试与测试报告子流程（软件层：能不能跑）
+- `/评测集 [对象]`：进入 `skills/ai-planning-orchestrator/SKILL.md` 的评测集子流程，汇总/构建/体检黄金集（四桶 60/15/15/10），产出 `eval-dataset.jsonl` + 体检报告
+- `/AI评测 [对象]`：搭评测体系（维度/量规/grader/judge）并跑 `scripts/run_eval.py` 自动化评测，产出评分量规 + 评测结果 JSON + 评测报告（质量层：好不好、能否回归）
+- `/AI调优 [对象]`：基于评测报告做定向调优（GEPA 式失败归因 → 每轮 3–5 处 → A/B 回归），产出新版提示词/服务 + 调优报告
 - `/Demo开发`：进入 `skills/product-demo-orchestrator/SKILL.md`
 - `/Demo设计系统` / `/Demo脚手架` / `/Demo打磨` / `/Demo校验`：Demo 子流程
 - `/Demo上线`：将已完成的 Web/H5 demo 部署到云端（Vercel/Surge/Netlify/Cloudflare），进入 `skills/product-demo-orchestrator/SKILL.md` 的部署上线流程
@@ -62,6 +65,18 @@ alwaysApply: false
 - `/更新请求` / `/经验写回`：整理可沉淀的方法并写回 Agent 仓库
 - `/安全扫描`：按 `policies/agent-security-scan.md` 用 AgentShield 扫描 Agent 配置/指令文件的安全漏洞（密钥/权限/注入/MCP/Hook），不可用时降级为人工自检清单；写回前应先跑一次
 - `/图片提示词 [需求]`：按 `policies/image-prompt-connector.md` 用 nano-banana-pro 从 10000+ Gemini 图片提示词里检索/改写出图提示词（产品配图/Demo 视觉/海报/缩略图），按需 `npx skills i` 安装、不可用降级为手写提示词骨架
+
+### 自然语言触发（AI策划与评测）
+
+以下表达路由到 `ai-planning-orchestrator`：
+
+- "把这个策略/方法论写成提示词" / "先定策略再写 prompt" / "提示词策略卡" → `/AIPRD`（策略先行）
+- "怎么把这个 AI 服务做稳" / "结构化输出/重试/降级/可观测怎么搞" → `/AI脚本`（AI 服务构建）
+- "建个评测集" / "黄金集" / "测试集怎么汇总" / "评测样本" → `/评测集`
+- "评测一下这个提示词/模型" / "搭评测体系" / "LLM-as-judge" / "自动化评测" / "pass@k" / "评测报告" → `/AI评测`
+- "提示词不达标怎么调" / "调优" / "A/B 对比两版提示词" / "出调优报告" / "回归有没有退步" → `/AI调优`
+
+> 注意区分：`/AI测试` 是"软件能不能跑、输出是否合法 JSON"；`/AI评测` 是"输出好不好、能否回归、能否调优"。两者不要混。
 
 ## 执行原则
 

@@ -177,7 +177,7 @@ footer a:hover{text-decoration:underline}
 <!-- NAV -->
 <nav>
   <div class="inner">
-    <a class="brand" href="#">产品专家 Agent <span>v0.19.0</span></a>
+    <a class="brand" href="#">产品专家 Agent <span>v0.20.0</span></a>
     <div class="links">
       <a href="#capabilities">能力</a>
       <a href="#install">安装</a>
@@ -208,7 +208,7 @@ footer a:hover{text-decoration:underline}
 <!-- VERSION BAR -->
 <div class="version-bar reveal">
   <div class="left">
-    <span class="tag">v0.19.0</span>
+    <span class="tag">v0.20.0</span>
     <span class="slug">product-expert</span>
   </div>
   <div class="repo">仓库：<a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">MagicalAci/teampilot-agent-product-expert</a></div>
@@ -263,7 +263,7 @@ footer a:hover{text-decoration:underline}
         <div class="cap-icon ai">🤖</div>
         <div class="cap-head-text">
           <h3>AI策划 <span class="main-cmd" onclick="copyCmd(this,'/AI策划')">/AI策划</span></h3>
-          <p>面向 AI 方案落地的产品能力，覆盖 AI PRD、Prompt 合同、脚本开发、测试报告与最小交接包。含 API Cookbook（11 个可运行示例）和平台能力矩阵。</p>
+          <p>面向 AI 方案落地的产品能力，覆盖策略先行提示词、AI PRD、AI 服务构建（12-factor）、脚本开发、测试报告，以及评测驱动开发闭环（评测集、评测体系、自动化评测 pass@k/回归/A-B、调优报告）。含 API Cookbook（11 个可运行示例）和平台能力矩阵。</p>
         </div>
       </div>
       <div class="sub-cmds">
@@ -271,6 +271,9 @@ footer a:hover{text-decoration:underline}
         <span class="sub-cmd" onclick="copyCmd(this,'/AIPRD')">/AIPRD<span class="copied-tip">已复制</span></span>
         <span class="sub-cmd" onclick="copyCmd(this,'/AI脚本')">/AI脚本<span class="copied-tip">已复制</span></span>
         <span class="sub-cmd" onclick="copyCmd(this,'/AI测试')">/AI测试<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/评测集')">/评测集<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/AI评测')">/AI评测<span class="copied-tip">已复制</span></span>
+        <span class="sub-cmd" onclick="copyCmd(this,'/AI调优')">/AI调优<span class="copied-tip">已复制</span></span>
       </div>
     </div>
 
@@ -360,11 +363,11 @@ footer a:hover{text-decoration:underline}
 
 直接运行下面这条命令：
 
-curl -fsSL https://teampilot.magicalaci.cn/api/agents/product-expert/install?format=script&version=0.19.0 | bash
+curl -fsSL https://teampilot.magicalaci.cn/api/agents/product-expert/install?format=script&version=0.20.0 | bash
 
 如果上面的命令执行失败或超时，改用下面的备用方式：
 
-AGENT_DIR="$HOME/TeamPilot/agents/product-expert/0.19.0"
+AGENT_DIR="$HOME/TeamPilot/agents/product-expert/0.20.0"
 mkdir -p "$AGENT_DIR"
 git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGENT_DIR"
 
@@ -372,27 +375,27 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 
 ## 第二步：安装完成后读取这些文件
 
-- ~/TeamPilot/agents/product-expert/0.19.0/QUICKSTART.md
-- ~/TeamPilot/agents/product-expert/0.19.0/.teampilot/agent.yml
+- ~/TeamPilot/agents/product-expert/0.20.0/QUICKSTART.md
+- ~/TeamPilot/agents/product-expert/0.20.0/.teampilot/agent.yml
 - 不要依赖仓库 README.md 作为当前版本能力和命令的最终事实源；README 只能补充背景。
 
 如果 QUICKSTART.md 不存在，则读取以下文件代替：
-- ~/TeamPilot/agents/product-expert/0.19.0/.cursor/rules/product-expert-commands.mdc
+- ~/TeamPilot/agents/product-expert/0.20.0/.cursor/rules/product-expert-commands.mdc
 
 ## 当前版本信息
 
 - 名称：产品专家 Agent（product-expert）
-- 版本：0.19.0
+- 版本：0.20.0
 - 仓库：MagicalAci/teampilot-agent-product-expert
 - 简介：内置调研分析（单产品/方向/全景/用户研究）、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。
-- 本地目录：~/TeamPilot/agents/product-expert/0.19.0
+- 本地目录：~/TeamPilot/agents/product-expert/0.20.0
 
 ## 核心能力入口参考
 
 - /深度调研：统一调研分析能力 — 支持单产品深度分析、方向调研、市场全景、用户研究，含国内/海外双采集通道，自带 DeerFlow 深度研究、MediaCrawler 社媒采集、质量门禁、逐章写作与三轮事实核查。
 - /海外调研：海外通道快捷入口 — 用 last30days 引擎对 Reddit/X/YouTube/HN/TikTok/Polymarket 等海外平台采集并归一，引擎不可用时自动降级。
 - /产品策划：证据驱动的产品策划与 PRD 交付能力，覆盖任务卡冻结、定义闸门、章节编排、配图与校验。
-- /AI策划：面向 AI 方案落地的产品能力，覆盖 AI PRD、脚本开发、测试报告与最小交接包。
+- /AI策划：面向 AI 方案落地的产品能力，覆盖策略先行提示词、AI PRD、AI服务构建、脚本开发、测试报告，以及评测驱动开发闭环（/评测集、/AI评测、/AI调优：评测集汇总、评测体系、自动化评测 pass@k/回归、调优报告）。
 - /Demo开发：面向 Web、H5 与 SwiftUI 的产品 demo 开发能力，覆盖 brief、设计系统、脚手架、打磨、校验、交接与一键部署上线。
 - /SQL：星火工坊 AIBI 数据查询分析能力，自然语言提问自动生成 SQL 查询 DBOPS 数据库，输出分析报告。支持快速版（纯聊天输出）和深度版（HTML看板+CSV）。覆盖 sparklab_starcard、sparklab_picbook、sg_sparklab_poptoy 三个线上库。
 
@@ -442,12 +445,28 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.19.0 -->
+    <!-- v0.20.0 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.19.0</code>
+        <code>v0.20.0</code>
         <span class="cl-tag">最新</span>
+      </div>
+      <div class="cl-body">
+        <strong>AI策划新增评测驱动开发（EDD）闭环</strong>
+        <ul>
+          <li>新增 <code>/评测集</code>、<code>/AI评测</code>、<code>/AI调优</code>：覆盖评测集汇总（黄金集四桶 60/15/15/10）、评测体系（维度/量规/grader/LLM-as-judge + 偏差校正 + Cohen's κ 校准）、自动化评测（<code>run_eval.py</code> 规则 grader + pass@k + 回归 + A/B）、评测报告与 GEPA 式调优报告</li>
+          <li>新增 <code>policies/llm-eval-methodology.md</code>：评测驱动开发方法论，蒸馏自 DeepEval·promptfoo·Ragas·Inspect AI·GEPA/DSPy·Langfuse/Phoenix·OTel GenAI</li>
+          <li>新增「策略先行提示词」「AI 服务构建（12-factor）」references；新增 6 个模板 + 3 个纯标准库脚本；6 个评测台契约测试 + 全量回归通过</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.19.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.19.0</code>
       </div>
       <div class="cl-body">
         <strong>集成图片提示词连接器 + 提示词工程方法论</strong>
@@ -753,7 +772,7 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 <!-- FOOTER -->
 <footer>
   <div class="container">
-    <p>产品专家 Agent v0.19.0 · <a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">GitHub</a> · TeamPilot × Cursor</p>
+    <p>产品专家 Agent v0.20.0 · <a href="https://github.com/MagicalAci/teampilot-agent-product-expert" target="_blank">GitHub</a> · TeamPilot × Cursor</p>
   </div>
 </footer>
 

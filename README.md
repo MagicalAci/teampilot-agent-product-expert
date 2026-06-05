@@ -12,7 +12,7 @@
 ## 当前版本
 
 - Slug：`product-expert`
-- Version：`0.19.0`
+- Version：`0.20.0`
 - Repo：`MagicalAci/teampilot-agent-product-expert`
 
 ## 架构特性
@@ -42,8 +42,8 @@
 
 - 主 skill：`skills/ai-planning-orchestrator/SKILL.md`
 - 主命令：`/AI策划`
-- 子命令：`/AIPRD`、`/AI脚本`、`/AI测试`
-- 适用场景：AI PRD、Prompt 合同、脚本开发、测试报告、最小交接包
+- 子命令：`/AIPRD`、`/AI脚本`、`/AI测试`、`/评测集`、`/AI评测`、`/AI调优`
+- 适用场景：策略先行提示词、AI PRD、Prompt 合同、AI 服务构建（12-factor）、脚本开发、测试报告、最小交接包，以及**评测驱动开发闭环**（评测集汇总、评测体系、自动化评测 pass@k/回归/A-B、评测报告与 GEPA 式调优报告）
 
 ### 4. Demo开发
 
@@ -83,11 +83,11 @@
 
 直接运行下面这条命令：
 
-curl -fsSL https://teampilot.magicalaci.cn/api/agents/product-expert/install?format=script&version=0.19.0 | bash
+curl -fsSL https://teampilot.magicalaci.cn/api/agents/product-expert/install?format=script&version=0.20.0 | bash
 
 如果上面的命令执行失败或超时，改用下面的备用方式：
 
-AGENT_DIR="$HOME/TeamPilot/agents/product-expert/0.19.0"
+AGENT_DIR="$HOME/TeamPilot/agents/product-expert/0.20.0"
 mkdir -p "$AGENT_DIR"
 git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGENT_DIR"
 
@@ -95,20 +95,20 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 
 ## 第二步：安装完成后读取这些文件
 
-- ~/TeamPilot/agents/product-expert/0.19.0/QUICKSTART.md
-- ~/TeamPilot/agents/product-expert/0.19.0/.teampilot/agent.yml
+- ~/TeamPilot/agents/product-expert/0.20.0/QUICKSTART.md
+- ~/TeamPilot/agents/product-expert/0.20.0/.teampilot/agent.yml
 - 不要依赖仓库 README.md 作为当前版本能力和命令的最终事实源；README 只能补充背景。
 
 如果 QUICKSTART.md 不存在，则读取以下文件代替：
-- ~/TeamPilot/agents/product-expert/0.19.0/.cursor/rules/product-expert-commands.mdc
+- ~/TeamPilot/agents/product-expert/0.20.0/.cursor/rules/product-expert-commands.mdc
 
 ## 当前版本信息
 
 - 名称：产品专家 Agent（product-expert）
-- 版本：0.11.0
+- 版本：0.20.0
 - 仓库：MagicalAci/teampilot-agent-product-expert
 - 简介：内置调研分析（单产品/方向/全景/用户研究）、产品策划、AI策划、Demo开发、SQL数据查询分析五项完整能力的 Cursor 原生 Agent。
-- 本地目录：~/TeamPilot/agents/product-expert/0.19.0
+- 本地目录：~/TeamPilot/agents/product-expert/0.20.0
 
 ## 核心能力入口参考
 
@@ -137,6 +137,7 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
    - 海外调研：`/海外调研 Perplexity`
    - 产品策划：`/产品策划 家长端留存提升方案`
    - AI策划：`/AI策划 PRD 生成 Agent`
+   - AI评测：`/AI评测 课堂讲题 Agent`（先 `/评测集` 建集，评测后 `/AI调优`）
    - Demo开发：`/Demo开发 AI 陪练产品首页 demo，目标平台：H5`
    - SQL 快速查询：`/SQL 帮我看下星卡最近的用户和订单情况`
    - SQL 深度分析：`/SQL深度 出一份绘本产品的完整运营分析报告`
@@ -145,7 +146,7 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 
 - `skills/research-toolkit/`：调研分析完整 skill 包，含国内/海外双采集通道（海外通道见 `protocols/overseas-research.md` + `references/last30days-connector.md`），含 assets、examples、references、scripts、tests、schemas、fixtures
 - `skills/education-prd-orchestrator/`：产品策划完整 skill 包，含 assets、examples、references、scripts、tests、fixtures
-- `skills/ai-planning-orchestrator/`：AI策划完整 skill 包，含 assets、examples、references、scripts、tests
+- `skills/ai-planning-orchestrator/`：AI策划完整 skill 包，含 assets、examples、references、scripts、tests；含**评测驱动开发子系统**（策略先行提示词 + AI服务构建 + 评测集/评测体系/自动化评测台 `run_eval.py`/调优报告）
 - `skills/product-demo-orchestrator/`：Demo开发完整 skill 包，含 assets、references、scripts、tests
 - `skills/aibi-query/`：SQL 数据查询分析 skill 包，含 references（数据库全景/查询案例/查询规范）、templates（HTML 看板）、scripts（Token 管理）
 - `policies/submission-review-contract.md`：统一提交与评审契约
@@ -153,6 +154,7 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
 - `policies/agent-security-scan.md`：`/安全扫描` 安全自检连接器（AgentShield / [affaan-m/ECC](https://github.com/affaan-m/ECC)，MIT），按需安装、不可用降级，写回前检查配置/指令的安全漏洞
 - `scripts/security_self_check.py`：仓库级安全自检门禁（硬编码密钥 + `.env` 卫生），已接入 CI（`security-self-check.yml`）
 - `policies/prompt-engineering-techniques.md`：提示词工程方法论（22 技术蒸馏自 [NirDiamant/Prompt_Engineering](https://github.com/NirDiamant/Prompt_Engineering)），强化 AI策划 与技能编写
+- `policies/llm-eval-methodology.md`：评测驱动开发（EDD）方法论（评测集/评测体系/自动化评测/LLM-as-judge/调优，蒸馏自 [DeepEval](https://github.com/confident-ai/deepeval)·[promptfoo](https://github.com/promptfoo/promptfoo)·[Ragas](https://github.com/explodinggradients/ragas)·[Inspect AI](https://github.com/UKGovernmentBEIS/inspect_ai)·[GEPA](https://github.com/gepa-ai/gepa)/[DSPy](https://github.com/stanfordnlp/dspy)·[OTel GenAI](https://opentelemetry.io/docs/specs/semconv/gen-ai/)），强化 AI策划 评测/调优
 - `policies/image-prompt-connector.md`：`/图片提示词` 连接器（[nano-banana-pro](https://github.com/YouMind-OpenLab/nano-banana-pro-prompts-recommend-skill)，MIT），从 10000+ Gemini 图片提示词检索/改写出图提示词
 - `mcps/README.md`：单产品分析依赖的 MCP 与降级说明
 - `tests/test_product_expert_agent.py`：仓库级能力映射与入口回归

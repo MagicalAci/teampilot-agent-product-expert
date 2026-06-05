@@ -7,8 +7,8 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.19.0
-  notes: 新增 /Demo上线 部署能力 — 支持将 Web/H5 demo 一键部署到 Vercel、Surge、Netlify、Cloudflare Pages，获取可分享在线链接。
+  version: 0.20.0
+  notes: AI策划新增评测驱动开发(EDD)闭环 — /评测集、/AI评测、/AI调优 三命令，覆盖策略先行提示词、AI服务构建(12-factor)、黄金评测集、LLM-as-judge评测体系、自动化评测台(run_eval pass@k/回归/AB)与GEPA式调优报告。
 dependencies:
   skills:
     - skills/research-toolkit/SKILL.md
@@ -29,13 +29,14 @@ dependencies:
     - policies/agent-team-methodology.md
     - policies/agent-security-scan.md
     - policies/prompt-engineering-techniques.md
+    - policies/llm-eval-methodology.md
     - policies/image-prompt-connector.md
 contracts:
   submitChecklist:
     - 交付物必须明确对应本次能力入口，并落在该能力约定的标准目录结构中。
     - 单产品分析需保留任务卡、关键证据、过程记录、最终判断与事实核查痕迹。
     - 产品策划需保留 PRD、图文资产、证据包与 review 交接信息。
-    - AI策划需保留 AI PRD、脚本或样例、测试报告，以及必要的开发 README 或打包清单。
+    - AI策划需保留 AI PRD、脚本或样例、测试报告，以及必要的开发 README 或打包清单；若做了评测/调优，需保留提示词策略卡、评测集、评分量规、评测报告与调优报告。
     - Demo开发需保留 demo brief、design system、平台入口文件、preflight checklist、walkthrough 与 developer handoff。若已部署上线，需保留 deploy-result.md 记录在线 URL。
     - 若 Agent 给出多个备选方案，最终选择与理由必须由人类明确确认。
   reviewChecklist:
@@ -115,8 +116,23 @@ cursor:
     - key: ai-test
       title: AI测试
       command: /AI测试
-      description: 单独验证 AI 脚本并输出测试报告
+      description: 单独验证 AI 脚本并输出测试报告（软件层：能不能跑）
       example: /AI测试 PRD 生成 Agent
+    - key: eval-dataset
+      title: 评测集
+      command: /评测集
+      description: 汇总/构建/体检黄金评测集（四桶 60/15/15/10），产出 eval-dataset.jsonl + 体检报告
+      example: /评测集 课堂讲题 Agent
+    - key: ai-eval
+      title: AI评测
+      command: /AI评测
+      description: 搭评测体系(维度/量规/grader/judge)并跑自动化评测，产出评分量规 + 评测结果 + 评测报告
+      example: /AI评测 课堂讲题 Agent
+    - key: ai-tune
+      title: AI调优
+      command: /AI调优
+      description: 基于评测报告做定向调优(GEPA 式失败归因 + A/B 回归)，产出新版提示词 + 调优报告
+      example: /AI调优 课堂讲题 Agent
     - key: demo-development
       title: Demo开发
       command: /Demo开发
@@ -221,11 +237,11 @@ capabilities:
       - policies/submission-review-contract.md
   - key: ai-planning
     title: AI策划
-    description: 面向 AI 方案落地的产品能力，覆盖 AI PRD、脚本开发、测试报告与最小交接包。
+    description: 面向 AI 方案落地的产品能力，覆盖策略先行提示词、AI PRD、AI服务构建、脚本开发、测试报告，以及评测驱动开发闭环（评测集、评测体系、自动化评测、调优报告）与最小交接包。
     command: /AI策划
-    recommendedWhen: 当方案核心依赖 LLM、Prompt、工具调用、结构化输出或 Agent 工作流时使用。
+    recommendedWhen: 当方案核心依赖 LLM、Prompt、工具调用、结构化输出或 Agent 工作流，或需要对 AI 输出做质量评测与调优时使用。
     inputTemplate: /AI策划 PRD 生成 Agent
-    outputFormat: AI PRD、脚本与样例、测试报告、开发 README、脚本包清单
+    outputFormat: 提示词策略卡、AI PRD、脚本与样例、测试报告、评测集、评分量规、评测报告、调优报告、开发 README、脚本包清单
     skillRefs:
       - skills/ai-planning-orchestrator/SKILL.md
     mcpRefs: []
