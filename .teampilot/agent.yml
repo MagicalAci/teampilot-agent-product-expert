@@ -7,7 +7,7 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.20.0
+  version: 0.21.0
   notes: AI策划新增评测驱动开发(EDD)闭环 — /评测集、/AI评测、/AI调优 三命令，覆盖策略先行提示词、AI服务构建(12-factor)、黄金评测集、LLM-as-judge评测体系、自动化评测台(run_eval pass@k/回归/AB)与GEPA式调优报告。
 dependencies:
   skills:
