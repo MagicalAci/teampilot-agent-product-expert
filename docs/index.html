@@ -445,12 +445,28 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.24.0 -->
+    <!-- v0.25.0 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.24.0</code>
+        <code>v0.25.0</code>
         <span class="cl-tag">最新</span>
+      </div>
+      <div class="cl-body">
+        <strong>评测闭环脊椎实跑点亮（自我进化闭环全链路实证）</strong>
+        <ul>
+          <li>用真实轨迹评测集端到端跑通扩展后的 <code>run_eval.py</code> 轨迹 grader（tool_called / tool_sequence / tool_args_match / step_efficiency / task_completion）：好版 pass_rate 100%，退化版 33% 并<strong>检出回归 + fail-under 门禁阻断</strong></li>
+          <li>新增轨迹 grader <strong>真实执行测试</strong>（不止验"标记存在"，实跑验证 grader 与回归/A-B 机制）+ 样例评测集与报告产物（<code>research/ai-capability-upgrade/eval/</code>）</li>
+          <li>完成全仓引用完整性扫描（35 处协议/脚本引用零断链）；"研究→综合→增强→评测→发布"自我进化闭环全链路可跑</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.24.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.24.0</code>
       </div>
       <div class="cl-body">
         <strong>AI 能力系统性升级 · Phase 3（6 个实现级 P2 协议 + 零依赖检索脚手架）</strong>

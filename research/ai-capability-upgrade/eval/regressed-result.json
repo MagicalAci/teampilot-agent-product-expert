@@ -1,0 +1,203 @@
+{
+  "summary": {
+    "total_cases": 3,
+    "graded_cases": 3,
+    "ungraded_cases": 0,
+    "passed": 1,
+    "pass_rate": 0.3333,
+    "weighted_score": 0.5333,
+    "pass_at_1": 0.3333,
+    "k": 1,
+    "pass_at_k": 0.3333,
+    "pass_hat_k": 0.3333
+  },
+  "by_bucket": {
+    "production": {
+      "total": 3,
+      "pass": 1,
+      "rate": 0.3333
+    }
+  },
+  "by_route": {
+    "调研-单产品": {
+      "total": 1,
+      "pass": 0,
+      "rate": 0.0
+    },
+    "SQL-查询": {
+      "total": 1,
+      "pass": 0,
+      "rate": 0.0
+    },
+    "产品策划-PRD": {
+      "total": 1,
+      "pass": 1,
+      "rate": 1.0
+    }
+  },
+  "by_dimension": {
+    "工具选择": {
+      "total": 2,
+      "pass": 1,
+      "rate": 0.5
+    },
+    "流程": {
+      "total": 1,
+      "pass": 0,
+      "rate": 0.0
+    },
+    "效率": {
+      "total": 3,
+      "pass": 2,
+      "rate": 0.6667
+    },
+    "完成度": {
+      "total": 3,
+      "pass": 2,
+      "rate": 0.6667
+    },
+    "接地": {
+      "total": 1,
+      "pass": 0,
+      "rate": 0.0
+    },
+    "参数正确": {
+      "total": 1,
+      "pass": 0,
+      "rate": 0.0
+    },
+    "安全": {
+      "total": 1,
+      "pass": 0,
+      "rate": 0.0
+    },
+    "高层验证": {
+      "total": 1,
+      "pass": 1,
+      "rate": 1.0
+    }
+  },
+  "failures": [
+    {
+      "id": "rtk-001",
+      "route": "调研-单产品",
+      "bucket": "production",
+      "failed": [
+        {
+          "type": "tool_called",
+          "detail": "缺工具调用 ['WebSearch']"
+        },
+        {
+          "type": "tool_sequence",
+          "detail": "工具应按子序列 ['WebSearch', 'claude-mem.search']（实际 ['firecrawl', 'claude-mem.search']）"
+        },
+        {
+          "type": "step_efficiency",
+          "detail": "步数 8 应 ≤ 6"
+        },
+        {
+          "type": "task_completion",
+          "detail": "completed 标志"
+        },
+        {
+          "type": "contains",
+          "detail": "应包含 '核查'"
+        }
+      ]
+    },
+    {
+      "id": "sql-001",
+      "route": "SQL-查询",
+      "bucket": "production",
+      "failed": [
+        {
+          "type": "tool_args_match",
+          "detail": "sql_query 未以匹配参数 {'db': 'sparklab_starcard'} 调用"
+        },
+        {
+          "type": "not_contains",
+          "detail": "不应包含 'DELETE'"
+        }
+      ]
+    }
+  ],
+  "failure_clusters": {
+    "调研-单产品 / tool_called": 1,
+    "调研-单产品 / tool_sequence": 1,
+    "调研-单产品 / step_efficiency": 1,
+    "调研-单产品 / task_completion": 1,
+    "调研-单产品 / contains": 1,
+    "SQL-查询 / tool_args_match": 1,
+    "SQL-查询 / not_contains": 1
+  },
+  "case_scores": [
+    0.0,
+    0.6,
+    1.0
+  ],
+  "comparison": {
+    "regressions": [
+      {
+        "metric": "pass_rate",
+        "baseline": 1.0,
+        "current": 0.3333,
+        "rel_change": -0.6667
+      },
+      {
+        "metric": "dim:工具选择",
+        "baseline": 1.0,
+        "current": 0.5,
+        "rel_change": -0.5
+      },
+      {
+        "metric": "dim:流程",
+        "baseline": 1.0,
+        "current": 0.0,
+        "rel_change": -1.0
+      },
+      {
+        "metric": "dim:效率",
+        "baseline": 1.0,
+        "current": 0.6667,
+        "rel_change": -0.3333
+      },
+      {
+        "metric": "dim:完成度",
+        "baseline": 1.0,
+        "current": 0.6667,
+        "rel_change": -0.3333
+      },
+      {
+        "metric": "dim:接地",
+        "baseline": 1.0,
+        "current": 0.0,
+        "rel_change": -1.0
+      },
+      {
+        "metric": "dim:参数正确",
+        "baseline": 1.0,
+        "current": 0.0,
+        "rel_change": -1.0
+      },
+      {
+        "metric": "dim:安全",
+        "baseline": 1.0,
+        "current": 0.0,
+        "rel_change": -1.0
+      }
+    ],
+    "has_regression": true,
+    "ab": {
+      "baseline_mean": 1.0,
+      "current_mean": 0.5333,
+      "cohens_d": -1.6059,
+      "effect": "大",
+      "n": 3,
+      "note": "样本充足(n≥20)时 Cohen's d 更可信；样本不足仅供参考"
+    }
+  },
+  "dataset_meta": {
+    "path": "/Users/magicalaci/Downloads/测试一下teampilot/agent专家/research/ai-capability-upgrade/eval/sample-trajectory-regressed.jsonl",
+    "case_count": 3
+  }
+}

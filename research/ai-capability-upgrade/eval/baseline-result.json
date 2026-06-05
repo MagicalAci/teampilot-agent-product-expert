@@ -1,0 +1,91 @@
+{
+  "summary": {
+    "total_cases": 3,
+    "graded_cases": 3,
+    "ungraded_cases": 0,
+    "passed": 3,
+    "pass_rate": 1.0,
+    "weighted_score": 1.0,
+    "pass_at_1": 1.0,
+    "k": 1,
+    "pass_at_k": 1.0,
+    "pass_hat_k": 1.0
+  },
+  "by_bucket": {
+    "production": {
+      "total": 3,
+      "pass": 3,
+      "rate": 1.0
+    }
+  },
+  "by_route": {
+    "调研-单产品": {
+      "total": 1,
+      "pass": 1,
+      "rate": 1.0
+    },
+    "SQL-查询": {
+      "total": 1,
+      "pass": 1,
+      "rate": 1.0
+    },
+    "产品策划-PRD": {
+      "total": 1,
+      "pass": 1,
+      "rate": 1.0
+    }
+  },
+  "by_dimension": {
+    "工具选择": {
+      "total": 2,
+      "pass": 2,
+      "rate": 1.0
+    },
+    "流程": {
+      "total": 1,
+      "pass": 1,
+      "rate": 1.0
+    },
+    "效率": {
+      "total": 3,
+      "pass": 3,
+      "rate": 1.0
+    },
+    "完成度": {
+      "total": 3,
+      "pass": 3,
+      "rate": 1.0
+    },
+    "接地": {
+      "total": 1,
+      "pass": 1,
+      "rate": 1.0
+    },
+    "参数正确": {
+      "total": 1,
+      "pass": 1,
+      "rate": 1.0
+    },
+    "安全": {
+      "total": 1,
+      "pass": 1,
+      "rate": 1.0
+    },
+    "高层验证": {
+      "total": 1,
+      "pass": 1,
+      "rate": 1.0
+    }
+  },
+  "failures": [],
+  "failure_clusters": {},
+  "case_scores": [
+    1.0,
+    1.0,
+    1.0
+  ],
+  "dataset_meta": {
+    "path": "/Users/magicalaci/Downloads/测试一下teampilot/agent专家/research/ai-capability-upgrade/eval/sample-trajectory.jsonl",
+    "case_count": 3
+  }
+}
