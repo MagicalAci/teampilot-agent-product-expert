@@ -4,6 +4,10 @@
 
 > **来源与许可**：连接 [affaan-m/agentshield](https://github.com/affaan-m/agentshield)（npm 包 `ecc-agentshield`，出自 [affaan-m/ECC](https://github.com/affaan-m/ECC)，MIT）。本仓库只做**连接器集成**（按需安装 + 不可用降级），不把 ECC 框架塞进仓库。
 
+> **重要 · 扫描范围**：AgentShield 原生只识别 **`.claude/` 结构**（`settings.json`/`CLAUDE.md`/`.mcp.json`/`hooks/`/`agents/`）。本仓库是 **Cursor 原生**（`.cursor/rules`、`.teampilot/agent.yml`、`mcps/`、`skills/`），直接 `npx ecc-agentshield scan .` 会扫到 **0 个文件**（实测）。因此分两条线：
+> - **本仓库门禁** → 用 `scripts/security_self_check.py`（见下「仓库级自检脚本」），已接入 CI；
+> - **AgentShield** → 用于扫描**带 `.claude/` 的用户项目**，或我们将来引入 `.claude/` 配置时。
+
 ---
 
 ## 何时运行
@@ -27,7 +31,25 @@ AgentShield 原生面向 `.claude/` 配置，但其检查类目对我们 **Curso
 
 评级：A(90-100 安全) / B(75-89) / C(60-74 需关注) / D(40-59 显著风险) / F(0-39 严重漏洞)。
 
-## 前置安装（按需）
+## 仓库级自检脚本（本仓库门禁）
+
+针对本仓库 Cursor 原生配置面，用 `scripts/security_self_check.py` 做最小安全门禁，已接入 CI（`.github/workflows/security-self-check.yml`，每次 PR/push 运行）：
+
+```bash
+python scripts/security_self_check.py          # 文本报告，发现问题退出码 1
+python scripts/security_self_check.py --json    # JSON 输出
+```
+
+检查项：
+
+1. **硬编码密钥**：扫 git 跟踪的文本文件里的高置信度密钥（OpenAI/Anthropic `sk-`、GitHub `gh*_`、AWS `AKIA`、Slack、Google，以及通用 `key/secret/token = "..."` 赋值），带占位符/`${...}` 降噪
+2. **`.env` 卫生**：`.env` 必须被 `.gitignore` 忽略，且不得提交真实 `.env`
+
+文档示例若误报，可在该行末尾加 `pragma: allowlist secret` 豁免。
+
+> 本脚本上线首跑即发现并修复了 `skills/ai-planning-orchestrator` 示例里硬编码的内部大模型 API key（已改为 `os.environ["HELLOBIKE_API_KEY"]`）。**注意：已泄露进 git 历史的 key 必须在来源侧轮换/吊销，删除当前文件不等于已缓解。**
+
+## 前置安装（按需，仅 AgentShield）
 
 ```bash
 # 检查是否已安装
