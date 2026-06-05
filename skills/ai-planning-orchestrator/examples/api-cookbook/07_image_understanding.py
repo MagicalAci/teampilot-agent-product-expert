@@ -15,7 +15,7 @@ import zlib
 import requests
 
 API_URL = "https://fat-aibrain-large-model-engine.hellobike.cn/v1/chat/completions"
-SECRET_KEY = os.environ.get("HELLOBIKE_API_KEY", "")
+SECRET_KEY = os.environ.get("HELLOBIKE_API_KEY", "sk-Vh5iZI1erTwgnXKXbGQsqbC_saQknnGO2a90byMFSKA")
 HEADERS = {
     "Content-Type": "application/json; charset=utf-8",
     "Authorization": f"Bearer {SECRET_KEY}",

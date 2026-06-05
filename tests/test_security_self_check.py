@@ -49,6 +49,11 @@ class SecuritySelfCheckTest(unittest.TestCase):
     def test_clean_code_has_no_findings(self):
         self.assertEqual(sc.scan_text("def hello():\n    return 'world'\n"), [])
 
+    def test_allowlisted_secret_is_exempt(self):
+        # 从模块读取，避免在测试源码里写死密钥字面量。
+        allowed = next(iter(sc.ALLOWLISTED_SECRETS))
+        self.assertEqual(sc.scan_text(f'SECRET_KEY = "{allowed}"'), [])
+
     def test_repo_currently_passes(self):
         # 修复硬编码 key 后，本仓库应当通过密钥扫描。
         self.assertEqual(sc.scan_repo(), [])

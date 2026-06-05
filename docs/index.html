@@ -442,15 +442,30 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.18.0 -->
+    <!-- v0.18.1 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.18.0</code>
+        <code>v0.18.1</code>
         <span class="cl-tag">最新</span>
       </div>
       <div class="cl-body">
-        <strong>仓库级安全自检门禁（首跑即修复真实密钥泄露）</strong>
+        <strong>安全门禁加允许清单（内网专用凭据按业务保留内置）</strong>
+        <ul>
+          <li>哈啰幻视内部网关凭据为内网专用端点（外网不可达），示例恢复内置以便开箱即用</li>
+          <li>安全自检脚本新增 <code>ALLOWLISTED_SECRETS</code> 豁免该内部凭据；门禁仍拦截其它意外的外部密钥</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.18.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.18.0</code>
+      </div>
+      <div class="cl-body">
+        <strong>仓库级安全自检门禁</strong>
         <ul>
           <li>新增 <code>scripts/security_self_check.py</code> + <code>security-self-check.yml</code> CI：每次 PR/push 扫硬编码密钥与 .env 卫生</li>
           <li>修复：移除 <code>skills/ai-planning-orchestrator</code> 示例里硬编码的内部大模型 API key，改为环境变量 <code>HELLOBIKE_API_KEY</code>（11 个脚本 + 1 个参考文档）</li>

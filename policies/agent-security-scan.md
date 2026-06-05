@@ -45,9 +45,12 @@ python scripts/security_self_check.py --json    # JSON 输出
 1. **硬编码密钥**：扫 git 跟踪的文本文件里的高置信度密钥（OpenAI/Anthropic `sk-`、GitHub `gh*_`、AWS `AKIA`、Slack、Google，以及通用 `key/secret/token = "..."` 赋值），带占位符/`${...}` 降噪
 2. **`.env` 卫生**：`.env` 必须被 `.gitignore` 忽略，且不得提交真实 `.env`
 
-文档示例若误报，可在该行末尾加 `pragma: allowlist secret` 豁免。
+豁免方式（两种）：
 
-> 本脚本上线首跑即发现并修复了 `skills/ai-planning-orchestrator` 示例里硬编码的内部大模型 API key（已改为 `os.environ["HELLOBIKE_API_KEY"]`）。**注意：已泄露进 git 历史的 key 必须在来源侧轮换/吊销，删除当前文件不等于已缓解。**
+- 单行：在该行末尾加 `pragma: allowlist secret`
+- 全局：把"有意保留"的内部凭据登记到脚本里的 `ALLOWLISTED_SECRETS`
+
+> `skills/ai-planning-orchestrator` 示例内置了哈啰幻视**内部大模型网关**凭据：该端点为**内网专用、外网不可达**，按业务决定保留内置以便开箱即用，已登记进 `ALLOWLISTED_SECRETS`，因此不计为泄露。门禁仍会拦截其它意外提交的**外部**密钥（OpenAI/GitHub/AWS 等）。
 
 ## 前置安装（按需，仅 AgentShield）
 
