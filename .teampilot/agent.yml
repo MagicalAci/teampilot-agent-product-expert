@@ -8,7 +8,7 @@ agent:
   standaloneEnabled: true
 release:
   version: 0.23.0
-  notes: AI能力系统性升级 Phase 2(P1) — 在Phase1(13项P0)之上新增6个P1协议(上下文预算/AgentOps生命周期build→eval→ship→govern/Prompt自动优化GEPA-DSPy升级判据/输出契约schema/自建MCP工具创作/安全红队清单)，扩展3个既有方法论(团队成本与运行时安全/安全扫描MCP运行时风险/评测轨迹与red-team)，新增knowledge跨任务知识库脚手架与aibi Table-RAG-lite及多轮查询改写；P0+P1契约测试全绿。
+  notes: AI能力系统性升级 Phase 3(P2) — 在P0(13项)/P1(6项)之上补齐6个实现级P2协议(高级检索CRAG/Adaptive-RAG/GraphRAG/ColPali、CodeAct与沙箱执行、持久化执行Temporal/DBOS、自托管serving vLLM/SGLang、产品化就绪多租户/SSO/合规、自进化Agent北极星ACE/ADAS/DGM)，均为触发式重基建(默认不做、含触发判定+选型+集成方案，忠于轻量聚焦定位)；落地零依赖检索脚手架scripts/retrieval_index.py(纯标库BM25+RRF，密集层可选)；P0+P1+P2契约测试全绿。至此12域SYNTHESIS路线图三阶段全部完成。
 dependencies:
   skills:
     - skills/research-toolkit/SKILL.md
@@ -48,6 +48,12 @@ dependencies:
     - policies/output-contract.md
     - policies/mcp-tool-authoring.md
     - policies/red-team-checklist.md
+    - policies/advanced-retrieval-p2.md
+    - policies/codeact-execution-p2.md
+    - policies/durable-execution-p2.md
+    - policies/self-hosted-serving-p2.md
+    - policies/productization-readiness-p2.md
+    - policies/self-evolving-agent-p2.md
 contracts:
   submitChecklist:
     - 交付物必须明确对应本次能力入口，并落在该能力约定的标准目录结构中。

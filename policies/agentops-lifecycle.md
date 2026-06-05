@@ -29,7 +29,7 @@
 ## 3. 与本仓库接线
 - `submission-review-contract.md` 的提交/评审项 = 本生命周期 ship/govern 阶段门禁的落地清单。
 - `agent-team-methodology.md` 第三/四部分（技能测试 + 运维增量）= build/eval 的方法论。
-- 北极星（P2）：eval 基建成熟后把 build 升级为 **ACE 式三角色（Generator/Reflector/Curator）+ 增量 delta + helpful/harmful 计数**。
+- 北极星（P2）：eval 基建成熟后把 build 升级为 **ACE 式三角色（Generator/Reflector/Curator）+ 增量 delta + helpful/harmful 计数**。完整设计见 `policies/self-evolving-agent-p2.md`（含 ADAS/DGM 远期路径）。
 
 ## 何时查阅
 - 执行 `/经验写回`、`/更新请求`、自我进化时 → 全文（走四阶段门禁）

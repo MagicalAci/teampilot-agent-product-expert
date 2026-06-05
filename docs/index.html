@@ -445,12 +445,28 @@ git clone https://github.com/MagicalAci/teampilot-agent-product-expert.git "$AGE
   <p class="section-desc reveal">每个版本的核心变更记录。</p>
 
   <div class="changelog reveal">
-    <!-- v0.23.0 -->
+    <!-- v0.24.0 -->
     <div class="cl-entry latest">
       <div class="cl-dot"></div>
       <div class="cl-version">
-        <code>v0.23.0</code>
+        <code>v0.24.0</code>
         <span class="cl-tag">最新</span>
+      </div>
+      <div class="cl-body">
+        <strong>AI 能力系统性升级 · Phase 3（6 个实现级 P2 协议 + 零依赖检索脚手架）</strong>
+        <ul>
+          <li>新增 6 个 P2 协议（<code>policies/*-p2.md</code>，触发式重基建、含触发判定+选型+集成方案）：高级检索（CRAG/Adaptive-RAG/GraphRAG/ColPali）、CodeAct 与沙箱执行、持久化执行（Temporal/DBOS）、自托管 serving（vLLM/SGLang）、产品化就绪（多租户/SSO/合规）、自进化 Agent 北极星（ACE/ADAS/DGM）</li>
+          <li>落地零依赖检索脚手架 <code>scripts/retrieval_index.py</code>（纯标准库 BM25+RRF，中文友好，密集层可选降级）+ 测试；各 P0/P1 协议指向对应 P2 文档</li>
+          <li>新增 P2 契约测试，6 协议登记进 manifest 与 task-navigator；全仓回归通过。至此 12 域 SYNTHESIS 路线图 P0/P1/P2 三阶段全部完成</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- v0.23.0 -->
+    <div class="cl-entry">
+      <div class="cl-dot"></div>
+      <div class="cl-version">
+        <code>v0.23.0</code>
       </div>
       <div class="cl-body">
         <strong>AI 能力系统性升级 · Phase 2（6 个 P1 协议 + 既有方法论扩展）</strong>

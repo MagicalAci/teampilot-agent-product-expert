@@ -38,7 +38,7 @@
 
 - 主代理**每批次结束先写状态文件**（先持久化再继续）。
 - 任务被中断/上下文清空/换会话后，**开工第一步读 `orchestration-state.md` 续跑**，不重复已完成步（防 MAST FM-1.4 上下文丢失）。
-- 这是"应用级断点续跑"，覆盖绝大多数需求；真需要 durable runtime（跨进程强一致事务）才评估 Temporal/DBOS（P2，与轻量定位冲突，谨慎）。
+- 这是"应用级断点续跑"，覆盖绝大多数需求；真需要 durable runtime（跨进程强一致事务）才评估 Temporal/DBOS（P2，与轻量定位冲突，谨慎）。选型与触发详见 `policies/durable-execution-p2.md`。
 
 ---
 

@@ -47,7 +47,7 @@
 - `agent-team-methodology.md` 第四部分加一句"落地约定见本文件"；子代理派发段引用 §1–§3。
 - `task-navigator.mdc` 预检判定块加"成本预估"。
 - 成本可观测（`.meta/cost-log.md` 记每阶段调用/子代理数/token 量级，observability 非 enforcement）见 `agent-trajectory-eval.md`。
-- **P2（仅若未来自托管）**：vLLM/SGLang/量化/解耦 serving/spec decode——现在**不引入**。
+- **P2（仅若未来自托管）**：vLLM/SGLang/量化/解耦 serving/spec decode——现在**不引入**。选型与触发详见 `policies/self-hosted-serving-p2.md`。
 
 ## 何时查阅
 - 选模型档/思考预算 → §1；派子代理 → §2–§3

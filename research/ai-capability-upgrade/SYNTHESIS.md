@@ -90,6 +90,8 @@
 
 ### Phase 3 — P2 远期/北极星（需重基建，默认不做，仅记触发条件）
 
+> **状态（v0.24.0）**：Phase 3 各项已产出**实现级 P2 协议**（`policies/*-p2.md`，含触发判定 + 选型 + 集成方案），并落地零依赖入口 `scripts/retrieval_index.py`（BM25+RRF）。这些是"**spec-complete + 触发式启用**"——默认不引入重基建（忠于轻量聚焦定位），命中触发条件即按对应 P2 协议实施。映射：检索→`advanced-retrieval-p2.md`；CodeAct/沙箱→`codeact-execution-p2.md`；durable→`durable-execution-p2.md`；自托管 serving→`self-hosted-serving-p2.md`；多租户/合规→`productization-readiness-p2.md`；ACE/ADAS/DGM 自进化→`self-evolving-agent-p2.md`。
+
 | 主题 | 触发条件 | 来源域 |
 |---|---|---|
 | 向量库/嵌入混合索引、CRAG/Adaptive-RAG | 单任务证据 >~800 条或跨任务高频复用 | 5 |

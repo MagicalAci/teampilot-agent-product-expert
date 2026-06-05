@@ -46,7 +46,7 @@
 ## 6. 与本仓库接线 + P1/P2
 - `product-expert-commands.mdc` 执行原则加一句"涉及工具调用先读 `tool-use-protocol.md`"。
 - **P1**：`mcp-tool-authoring.md`（造/买/降级判据 + 自建 MCP build→eval→iterate）。
-- **P2**：CodeAct-lite（能一段脚本完成的多步工具操作就写脚本）+ 沙箱执行；浏览器 DOM 派（Playwright MCP）优先于截图视觉派。
+- **P2**：CodeAct-lite（能一段脚本完成的多步工具操作就写脚本）+ 沙箱执行；浏览器 DOM 派（Playwright MCP）优先于截图视觉派。详见 `policies/codeact-execution-p2.md`。
 
 ## 何时查阅
 - 任何能力调工具前 → §1–§3

@@ -63,7 +63,7 @@
 ## 4. 与本仓库接线 + P2 远期
 - `task-navigator.mdc` 预检判定块：需在已采集语料/`knowledge/`/记忆中找证据时，先读本协议。
 - `research-toolkit` 分析/核查阶段、`aibi-query`（表/案例按需检索 = Table-RAG-lite）引用本协议。
-- **P2 远期**（需重基建，默认不做）：嵌入式混合索引（sqlite-vec/LanceDB，证据 >~800 条时）、CRAG/Adaptive-RAG 纠错式检索、GraphRAG 全局综合、ColPali 视觉 RAG。
+- **P2 远期**（需重基建，默认不做）：嵌入式混合索引（sqlite-vec/LanceDB，证据 >~800 条时）、CRAG/Adaptive-RAG 纠错式检索、GraphRAG 全局综合、ColPali 视觉 RAG。**详见 `policies/advanced-retrieval-p2.md`；零依赖入口已落地 `scripts/retrieval_index.py`（纯标库 BM25+RRF，密集层可选降级）。**
 
 ## 何时查阅
 - 在大语料里找证据、做核查取证 → §1
