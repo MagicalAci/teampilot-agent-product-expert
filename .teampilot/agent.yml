@@ -7,7 +7,7 @@ agent:
   cursorOnly: true
   standaloneEnabled: true
 release:
-  version: 0.23.0
+  version: 0.24.0
   notes: AI能力系统性升级 Phase 3(P2) — 在P0(13项)/P1(6项)之上补齐6个实现级P2协议(高级检索CRAG/Adaptive-RAG/GraphRAG/ColPali、CodeAct与沙箱执行、持久化执行Temporal/DBOS、自托管serving vLLM/SGLang、产品化就绪多租户/SSO/合规、自进化Agent北极星ACE/ADAS/DGM)，均为触发式重基建(默认不做、含触发判定+选型+集成方案，忠于轻量聚焦定位)；落地零依赖检索脚手架scripts/retrieval_index.py(纯标库BM25+RRF，密集层可选)；P0+P1+P2契约测试全绿。至此12域SYNTHESIS路线图三阶段全部完成。
 dependencies:
   skills:
